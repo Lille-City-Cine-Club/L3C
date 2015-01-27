@@ -1,0 +1,74 @@
+@font-face {
+	font-family: 'icomoon';
+	src:url('fonts/icomoon.eot?-q6stsd');
+	src:url('fonts/icomoon.eot?#iefix-q6stsd') format('embedded-opentype'),
+		url('fonts/icomoon.woff?-q6stsd') format('woff'),
+		url('fonts/icomoon.ttf?-q6stsd') format('truetype'),
+		url('fonts/icomoon.svg?-q6stsd#icomoon') format('svg');
+	font-weight: normal;
+	font-style: normal;
+}
+
+[class^="icon-"], [class*=" icon-"] {
+	font-family: 'icomoon';
+	speak: none;
+	font-style: normal;
+	font-weight: normal;
+	font-variant: normal;
+	text-transform: none;
+	line-height: 1;
+
+	/* Better Font Rendering =========== */
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
+}
+
+.icon-user:before {
+	content: "\e600";
+}
+
+.icon-heart:before {
+	content: "\e601";
+}
+
+.icon-facebook3:before {
+	content: "\e606";
+}
+
+.icon-facebook:before {
+	content: "\e604";
+}
+
+.icon-facebook2:before {
+	content: "\e605";
+}
+
+.icon-video-camera:before {
+	content: "\e914";
+}
+
+.icon-upload:before {
+	content: "\e961";
+}
+
+.icon-database:before {
+	content: "\e964";
+}
+
+.icon-bubble2:before {
+	content: "\e96e";
+}
+
+.icon-user2:before {
+	content: "\e971";
+}
+
+.icon-users:before {
+	content: "\e972";
+}
+
+.icon-question:before {
+	content: "\e09";
+}
+
+x
