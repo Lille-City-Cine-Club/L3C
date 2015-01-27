@@ -1,4 +1,3 @@
-/* ----------------------------------------------------------------- Nav Wrapper ---------------------------------------------------------- */
 .logo-nav-wrapper{
 display: table;
 background-color : #171717;
@@ -10,45 +9,7 @@ box-sizing: border-box;
 margin-bottom:-20px;
 }
 
-.nav-wrapper{
-display: table-cell;
-width :70%;
-text-align: right;
-vertical-align: middle;
-}
 
-.site-logo img{
-	max-height:60%;
-	width:auto;
-	padding-left:75px;
-}
-
-.logo-wrapper{
-display: table-cell;
-}
-
-#menu li {
-display: inline;
-padding: 2px 5px 2px 5px;
-color:#FFF;
-letter-spacing: 1px;
-font-weight: normal;
-line-height: 2em;
-margin: 0 0 0 30px;
-text-transform:uppercase;
-}
-#menu li a:link{
-text-decoration:none;
-}
-#menu li a:visited{
-color:#FFF;
-}
-/*permet de mettre le "Admin" au centre de la page admin.html*/
-#menu #li-admin{
-margin-right:300px;
-}
-
-/* ----------------------------------------------------------------- Suggestion ----------------------------------------------------------- */
 .poster-about{
 display:inline-block;
 box-sizing:border-box;
@@ -85,7 +46,41 @@ padding-left:7%;
 width:30%
 }
 
-/* ----------------------------------------------------------------- Logo FB -------------------------------------------------------------- */
+.nav-wrapper{
+display: table-cell;
+width :70%;
+text-align: right;
+vertical-align: middle;
+}
+
+#menu li {
+display: inline;
+padding: 2px 5px 2px 5px;
+color:#FFF;
+letter-spacing: 1px;
+font-weight: normal;
+line-height: 2em;
+margin: 0 0 0 30px;
+text-transform:uppercase;
+}
+
+
+#menu li a:link{
+text-decoration:none;
+}
+#menu li a:visited{
+color:#FFF;
+}
+#menu #li-admin{
+margin-right:300px;
+}
+
+/*
+.fb{
+text-decoration:none;
+color: #FFF;
+}*/
+
 .fb:before, .nous:before{
 content:'\e604';
 font-family:'icomoon';
@@ -108,7 +103,18 @@ content:'\e600';
 .nous:before{
 content:'\e601';
 } 
-/* ------------------------------------------------------------ Footer --------------------------------------------------------------------- */
+
+
+.site-logo img{
+	max-height:60%;
+	width:auto;
+	padding-left:75px;
+}
+
+.logo-wrapper{
+display: table-cell;
+}
+
 .footer-wrapper{
 width:100%;
 height:14%;
@@ -118,6 +124,13 @@ background-image:url(../ressources/footer1.jpg);
 background-repeat:no-repeat;
 background-position:center center;
 */
+}
+
+.footer-wrapper #footer-menu{
+
+}
+.footer-wrapper #footer-copyright{
+
 }
 
 .footer-wrapper #footer-menu li a:link{
@@ -136,9 +149,6 @@ list-style-type:none;
 margin-left:25px;
 }
 
-.footer-wrapper #footer-menu{}
-.footer-wrapper #footer-copyright{}
-
 .seance-wrapper{
 padding-top:40px;
 }
@@ -147,8 +157,8 @@ padding-top:40px;
 margin-left:550px;
 width:20%;
 height:auto;
-}
 
+}
 .seance-wrapper #div-title h2{
 float:right;
 width:63%;
@@ -163,7 +173,7 @@ height:64%;
 margin-top: 40px;
 height:65%
 }
-/* ----------------------------------------------------------------- General -------------------------------------------------------------- */
+
 body {
 color: #333;
 background-color: #FAF5F5;
