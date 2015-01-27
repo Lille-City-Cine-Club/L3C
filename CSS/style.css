@@ -1,3 +1,4 @@
+/* -------------------------------------------------------- Navigateur -------------------------------------------------------------------- */
 .logo-nav-wrapper{
 display: table;
 background-color : #171717;
@@ -8,51 +9,22 @@ vertical-align:middle;
 box-sizing: border-box;
 margin-bottom:-20px;
 }
-
-
-.poster-about{
-display:inline-block;
-box-sizing:border-box;
+.site-logo img{
+max-height:75px;
+width:auto;
+padding-top:10px;
+padding-left:130px;
 }
-
-.about_movie{
-display:inline-block;
-float:right;
-width:56%;
-margin-right:5%;
-padding-top:4%;
-padding-right:2%;
-text-align:justify;
-line-height: 1.2em;
+.logo-wrapper{
+display: table-cell;
 }
-
-#MovieTitle{
-color:#7D0000;
-font-style:bold;
-font-size:1.5em;
-}
-
-.poster img{
-width:75%;
-}
-
-.poster{
-display:inline-block;
-float:left;
-/*resizing the img to 75%*/
-/*transform:scale(0.75);*/
-padding-top:4%;
-padding-left:7%;
-width:30%
-}
-
 .nav-wrapper{
 display: table-cell;
-width :70%;
+width:70%;
 text-align: right;
 vertical-align: middle;
+padding-top:10px;
 }
-
 #menu li {
 display: inline;
 padding: 2px 5px 2px 5px;
@@ -63,8 +35,6 @@ line-height: 2em;
 margin: 0 0 0 30px;
 text-transform:uppercase;
 }
-
-
 #menu li a:link{
 text-decoration:none;
 }
@@ -75,12 +45,61 @@ color:#FFF;
 margin-right:300px;
 }
 
+/* -------------------------------------------------------- Suggestion -------------------------------------------------------------------- */
+.poster-about{
+display:inline-block;
+box-sizing:border-box;
+}
+.about_movie{
+display:inline-block;
+float:right;
+width:56%;
+margin-right:5%;
+padding-top:4%;
+padding-right:2%;
+text-align:justify;
+line-height: 1.2em;
+}
+#MovieTitle{
+color:#7D0000;
+font-style:bold;
+font-size:1.5em;
+}
+.poster img{
+width:75%;
+}
+.poster{
+display:inline-block;
+float:left;
+/*resizing the img to 75%*/
+/*transform:scale(0.75);*/
+padding-top:4%;
+padding-left:7%;
+width:30%
+}
+.seance-wrapper{
+padding-top:40px;
+}
+.seance-wrapper #div-img img{
+margin-left:550px;
+width:20%;
+height:auto;
+}
+.seance-wrapper #div-title h2{
+float:right;
+width:63%;
+}
+.about{
+margin-top:50px;
+height:64%;
+}
+
+/* -------------------------------------------------------- Icone FB ---------------------------------------------------------------------- */
 /*
 .fb{
 text-decoration:none;
 color: #FFF;
 }*/
-
 .fb:before, .nous:before{
 content:'\e604';
 font-family:'icomoon';
@@ -104,17 +123,7 @@ content:'\e600';
 content:'\e601';
 } 
 
-
-.site-logo img{
-	max-height:60%;
-	width:auto;
-	padding-left:75px;
-}
-
-.logo-wrapper{
-display: table-cell;
-}
-
+/* -------------------------------------------------------- Footer ------------------------------------------------------------------------ */
 .footer-wrapper{
 width:100%;
 height:14%;
@@ -125,21 +134,13 @@ background-repeat:no-repeat;
 background-position:center center;
 */
 }
-
-.footer-wrapper #footer-menu{
-
-}
-.footer-wrapper #footer-copyright{
-
-}
-
+.footer-wrapper #footer-copyright{}
 .footer-wrapper #footer-menu li a:link{
 text-decoration:none;
 }
 .footer-wrapper #footer-menu li a:visited{
 color:#FFF;
 }
-
 #footer-menu{
 color:#FFF;
 letter-spacing:1px;
@@ -149,31 +150,13 @@ list-style-type:none;
 margin-left:25px;
 }
 
-.seance-wrapper{
-padding-top:40px;
-}
-
-.seance-wrapper #div-img img{
-margin-left:550px;
-width:20%;
-height:auto;
-
-}
-.seance-wrapper #div-title h2{
-float:right;
-width:63%;
-}
-
-.about{
-margin-top:50px;
-height:64%;
-}
-
+/* -------------------------------------------------------- Admin ------------------------------------------------------------------------- */
 #form{
 margin-top: 40px;
 height:65%
 }
 
+/* -------------------------------------------------------- General ----------------------------------------------------------------------- */
 body {
 color: #333;
 background-color: #FAF5F5;

@@ -14,7 +14,7 @@
   <title> L3C: Le film du mois ! </title>
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
 	
-	<script>
+	<script><!-- Ajax command to add new movie to DB -->
 		$(document).ready(function(){
 			$('#formFilm').on('submit', function(e) {
 				e.preventDefault(); // J'empêche le comportement par défaut du navigateur, c-à-d de soumettre le formulaire
@@ -57,7 +57,9 @@
 		<div class="logo-wrapper">
 		
 			<h1 class="site-logo">
-			<img src="../ressources/logo/L3C.jpg" alt="Couz Cine Club" href="home" >
+				<a href="http://localhost:7777">
+					<img src="../ressources/logo/L3C.jpg" alt="Couz Cine Club" href="home" >
+				</a>
 			</h1>
 			
 		</div>
@@ -66,7 +68,6 @@
 			<ul id="menu">
 				<li id="li-admin"> ADMIN </li>
 				<li><a id="Seance" href="suggestion"> Le Film du mois </a></li>
-				<li><a id="logIn" href="admin">Connexion</a></li>
 				<li><a id="about" href="about">A propos</a></li>
 				
 				<!-- pour aller sur la page de connexion quand se sera gerer 
@@ -75,15 +76,12 @@
 			</ul>
 		</div>
 	</div>
-	<div id="form">
-	
-	<div>
+	<div id="form">	
 		<form id="formFilm" method="post" action="postContent">
 			<ul>
 				<li id="Title" >
 					<label class="description" >Titre: </label>
 					<input id="title" type="text" maxlength="255" value=""/> 
-				
 				</li>		
 				<li id="Real" >
 					<label class="description" >Realisateur: </label>
@@ -96,7 +94,6 @@
 				<li id="Synopsis" >
 					<label class="description" >Synopsis </label>
 					<textarea id="synopsis"></textarea> 
-					
 				</li>		
 				<li id="Affiche" >
 					<label class="description">L'affiche du film </label>
@@ -114,8 +111,6 @@
 		</form>
 	</div>
 	
-	</div>
-		
 	<div class="footer-wrapper">
 		<ul id="footer-menu">
 			<li><a class="fb"> Facebook </a></li>
