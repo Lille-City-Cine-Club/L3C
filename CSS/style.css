@@ -177,15 +177,10 @@ content:'\e601';
 width:100%;
 height:14%;
 background-color : #171717;
-/*
-background-image:url(../ressources/footer1.jpg);
-background-repeat:no-repeat;
-background-position:center center;
-*/
 }
-.footer-wrapper #footer-copyright{}
 .footer-wrapper #footer-menu li a:link{
 text-decoration:none;
+color:#FFF;
 }
 .footer-wrapper #footer-menu li a:visited{
 color:#FFF;
@@ -197,6 +192,16 @@ padding-top: 20px;
 line-height:2em;
 list-style-type:none;
 margin-left:25px;
+}
+
+.footer-wrapper #menu-logo img{
+float:right;
+margin-right:60px;
+padding-top:30px;
+}
+.footer-wrapper #copyright {
+text-align:center;
+color:#FFF;
 }
 
 /* -------------------------------------------------------- Admin ------------------------------------------------------------------------- */
