@@ -95,10 +95,14 @@ height:64%;
 }
 
 /* -------------------------------------------------------- A Propos ---------------------------------------------------------------------- */
+
 .about{
 text-align : center;
+width:auto;
+height:auto;
 }
 
+/*Pour faire les images circulaires*/
 .about-circular-ben {
 	width: 235px;
 	height: 235px;
@@ -132,7 +136,9 @@ text-align : center;
 .about-title{
 	margin-top : 3%;
 	font-size : 20px;
-	padding-top: 7% 
+	padding-top: 7%;
+	margin-left:2%;
+	margin-right:2%;
 }
 
 .about-description{
@@ -175,7 +181,7 @@ content:'\e601';
 /* -------------------------------------------------------- Footer ------------------------------------------------------------------------ */
 .footer-wrapper{
 width:100%;
-height:14%;
+height:20%;
 background-color : #171717;
 }
 .footer-wrapper #footer-menu li a:link{
@@ -192,8 +198,8 @@ padding-top: 20px;
 line-height:2em;
 list-style-type:none;
 margin-left:25px;
+padding-top:35px;
 }
-
 .footer-wrapper #menu-logo img{
 float:right;
 margin-right:60px;
@@ -206,16 +212,14 @@ color:#FFF;
 
 /* -------------------------------------------------------- Admin ------------------------------------------------------------------------- */
 #form #formFilm{
-margin-top: 40px;
-height:50%;
+height:auto;
 border: 2px solid;
 border-radius:25px;
 margin-top : 50px;
 margin-left: 30%;
 margin-right: 30%;
 margin-bottom:25px;
-
-padding-bottom:20px;
+padding-bottom:10px;
 }
 
 #form #formFilm h2{
@@ -247,20 +251,21 @@ padding-right: 200px;
 #form ul #synopsis #synopsis{
 resize:none;
 height:75px;
-width:700px;
+width:95%;
 border-radius:10px;
 border: 1px solid;
 }
 #form ul #justification #justification{
 resize:none;
 height:75px;
-width:700px;
+width:95%;
 border-radius:10px;
 border: 1px solid;
 }
 
 #form ul #buttons #ButtonsWrapper{
 text-align:center;
+margin-left:-40px;
 }
 
 /* -------------------------------------------------------- General ----------------------------------------------------------------------- */
