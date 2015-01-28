@@ -94,6 +94,55 @@ margin-top:50px;
 height:64%;
 }
 
+/* -------------------------------------------------------- A Propos ---------------------------------------------------------------------- */
+.about{
+text-align : center;
+}
+
+.about-circular-ben {
+	width: 235px;
+	height: 235px;
+	border-radius: 150px;
+	-webkit-border-radius: 150px;
+	-moz-border-radius: 150px;
+	background: url(../ressources/about_Ben.jpg) no-repeat;
+	box-shadow: 0 0 8px rgba(0, 0, 0, .8);
+	-webkit-box-shadow: 0 0 8px rgba(0, 0, 0, .8);
+	-moz-box-shadow: 0 0 8px rgba(0, 0, 0, .8);
+	float : left;
+	margin-left: 17.5%;
+	padding-top: 1% ;
+}
+
+.about-circular-suf {
+	width: 235px;
+	height: 235px;
+	border-radius: 150px;
+	-webkit-border-radius: 150px;
+	-moz-border-radius: 150px;
+	background: url(../ressources/about_Sufiane4.jpg) no-repeat;
+	box-shadow: 0 0 8px rgba(0, 0, 0, .8);
+	-webkit-box-shadow: 0 0 8px rgba(0, 0, 0, .8);
+	-moz-box-shadow: 0 0 8px rgba(0, 0, 0, .8);
+	float : right;
+	margin-right: 17.5%;
+	padding-top: 1% ;
+}
+
+.about-title{
+	margin-top : 3%;
+	font-size : 20px;
+	padding-top: 7% 
+}
+
+.about-description{
+	font-size : 20px;
+	margin-top : 6%;
+	margin-left : 16%;
+	margin-right : 16%;
+	text-align : justify;
+}
+
 /* -------------------------------------------------------- Icone FB ---------------------------------------------------------------------- */
 /*
 .fb{
@@ -151,9 +200,62 @@ margin-left:25px;
 }
 
 /* -------------------------------------------------------- Admin ------------------------------------------------------------------------- */
-#form{
+#form #formFilm{
 margin-top: 40px;
-height:65%
+height:50%;
+border: 2px solid;
+border-radius:25px;
+margin-top : 50px;
+margin-left: 30%;
+margin-right: 30%;
+margin-bottom:25px;
+
+padding-bottom:20px;
+}
+
+#form #formFilm h2{
+padding-left: 40px;
+}
+
+#form ul li {
+list-style-type:none;
+line-height:2.5em;
+}
+#form ul li .description{
+font-style:italic;
+font-size:15px;
+}
+
+#form ul #Title #title{
+margin-left:50px;
+padding-right: 200px;
+}
+#form ul #Real #realisateur {
+margin-left:7px;
+padding-right: 200px;
+}
+#form ul #Acteurs #acteurs {
+margin-left:30px;
+padding-right: 200px;
+}
+
+#form ul #synopsis #synopsis{
+resize:none;
+height:75px;
+width:700px;
+border-radius:10px;
+border: 1px solid;
+}
+#form ul #justification #justification{
+resize:none;
+height:75px;
+width:700px;
+border-radius:10px;
+border: 1px solid;
+}
+
+#form ul #buttons #ButtonsWrapper{
+text-align:center;
 }
 
 /* -------------------------------------------------------- General ----------------------------------------------------------------------- */

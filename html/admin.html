@@ -78,6 +78,7 @@
 	</div>
 	<div id="form">	
 		<form id="formFilm" method="post" action="postContent">
+			<h2> Ajouter un film : </h2>			
 			<ul>
 				<li id="Title" >
 					<label class="description" >Titre: </label>
@@ -88,35 +89,45 @@
 					<input id="realisateur" type="text" maxlength="255" value=""/> 
 				</li>		
 				<li id="Acteurs" >
-					<label class="description" >Acteurs </label>
+					<label class="description" >Acteurs: </label>
 					<input id="acteurs"  type="text" maxlength="255" value=""/> 
 				</li>		
 				<li id="Synopsis" >
-					<label class="description" >Synopsis </label>
+					<label class="description" >Synopsis: </label>
 					<textarea id="synopsis"></textarea> 
 				</li>		
 				<li id="Affiche" >
-					<label class="description">L'affiche du film </label>
+					<label class="description">L'affiche du film: </label>
 					<input id="affiche" type="file"/> 					
 				</li>		
 				<li id="Justification" >
-					<label class="description">Pourquoi ce film </label>
+					<label class="description">Pourquoi ce film: </label>
 					<textarea id="justification"></textarea> 
 				</li>
-				<li class="buttons">
-					<input type="hidden" name="form_id" value="955925" />
-					<input id="saveForm" class="buttonValider" type="submit" value="Valider" />
+				<li id="buttons">
+					<div id="ButtonsWrapper" >
+						<input type="hidden" name="form_id" value="955925" />
+						<input id="saveForm" class="buttonValider" type="submit" value="Valider" />
+					</div>
 				</li>
 			</ul>
 		</form>
 	</div>
 	
 	<div class="footer-wrapper">
-		<ul id="footer-menu">
-			<li><a class="fb"> Facebook </a></li>
-			<li><a class="nous" href="about"> A propos </a></li>
-		</ul>	
-	</div>
+		<div id="menu-logo" >
+			<a href="http://www.univ-lille1.fr/" target="_blank"> <img src="../ressources/logo/lille1logoMini.jpg" alt="Université Lille1" >
+			<ul id="footer-menu">
+				<li><a class="fb"> Facebook </a></li>
+				<li><a class="nous" href="about"> A propos </a></li>
+			</ul>
+
+		</div>
+		<div id="copyright">
+			<p> &copy BennyP & DonDiego. En collaboration avec M.Dufrêne. Université Lille1
+			</p>	
+		</div>
+				</div>
 </div>
 </body>
 </html>
