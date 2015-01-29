@@ -135,18 +135,19 @@ height:auto;
 
 .about-title{
 	margin-top : 3%;
-	font-size : 20px;
-	padding-top: 7%;
+	font-size : 17px;
+	padding-top: 10%;
 	margin-left:2%;
 	margin-right:2%;
 }
 
 .about-description{
-	font-size : 20px;
+	font-size : 16.5px;
 	margin-top : 6%;
 	margin-left : 16%;
 	margin-right : 16%;
 	text-align : justify;
+	padding-top:2%;
 }
 
 /* -------------------------------------------------------- Icone FB ---------------------------------------------------------------------- */
