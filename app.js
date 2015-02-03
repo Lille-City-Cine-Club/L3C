@@ -141,7 +141,7 @@ app.post('/postContent',function(req,res){
 	title = req.body.title;
 	director=req.body.director;
 	actors = req.body.actors.split(', '); // transformation of string to array, parsing to ', '
-	/*need genre gestion*/
+	/*need GENRE handler*/
 	synopsis=req.body.synopsis;
 	why=req.body.why;
 	date=moment().format('MMMM Do YYYY, h:mm:ss a');

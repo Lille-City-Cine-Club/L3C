@@ -21,19 +21,21 @@
 	 
 				var $this = $(this); // L'objet jQuery du formulaire	
 				
-				var genre1,genre2,genre3,valG1,valG2,valG3;
+				var genre1,genre2,genre3,g1,g2,g3;
+				
+				/* /!\ Si g1 = " " NE PAS ENVOYER !!!!*/
 				genre1=document.getElementById("genre1");
-				valG1= genre1[genre1.selectedIndex].value;
+				g1= genre1[genre1.selectedIndex].value;
 				
 				if($('#genre2').val != " "){
-					genre2=document.getElementById("genre1");
-					valG2= genre1[genre1.selectedIndex].value;
+					genre2=document.getElementById("genre2");
+					g2= genre2[genre2.selectedIndex].value;
 				}
 				if($('#genre3').val != " "){
-					genre3=document.getElementById("genre1");
-					valG3= genre1[genre1.selectedIndex].value;
+					genre3=document.getElementById("genre3");
+					g3= genre3[genre3.selectedIndex].value;
 				}
-				console.log('genre:'+ valG1);
+				console.log('genre:'+ g1);
 				
 				var data = {
 					"title":$('#title').val(),
@@ -41,9 +43,9 @@
 					"actors": $('#acteurs').val(),
 					"synopsis":$('#synopsis').val(),
 					/*affiche stocké localement, chemin DB*/
-					"genre1":genre1,
-					"genre2":genre2,
-					"genre3":genre3,
+					"genre1":g1,
+					"genre2":g2,
+					"genre3":g3,
 					"why":$('#justification').val(),
 				}
 				
@@ -51,8 +53,8 @@
 					type:'POST',
 					url:$this.attr('action'),
 					data:data,
-					processData: false,
-					
+					/*processData: false,*/
+
 					success:function(content) {
 					alert(content);
 					},
