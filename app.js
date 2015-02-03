@@ -35,8 +35,10 @@ var Schema = mongoose.Schema;
 var movieSchema = new Schema({
 	title: String,
 	director: String,
-	actors: String,
+	actors: [String],
+	genre:[String],
 	synopsis: String,
+	/*affiche:String Chemin de l'image ,*/
 	why: String,
 	date: String
 });
@@ -138,11 +140,13 @@ app.post('/postContent',function(req,res){
 	var title,director,actors,synopsis,why,date;
 	title = req.body.title;
 	director=req.body.director;
-	actors=req.body.actors;
+	actors = req.body.actors.split(', '); // transformation of string to array, parsing to ', '
+	/*need genre gestion*/
 	synopsis=req.body.synopsis;
 	why=req.body.why;
 	date=moment().format('MMMM Do YYYY, h:mm:ss a');
 	
+	console.log('genre:'+req.body.genre1,req.body.genre2,req.body.genre3+'\n');
 	console.log('title: '+title+'\n director: '+director+'\n actors: '+actors+'\n synopsis: '+synopsis+'\n why:'+why+'\n Date: '+ date+'\n');
 	
 	var movie = {

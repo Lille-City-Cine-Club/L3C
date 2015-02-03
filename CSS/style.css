@@ -208,7 +208,7 @@ content:'\e600';
 }
 */
 .nous:before{
-content:'\e601';
+content:'\e96e';
 } 
 
 /* -------------------------------------------------------- Footer ------------------------------------------------------------------------ */
@@ -279,6 +279,10 @@ padding-right: 200px;
 #form ul #Acteurs #acteurs {
 margin-left:30px;
 padding-right: 200px;
+}
+
+#form ul #Genre #genre1{
+margin-left:17px;
 }
 
 #form ul #synopsis #synopsis{
