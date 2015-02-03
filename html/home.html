@@ -1,66 +1,113 @@
-
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <html lang="fr">
-<head>
-	
-  <!--[if lt IE 9]>
+  <head>
+    <!--[if lt IE 9]>
     <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
 <![endif]-->
-  <meta charset="utf-8" />
-	<link rel="stylesheet" href="../CSS/style.css" />
-	<link rel="stylesheet" href="../CSS/entypo.css" />
-  <title> L3C : Lille City Ciné Club </title>
-  
-   <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
-   
-</head>
-
-
-<body>
-
-<!--Div qui regroupe toute la page -->
-<div class="body-wrapper" >
-	<!-- logo+site -->
-	<div class="logo-nav-wrapper">
-		<!-- Regroupe le logo-->
-		<div class="logo-wrapper">
-			<h1 class="site-logo">
-				<a href="http://localhost:7777/">
-					<img src="../ressources/logo/L3C.jpg" alt="Couz Cine Club">
-				</a>
-			</h1>
-		</div>
-		<!-- le menu -->
-		<div class="nav-wrapper">
-			<ul id="menu">
-				<li><a id="Seance" href="suggestion"> Le Film du mois </a></li>
-				<li><a id="logIn" href="admin">Connexion</a></li>
-				<li><a id="about" href="about">A propos</a></li>
-				
-				<!-- pour aller sur la page de connexion quand se sera gerer 
-				<li><a href="connec.html" class="connec"></a></li>
-				-->
-			</ul>
-		</div>
-	</div>
-	<div id="caroussel">
-		<h1>ICI le CAROUSSEL!!!</h1>
-	</div>
-
-	<div class="footer-wrapper">
-		<div id="menu-logo" >
-			<a href="http://www.univ-lille1.fr/" target="_blank"> <img src="../ressources/logo/logoLille1Mini.png" alt="Université Lille1" >
-			<ul id="footer-menu">
-				<li><a class="fb"> Facebook </a></li>
-				<li><a class="nous" href="about"> A propos </a></li>
-			</ul>
-
-		</div>
-		<div id="copyright">
-			<p> &copy BennyP & DonDiego. En collaboration avec M.Dufrêne. Université Lille1.
-			</p>	
-		</div>
-	</div>
-</div>
-</body>
+    <!-- Import de Bootstrap-->
+    <link rel="stylesheet" href="../css/bootstrap.min.css" />
+    <script src="../js/jquery-1.9.1.min.js"></script>
+    <script src="../js/bootstrap.js"></script>
+    <meta charset="utf-8" />
+    <link rel="stylesheet" href="../CSS/style.css" />
+    <link rel="stylesheet" href="../CSS/entypo.css" />
+    <title>L3C : Lille City Ciné Club</title>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+  </head>
+  <body>
+    <!--Div qui regroupe toute la page -->
+    <div class="body-wrapper">
+      <!-- logo+site -->
+      <div class="logo-nav-wrapper">
+        <!-- Regroupe le logo-->
+        <div class="logo-wrapper">
+          <h1 class="site-logo">
+            <a href="http://localhost:7777/">
+              <img src="../ressources/logo/L3C.jpg" alt="Couz Cine Club" />
+            </a>
+          </h1>
+        </div>
+        <!-- le menu -->
+        <div class="nav-wrapper">
+          <ul id="menu">
+            <li>
+              <a id="Seance" href="suggestion">Le Film du mois</a>
+            </li>
+            <li>
+              <a id="logIn" href="admin">Connexion</a>
+            </li>
+            <li>
+              <a id="about" href="about">A propos</a>
+            </li>
+            <!-- pour aller sur la page de connexion quand se sera gerer 
+                                <li><a href="connec.html" class="connec"></a></li>
+                                -->
+          </ul>
+        </div>
+      </div>
+      <div class="carousel-global">
+        <div class="poster-carousel">
+          <div id="my_carousel" class="carousel slide" data-ride="carousel">
+          <!-- Slides -->
+          <div class="carousel-inner">
+            <!-- Page 1 -->
+            <div class="item active">
+              <img src="../ressources/home-carousel/ImitationGame.jpg" />
+            </div>
+            <!-- Page 2 -->
+            <div class="item">
+              <img src="../ressources/home-carousel/LaFamilleBelier.jpg" />
+            </div>
+            <!-- Page 3 -->
+            <div class="item">
+              <img src="../ressources/home-carousel/CharlieMortdecai.jpg" />
+            </div>
+            <!-- Page 4 -->
+            <div class="item">
+              <img src="../ressources/home-carousel/LesPingouinsDeMadagascar.jpg" />
+            </div>
+            <!-- Page 5 -->
+            <div class="item">
+              <img src="../ressources/home-carousel/Taken3.jpg" />
+            </div>
+            <!-- Page 6 -->
+            <div class="item">
+              <img src="../ressources/home-carousel/Whiplash.jpg" />
+            </div>
+          </div>
+          <!-- Contrôles -->
+          <a class="left carousel-control" href="#my_carousel" data-slide="prev">
+			<span class="glyphicon glyphicon-chevron-left"></span>
+		  </a> 
+          <a class="right carousel-control" href="#my_carousel" data-slide="next">
+			 <span class="glyphicon glyphicon-chevron-right"></span>
+		  </a>
+		  </div>
+        </div>
+      </div>
+	  
+	  <!--Message d'accueil-->
+	  <div class="home-message">
+		<h1>Bienvenue au Lille City Ciné Club !</h1>
+	  </div>
+      <div class="footer-wrapper">
+        <div id="menu-logo">
+          <a href="http://www.univ-lille1.fr/" target="_blank">
+            <img src="../ressources/logo/logoLille1Mini.png" alt="Université Lille1" />
+            <ul id="footer-menu">
+              <li>
+                <a class="fb">Facebook</a>
+              </li>
+              <li>
+                <a class="nous" href="about">A propos</a>
+              </li>
+            </ul>
+          </a>
+        </div>
+        <div id="copyright">
+          <p>� BennyP &amp; DonDiego. En collaboration avec M.Dufrêne. Université Lille1.</p>
+        </div>
+      </div>
+    </div>
+  </body>
 </html>

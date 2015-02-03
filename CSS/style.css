@@ -44,6 +44,38 @@ color:#FFF;
 #menu #li-admin{
 margin-right:300px;
 }
+/* -------------------------------------------------------- Page D'accueil----------------------------------------------------------------- */
+.poster-carousel{
+padding-top:6%;
+padding-bottom :2%;
+}
+
+.carousel-global{
+width : 300px;
+height : 350px;
+margin : 0 auto;
+padding-top: 2%;
+padding-bottom:2%;
+}
+
+.carousel-inner {
+width : 200px;
+height : 300x;
+margin: 0 auto;
+background-color:white;
+color:white;
+}
+
+.item{
+    height: 100%;
+    vertical-align: middle;
+}
+
+.home-message{
+padding-top : 1%;
+text-align:center;
+padding-bottom: 2%;
+}
 
 /* -------------------------------------------------------- Suggestion -------------------------------------------------------------------- */
 .poster-about{
