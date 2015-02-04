@@ -45,36 +45,100 @@ color:#FFF;
 margin-right:300px;
 }
 /* -------------------------------------------------------- Page D'accueil----------------------------------------------------------------- */
-.poster-carousel{
-padding-top:6%;
-padding-bottom :2%;
+/* -------------------------------------------------------- Carousel----------------------------------------------------------------- */
+#carousel-wrapper {
+	width:800px;
+	height: 220px;
+	margin: -110px 0 0 -367px;
+	position: absolute;
+	left: 53.5%;
+	top: 39%;
 }
 
-.carousel-global{
-width : 300px;
-height : 350px;
-margin : 0 auto;
-padding-top: 2%;
-padding-bottom:2%;
+#carousel {
+	width: 800px;
+	position:vrelative;
 }
 
-.carousel-inner {
-width : 200px;
-height : 300x;
-margin: 0 auto;
-background-color:white;
-color:white;
+#carousel ul {
+	list-style: none;
+	display: block;
+	margin: 0;
+	padding: 0;
 }
 
-.item{
-    height: 100%;
-    vertical-align: middle;
+#carousel li {
+	background: transparent url(../ressources/home-carousel/carousel_polaroid2.png) no-repeat 0 0;
+	font-size: 40px;
+	color: #999;
+	text-align: center;
+	display: block;
+	width: 203px;
+	height: 305px;
+	padding: 0;
+	margin: 6px;
+	float: left;
+	position: relative;
+}
+
+#carousel li img {
+	width: 175px;
+	height: 230px;
+	margin-top: 16px;
+	margin-right : 4px;
+}
+
+#carousel li span {
+	text-indent: -999px;
+	display: block;
+	overflow: hidden;
+	width: 203px;
+	height: 305px;
+	position: absolute;
+	z-index: 2;
+	top: 10px;
+	left: -11px;
+}			
+
+.clearfix {
+	float: none;
+	clear: both;
+}
+
+.pager-wrapper{
+padding-right : 19%;
+}
+			
+			
+#carousel .pager {
+	text-align: center;
+	margin: 0 auto;
+}
+
+#carousel .pager a {
+	background: transparent url(../ressources/home-carousel/carousel_control.png) no-repeat -2px -32px;
+	text-decoration: none;
+	text-indent: -999px;
+	display: inline-block;
+	overflow: hidden;
+	width: 8px;
+	height: 8px;
+	margin: 0 5px 0 0;
+}
+
+#carousel .pager a.selected {
+	background: transparent url(../ressources/home-carousel/carousel_control.png) no-repeat -12px -32px;
+	text-decoration: underline;				
+}
+
+
+.home-body{
+height:490px;
 }
 
 .home-message{
-padding-top : 1%;
+padding-top : 29%;
 text-align:center;
-padding-bottom: 2%;
 }
 
 /* -------------------------------------------------------- Suggestion -------------------------------------------------------------------- */
