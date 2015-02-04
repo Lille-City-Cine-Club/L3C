@@ -86,9 +86,9 @@ app.get('/suggestion', function(req,res){
 			
 			html = data;
 			html = html.replace('%%title%%',movie.title);
-			html = html.replace('%%genre%%',movie.genre);
+			html = html.replace('%%genre%%',movie.genre[0]+", "+movie.genre[1]+", "+movie.genre[2]);
 			html = html.replace('%%real%%',movie.director);
-			html = html.replace('%%actors%%',movie.actors);
+			html = html.replace('%%actors%%',movie.actors[0]+", "+movie.actors[1]+", "+movie.actors[2]+" ...");
 			html = html.replace('%%why%%',movie.why);
 			html = html.replace('%%synopsis%%',movie.synopsis);
 			
