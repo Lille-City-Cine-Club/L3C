@@ -32,6 +32,7 @@ db.once('connected', function(){
 
 // -------------------------------------------------------- DB model ----------------------------------------------------------------------
 var Schema = mongoose.Schema;
+
 var movieSchema = new Schema({
 	title: String,
 	director: String,
@@ -42,6 +43,7 @@ var movieSchema = new Schema({
 	why: String,
 	date: String
 });
+
 var movieModel = mongoose.model('Movie', movieSchema,'Movie');
 
 
@@ -68,7 +70,7 @@ app.get('/', function(req,res){
 app.get('/suggestion', function(req,res){
 	console.log('\nSuggestion loaded');
 	
-	movieModel.findOne({},null,{sort:{'date':-1}},function(err,movie){
+	movieModel.findOne({},null,{sort:{'date':1}},function(err,movie){
 		if(err){
 			console.log('Error find!');
 			throw err;
@@ -84,6 +86,7 @@ app.get('/suggestion', function(req,res){
 			
 			html = data;
 			html = html.replace('%%title%%',movie.title);
+			html = html.replace('%%genre%%',movie.genre);
 			html = html.replace('%%real%%',movie.director);
 			html = html.replace('%%actors%%',movie.actors);
 			html = html.replace('%%why%%',movie.why);
@@ -137,28 +140,30 @@ app.get('/about', function(req,res){
 app.post('/postContent',function(req,res){
 	console.log('posting content...\n');
 	
-	var title,director,actors,synopsis,why,date;
+	var title,director,actors,genre,synopsis,why,date;
 	title = req.body.title;
 	director=req.body.director;
-	actors = req.body.actors.split(', '); // transformation of string to array, parsing to ', '
-	/*need GENRE handler*/
+	actors = req.body.actors.split(', '); 	// transformation of string to array, parsing to ', '
+	genre = []; 							// creating an array of genre
+	genre.push(req.body.genre1,req.body.genre2,req.body.genre3);
 	synopsis=req.body.synopsis;
 	why=req.body.why;
 	date=moment().format('MMMM Do YYYY, h:mm:ss a');
 	
-	console.log('genre:'+req.body.genre1,req.body.genre2,req.body.genre3+'\n');
 	console.log('title: '+title+'\n director: '+director+'\n actors: '+actors+'\n synopsis: '+synopsis+'\n why:'+why+'\n Date: '+ date+'\n');
 	
 	var movie = {
 		"title":title,
 		"director":director,
 		"actors":actors,
+		"genre":genre,
 		"synopsis":synopsis,
 		"why":why,
 		"date":date
 	};
 
 	var movie = new movieModel(movie);
+	
 	movie.save(function(err,data){
 		if(err){
 			console.log('Error saving movie!');
