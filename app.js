@@ -3,12 +3,32 @@
 // Author : Sufiane 'DonDiego' Souissi
 //			Benjamin 'BennyP' Parant
 
-var express = require('express')
-var bodyParser = require('body-parser')
-var fs = require('fs')
-var mongoose = require('mongoose')
-var moment = require('moment');
+var express = require('express')		// main FW
+var bodyParser = require('body-parser')	// to parse req
+var fs = require('fs')					// to read Files
+var mongoose = require('mongoose') 		// for DB
+var moment = require('moment'); 		// for date
+var multer = require('multer');
+
 var app = express()
+
+// to store img in form (i.e poster)
+app.use(multer({dest: './ressources/poster',
+				rename: function(fieldname, filename){
+					return filename+moment().format('MMMM Do YYYY, h:mm:ss a');
+				},
+				onFileUploadStart: function(file){
+					console.log(file.name + 'uploading . . .');
+				},
+				onFileUploadComplete: function(file){
+					console.log(file.name + ' successfully uploaded to :'+ file.path);
+					done=true;
+				},
+				onError: function(error, next){
+					console.log('Error! Uploading '+ file.name+'failed!');
+					next(error);
+				}
+}));
 
 //for post request
 app.use(bodyParser.json());
@@ -40,6 +60,7 @@ var movieSchema = new Schema({
 	genre:[String],
 	synopsis: String,
 	/*affiche:String Chemin de l'image ,*/
+	poster: String,
 	why: String,
 	date: String
 });
@@ -139,18 +160,23 @@ app.get('/about', function(req,res){
 //posting content to DB
 app.post('/postContent',function(req,res){
 	console.log('posting content...\n');
+	console.dir(req.headers['content-type']); // PB HERE !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 	
-	var title,director,actors,genre,synopsis,why,date;
+	var title,director,actors,genre,synopsis,poster,why,date;
 	title = req.body.title;
 	director=req.body.director;
 	actors = req.body.actors.split(', '); 	// transformation of string to array, parsing to ', '
 	genre = []; 							// creating an array of genre
 	genre.push(req.body.genre1,req.body.genre2,req.body.genre3);
 	synopsis=req.body.synopsis;
+	poster=req.body.poster;					// Will change soon /!\
 	why=req.body.why;
 	date=moment().format('MMMM Do YYYY, h:mm:ss a');
 	
-	console.log('title: '+title+'\n director: '+director+'\n actors: '+actors+'\n synopsis: '+synopsis+'\n why:'+why+'\n Date: '+ date+'\n');
+	console.log("file");
+	console.log(req.files);
+	
+	console.log('title: '+title+'\n director: '+director+'\n actors: '+actors+'\n synopsis: '+synopsis+'\n poster:'+poster+'\n why:'+why+'\n Date: '+ date+'\n');
 	
 	var movie = {
 		"title":title,
@@ -158,6 +184,7 @@ app.post('/postContent',function(req,res){
 		"actors":actors,
 		"genre":genre,
 		"synopsis":synopsis,
+		"poster":poster,
 		"why":why,
 		"date":date
 	};

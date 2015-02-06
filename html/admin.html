@@ -8,8 +8,7 @@
 	<script src="../js/jquery-1.9.1.min.js"></script>
 	<!-- CSS de la page -->
 	<link rel="stylesheet" href="../CSS/style.css" />
-	<!-- CSS des icones -->
-	<link rel="stylesheet" href="../CSS/entypo.css" />
+	
   <title> L3C: Admin </title>
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
 	
@@ -20,21 +19,44 @@
 	 
 				var $this = $(this); // L'objet jQuery du formulaire	
 				
-				var genre1,genre2,genre3,g1,g2,g3;
+				var genre1,genre2,genre3,g1,g2,g3,formData;
+				
+				formData = new FormData();
+				//http://stackoverflow.com/questions/5392344/sending-multipart-formdata-with-jquery-ajax/5976031#5976031
+				//http://stackoverflow.com/questions/6974684/how-to-send-formdata-objects-with-ajax-requests-in-jquery
+				//http://stackoverflow.com/questions/9344455/unable-to-send-a-multipart-mixed-request-to-spring-mvc-based-rest-service
+				//https://www.google.fr/webhp?sourceid=chrome-instant&ion=1&espv=2&ie=UTF-8#q=multipart%20boundary%20not%20found
+				
+				//----Multer
+				//http://codeforgeek.com/2014/11/file-uploads-using-node-js/
 				
 				/* /!\ Si g1 = " " NE PAS ENVOYER !!!!*/
 				genre1=document.getElementById("genre1");
 				g1= genre1[genre1.selectedIndex].value;
 				
-				if($('#genre2').val != " "){
+				if (g1=""){
+					alert('Veuillez renseigner au moins 1 genre !');
+					console.log('erreur genre')
+					error;
+				}
+				
+				if($('#genre2').val != ""){
 					genre2=document.getElementById("genre2");
 					g2= genre2[genre2.selectedIndex].value;
 				}
-				if($('#genre3').val != " "){
+				if($('#genre3').val != ""){
 					genre3=document.getElementById("genre3");
 					g3= genre3[genre3.selectedIndex].value;
 				}
+				
 				console.log('genre:'+ g1);
+				console.log('poster: ');
+				var poster = $('#affiche').val();
+				console.log(poster);
+				
+				//var reader = new FileReader();
+				
+				
 				
 				var data = {
 					"title":$('#title').val(),
@@ -42,6 +64,7 @@
 					"actors": $('#acteurs').val(),
 					"synopsis":$('#synopsis').val(),
 					/*affiche stocké localement, chemin DB*/
+					"poster":$('#affiche').val(),
 					"genre1":g1,
 					"genre2":g2,
 					"genre3":g3,
@@ -53,6 +76,7 @@
 					url:$this.attr('action'),
 					data:data,
 					/*processData: false,*/
+					contentType: 'multipart/form-data',
 
 					success:function(content) {
 					alert(content);
@@ -96,7 +120,7 @@
 		</div>
 	</div>
 	<div id="form">	
-		<form id="formFilm" method="post" action="postContent">
+		<form id="formFilm" method="post" action="postContent" enctype=”multipart/form-data”>
 			<h2> Ajouter un film : </h2>			
 			<ul>
 				<li id="Title" >
@@ -128,6 +152,7 @@
 						<option value="horreur">Horreur</option>
 						<option value="peplum">Peplum</option>
 						<option value="policier">Policier</option> 
+						<option value="romantique">Romantique</option> 
 						<option value="science-fiction">Science-Fiction</option>
 						<option value="thriller">Thriller</option>
 						<option value="western">Western</option>
@@ -146,6 +171,7 @@
 						<option value="horreur">Horreur</option>
 						<option value="peplum">Peplum</option>
 						<option value="policier">Policier</option> 
+						<option value="romantique">Romantique</option> 
 						<option value="science-fiction">Science-Fiction</option>
 						<option value="thriller">Thriller</option>
 						<option value="western">Western</option>
@@ -164,6 +190,7 @@
 						<option value="horreur">Horreur</option>
 						<option value="peplum">Peplum</option>
 						<option value="policier">Policier</option> 
+						<option value="romantique">Romantique</option> 
 						<option value="science-fiction">Science-Fiction</option>
 						<option value="thriller">Thriller</option>
 						<option value="western">Western</option>
@@ -175,7 +202,7 @@
 				</li>		
 				<li id="Affiche" >
 					<label class="description">L'affiche du film: </label>
-					<input id="affiche" type="file"/> 					
+					<input id="affiche" type="file" name="affiche"/> 					
 				</li>		
 				<li id="Justification" >
 					<label class="description">Pourquoi ce film: </label>
