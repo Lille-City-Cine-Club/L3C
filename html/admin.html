@@ -19,6 +19,18 @@
 	 
 					var $this = $(this); // L'objet jQuery du formulaire	
 					
+					
+					
+				
+					formData = new FormData();
+					//http://stackoverflow.com/questions/5392344/sending-multipart-formdata-with-jquery-ajax/5976031#5976031
+					//http://stackoverflow.com/questions/6974684/how-to-send-formdata-objects-with-ajax-requests-in-jquery
+					//http://stackoverflow.com/questions/9344455/unable-to-send-a-multipart-mixed-request-to-spring-mvc-based-rest-service
+					//https://www.google.fr/webhp?sourceid=chrome-instant&ion=1&espv=2&ie=UTF-8#q=multipart%20boundary%20not%20found
+					
+					//----Multer
+					//http://codeforgeek.com/2014/11/file-uploads-using-node-js/
+					
 					var genre1,genre2,genre3,g1,g2,g3;
 					
 					/* /!\ Si g1 = " " NE PAS ENVOYER !!!!*/
