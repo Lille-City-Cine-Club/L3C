@@ -68,7 +68,7 @@ margin-right:300px;
 }
 
 #carousel li {
-	background: transparent url(../ressources/home-carousel/carousel_polaroid2.png) no-repeat 0 0;
+	background: transparent url(../ressources/home-carousel/carousel_polaroid.png) no-repeat 0 0;
 	font-size: 40px;
 	color: #999;
 	text-align: center;
@@ -248,35 +248,6 @@ height:auto;
 	text-align : justify;
 	padding-top:2%;
 }
-
-/* -------------------------------------------------------- Icone FB ---------------------------------------------------------------------- */
-/*
-.fb{
-text-decoration:none;
-color: #FFF;
-}*/
-.fb:before, .nous:before{
-content:'\e604';
-font-family:'icomoon';
-speak: none;
-	font-style: normal;
-	font-weight: normal;
-	font-variant: normal;
-	text-transform: none;
-	line-height: 1;
-
- Better Font Rendering =========== 
-	-webkit-font-smoothing: antialiased;
-	-moz-osx-font-smoothing: grayscale;
-} 
-/*
-.connec:before{
-content:'\e600';
-}
-*/
-.nous:before{
-content:'\e96e';
-} 
 
 /* -------------------------------------------------------- Footer ------------------------------------------------------------------------ */
 .footer-wrapper{
