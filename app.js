@@ -89,14 +89,14 @@ app.get('/', function(req,res){
 
 //Suggestion page
 app.get('/suggestion', function(req,res){
-	console.log('\nSuggestion loaded');
 	
-	movieModel.findOne({},null,{sort:{'date':1}},function(err,movie){
+	
+	movieModel.findOne({},null,{sort:{'date':-1}},function(err,movie){
 		if(err){
 			console.log('Error find!');
 			throw err;
 		}
-		console.log('Movie Loaded!');
+		console.log('\nSuggestion Loaded! Movie:'+ movie.title +'\n');
 		
 		var html;
 		fs.readFile(__dirname+'/html/suggestion.html','utf8',function(err,data){
@@ -105,11 +105,17 @@ app.get('/suggestion', function(req,res){
 				throw err;
 			}
 			
+			// disable "actors1, undefined ..."
+			var actors = "";
+			for(var i = 0; i<movie.actors.length ; i++){
+				actors += movie.actors[i];
+			}
+			
 			html = data;
 			html = html.replace('%%title%%',movie.title);
 			html = html.replace('%%genre%%',movie.genre[0]+", "+movie.genre[1]+", "+movie.genre[2]);
 			html = html.replace('%%real%%',movie.director);
-			html = html.replace('%%actors%%',movie.actors[0]+", "+movie.actors[1]+", "+movie.actors[2]+" ...");
+			html = html.replace('%%actors%%',actors +" ...");
 			html = html.replace('%%why%%',movie.why);
 			html = html.replace('%%synopsis%%',movie.synopsis);
 			
@@ -169,7 +175,7 @@ app.post('/postContent',function(req,res){
 	genre = []; 							// creating an array of genre
 	genre.push(req.body.genre1,req.body.genre2,req.body.genre3);
 	synopsis=req.body.synopsis;
-	poster=req.body.poster;					// Will change soon /!\
+	poster=req.body.poster;					/* Will change soon /!\*/
 	why=req.body.why;
 	date=moment().format('MMMM Do YYYY, h:mm:ss a');
 	
