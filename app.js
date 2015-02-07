@@ -108,7 +108,7 @@ app.get('/suggestion', function(req,res){
 			// disable "actors1, undefined ..."
 			var actors = "";
 			for(var i = 0; i<movie.actors.length ; i++){
-				actors += movie.actors[i];
+				actors += movie.actors[i]+', ';
 			}
 			
 			html = data;
