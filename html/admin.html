@@ -33,15 +33,16 @@
 					
 					var genre1,genre2,genre3,g1,g2,g3,formData;
 					
-					formData = new FormData();
+					/*formData = new FormData();
 					formData.append('title',$('#title').val());
-					formDatta.append('director',$('#realisateur').val());
-					formDatta.append('actors',$('#acteurs').val());
-					formDatta.append();
-					formDatta.append();
-					formDatta.append();
-					formDatta.append();
-					formDatta.append();
+					formData.append('director',$('#realisateur').val());
+					formData.append('actors',$('#acteurs').val());
+					formData.append();
+					formData.append();
+					formData.append();
+					formData.append();
+					formData.append();
+					*/
 					
 					/* /!\ Si g1 = " " NE PAS ENVOYER !!!!*/
 					genre1=document.getElementById("genre1");
@@ -187,8 +188,10 @@
 						<textarea id="synopsis" placeholder="Synopsis"></textarea> 
 					</li>		
 					<li id="Affiche" >
-						<label class="description">L'affiche du film: </label>
-						<input id="affiche" type="file"/> 					
+						<div id="affiche-wrapper">
+							<label class="description" id="affiche-description" >L'affiche du film: </label>
+							<input id="affiche" type="file" /> 					
+						</div>
 					</li>		
 					<li id="Justification" >
 						<label class="description">Pourquoi ce film: </label>
