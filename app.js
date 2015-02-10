@@ -12,7 +12,13 @@ var multer = require('multer');			// for receiving multipart form
 
 var app = express()
 
+/* needed to use multer?!
+var router =  express.Router(); 
+app.use('/postContent', router);	
+*/
+
 // to store img in form (i.e poster)
+var done = false;
 app.use(multer({dest: './ressources/poster',
 				rename: function(fieldname, filename){
 					return filename+moment().format('MMMM Do YYYY, h:mm:ss a');
@@ -36,16 +42,13 @@ app.use(bodyParser.urlencoded({extended : true}));
 
 
 // -------------------------------------------------------- Start -------------------------------------------------------------------------
-console.log("City Ciné Club, a.k.a CCC, Web Server!\nListening on : 7777 \n https://gist.github.com/aheckmann/2408370 \n http://coding.paulandkana.com/?p=12 \n http://stackoverflow.com/questions/12046703/store-images-in-mongodb-using-mongoose-how-to");
+console.log("City Ciné Club, a.k.a CCC, Web Server!\nListening on : 7777 \n");
 
 //connection to the DB
 // mongoose.connect('mongodb://localhost:27017'); // connect to test DB collection
 mongoose.connect('mongodb://localhost:27017/CCC');
 var db = mongoose.connection;
 
-
-//to switch DB, not working at the moment.... Will be using it if needing other DB
-//db.useDb('CCC');
 db.once('connected', function(){
 	console.log('Connected to DataBase');
 });
@@ -129,14 +132,32 @@ app.get('/suggestion', function(req,res){
 	});
 })
 
-// Admin page/Adding content page
+// Admin Home page
 app.get('/admin', function(req,res){
-	console.log('\nAdmin loaded');
+	console.log('\n Admin Home page loaded');
 	
 	var html;
-	fs.readFile(__dirname+'/html/admin.html','utf8',function(err,data){
+	fs.readFile(__dirname+'/html/admin.html','utf8',function(err, data){
 		if(err){
-			console.log('Error admin!');
+			console.log('Error Admin home page!');
+			throw err;
+		}
+		
+		html = data;
+		res.charset='utf-8';
+		res.res.setHeader("Access-Control-Allow-Origin","*");
+		res.send(html);
+	});
+})
+
+// Admin Adding content page
+app.get('/adminSuggestion', function(req,res){
+	console.log('\nAdminSuggestion loaded');
+	
+	var html;
+	fs.readFile(__dirname+'/html/adminSuggestion.html','utf8',function(err,data){
+		if(err){
+			console.log('Error adminSuggestion!');
 			throw err;
 		}
 		
@@ -202,6 +223,10 @@ app.post('/postContent',function(req,res){
 		"date":date
 	};
 
+	if(done){
+		console.log("uploading files complete!");
+	}
+	
 	var movie = new movieModel(movie);
 	
 	movie.save(function(err,data){
@@ -213,6 +238,8 @@ app.post('/postContent',function(req,res){
 		res.send("success! Movie added to DB.");
 	});	
 })
+
+
 
 // to get CSS/ressourcs etc...
 var staticMiddleware = express.static(__dirname);
