@@ -1,0 +1,225 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html lang="fr">
+	<head>
+		<!--[if lt IE 9]>
+		<script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+		<![endif]-->
+		<meta charset="utf-8" />
+		<!-- Import de Bootstrap et de FontAwesome (pour les icônes)-->
+		<link rel="stylesheet" href="../css/bootstrap.min.css" />
+		<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+		<link rel="stylesheet" href="../css/font-awesome.min.css" />
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+		<script src="http://code.jquery.com/ui/1.9.2/jquery-ui.js"></script>
+		<!-- CSS de la page -->
+		<link rel="stylesheet" href="../CSS/style.css" />
+		<title> L3C: Panel Admin </title>
+		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+	
+		<script><!-- Ajax command to add new movie to DB -->
+			$(document).ready(function(){
+				$('#formFilm').on('submit', function(e) {
+					e.preventDefault(); // J'empêche le comportement par défaut du navigateur, c-à-d de soumettre le formulaire
+	 
+					var $this = $(this); // L'objet jQuery du formulaire	
+			
+					//http://stackoverflow.com/questions/5392344/sending-multipart-formdata-with-jquery-ajax/5976031#5976031
+					//http://stackoverflow.com/questions/6974684/how-to-send-formdata-objects-with-ajax-requests-in-jquery
+					//http://stackoverflow.com/questions/9344455/unable-to-send-a-multipart-mixed-request-to-spring-mvc-based-rest-service
+					//https://www.google.fr/webhp?sourceid=chrome-instant&ion=1&espv=2&ie=UTF-8#q=multipart%20boundary%20not%20found
+					
+					//----Multer
+					//http://codeforgeek.com/2014/11/file-uploads-using-node-js/
+					
+					var genre1,genre2,genre3,g1,g2,g3,formData;
+					
+					formData = new FormData();
+					formData.append('title',$('#title').val());
+					formDatta.append('director',$('#realisateur').val());
+					formDatta.append('actors',$('#acteurs').val());
+					formDatta.append();
+					formDatta.append();
+					formDatta.append();
+					formDatta.append();
+					formDatta.append();
+					
+					/* /!\ Si g1 = " " NE PAS ENVOYER !!!!*/
+					genre1=document.getElementById("genre1");
+					g1= genre1[genre1.selectedIndex].value;
+					
+					if($('#genre2').val != " "){
+						genre2=document.getElementById("genre2");
+						g2= genre2[genre2.selectedIndex].value;
+					}
+					if($('#genre3').val != " "){
+						genre3=document.getElementById("genre3");
+						g3= genre3[genre3.selectedIndex].value;
+					}
+					console.log('genre:'+ g1);
+					
+					var data = {
+						"title":$('#title').val(),
+						"director":$('#realisateur').val(),
+						"actors": $('#acteurs').val(),
+						"synopsis":$('#synopsis').val(),
+						/*affiche stocké localement, chemin DB*/
+						"genre1":g1,
+						"genre2":g2,
+						"genre3":g3,
+						"why":$('#justification').val(),
+					}
+					
+					$.ajax( {
+						type:'POST',
+						url:$this.attr('action'),
+						data:data,
+						/*processData: false,*/
+
+						success:function(content) {
+						alert(content);
+						},
+						error:function(){
+							alert('Error Ajax!');
+						}
+					});
+				});
+			});
+		</script>
+	</head>
+
+	<body>
+	<div class="body-wrapper" ><!--Div qui regroupe toute la page -->
+		
+		<!-- logo+site -->
+		<div class="logo-nav-wrapper"><!-- Regroupe le logo-->
+			<div class="logo-wrapper">
+				<div class="site-logo">
+					<a href="http://localhost:7777/">
+						<img src="../ressources/logo/L3C.jpg" alt="Lille City Cine Club" />
+					</a>
+				</div>
+			</div>
+		
+			<div class="nav-wrapper"><!-- le menu -->
+				<ul id="menu">
+					<li id="li-admin"> ADMIN </li>
+					<li><a id="Seance" href="http://localhost:7777/"> Retour </a></li>
+				</ul>
+			</div>
+		</div>
+	
+		<div id="form">	
+			<form id="formFilm" method="post" action="postContent">
+				<h2> Ajouter un film : </h2>			
+				<ul>
+					<li id="Title" >
+						<label class="description" >Titre: </label>
+						<input id="title" type="text" maxlength="255" value="" placeholder="Titre"/> 
+					</li>		
+					<li id="Real" >
+						<label class="description" >Réalisateur: </label>
+						<input id="realisateur" type="text" maxlength="255" value="" placeholder="Réalisateur"/> 
+					</li>		
+					<li id="Acteurs" >
+						<label class="description" >Acteurs: </label>
+						<input id="acteurs"  type="text" maxlength="255" value="" placeholder="acteur 1, acteur 2, ..."/> 
+					</li>		
+					<!-- ComboBox: Genre-->
+					<li id="Genre">
+						<label class="description"> Genre(s) : </label>
+						<select id="genre1">
+							<option value="" ></option>
+							<option value="action">Action</option>
+							<option value="aventure">Aventure</option>
+							<option value="biographique">Biographique</option>
+							<option value="catastrophe">Catastrophe</option>
+							<option value="comedie">Comedie</option>
+							<option value="drame">Drame</option>
+							<option value="espionnage">Espionnage</option>
+							<option value="fantastique">Fantastique</option>
+							<option value="historique">Historique</option>
+							<option value="horreur">Horreur</option>
+							<option value="peplum">Peplum</option>
+							<option value="policier">Policier</option> 
+							<option value="science-fiction">Science-Fiction</option>
+							<option value="thriller">Thriller</option>
+							<option value="western">Western</option>
+						</select>
+						<select id="genre2">
+							<option value="" ></option>
+							<option value="action">Action</option>
+							<option value="aventure">Aventure</option>
+							<option value="biographique">Biographique</option>
+							<option value="catastrophe">Catastrophe</option>
+							<option value="comedie">Comedie</option>
+							<option value="drame">Drame</option>
+							<option value="espionnage">Espionnage</option>
+							<option value="fantastique">Fantastique</option>
+							<option value="historique">Historique</option>
+							<option value="horreur">Horreur</option>
+							<option value="peplum">Peplum</option>
+							<option value="policier">Policier</option> 
+							<option value="science-fiction">Science-Fiction</option>
+							<option value="thriller">Thriller</option>
+							<option value="western">Western</option>
+						</select>
+						<select id="genre3">
+							<option value="" ></option>
+							<option value="action">Action</option>
+							<option value="aventure">Aventure</option>
+							<option value="biographique">Biographique</option>
+							<option value="catastrophe">Catastrophe</option>
+							<option value="comedie">Comedie</option>
+							<option value="drame">Drame</option>
+							<option value="espionnage">Espionnage</option>
+							<option value="fantastique">Fantastique</option>
+							<option value="historique">Historique</option>
+							<option value="horreur">Horreur</option>
+							<option value="peplum">Peplum</option>
+							<option value="policier">Policier</option> 
+							<option value="science-fiction">Science-Fiction</option>
+							<option value="thriller">Thriller</option>
+							<option value="western">Western</option>
+						</select>
+					</li>
+					<li id="Synopsis" >
+						<label class="description" >Synopsis: </label>
+						<textarea id="synopsis" placeholder="Synopsis"></textarea> 
+					</li>		
+					<li id="Affiche" >
+						<label class="description">L'affiche du film: </label>
+						<input id="affiche" type="file"/> 					
+					</li>		
+					<li id="Justification" >
+						<label class="description">Pourquoi ce film: </label>
+						<textarea id="justification" placeholder="Pourquoi?"></textarea> 
+					</li>
+					<li id="buttons">
+						<div id="ButtonsWrapper" >
+							<input type="hidden" name="form_id" value="955925" />
+							<input id="saveForm" class="buttonValider" type="submit" value="Valider" />
+						</div>
+					</li>
+				</ul>
+			</form>
+		</div>
+		
+		<div class="footer-wrapper">
+		<div id="menu-logo" >
+			<a href="http://www.univ-lille1.fr/" target="_blank">
+				<img src="../ressources/logo/logoLille1Mini.png" alt="Université Lille1" >
+			</a>
+			<ul id="footer-menu">
+				<li><span class="fa fa-lg fa-facebook" style="margin-left:0.2%"></span> <a href=http://www.facebook.com/LilleCityCineClub target="_blank" style="margin-left:0.8%"> Facebook </a></li>
+				<li><span class="glyphicon glyphicon-info-sign" style="font-size:16px;" ></span> <a href="about" style="margin-left:0.5%"> A propos </a></li>
+			</ul>
+		</div>
+		<div id="copyright">
+			<p>
+				&copy Benny-P & DonDiego. En collaboration avec M.Dufrêne. Université Lille 1.
+			</p>	
+		</div>
+	</div>
+	</div>
+	</body>
+</html>
