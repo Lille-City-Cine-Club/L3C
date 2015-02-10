@@ -151,7 +151,7 @@ app.get('/admin', function(req,res){
 })
 
 // Admin Adding content page
-app.get('/adminSuggestion', function(req,res){
+app.get('/admin-suggestion', function(req,res){
 	console.log('\nAdminSuggestion loaded');
 	
 	var html;
