@@ -145,7 +145,7 @@ app.get('/admin', function(req,res){
 		
 		html = data;
 		res.charset='utf-8';
-		res.res.setHeader("Access-Control-Allow-Origin","*");
+		res.setHeader("Access-Control-Allow-Origin","*");
 		res.send(html);
 	});
 })
