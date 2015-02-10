@@ -33,17 +33,6 @@
 					
 					var genre1,genre2,genre3,g1,g2,g3,formData;
 					
-					/*formData = new FormData();
-					formData.append('title',$('#title').val());
-					formData.append('director',$('#realisateur').val());
-					formData.append('actors',$('#acteurs').val());
-					formData.append();
-					formData.append();
-					formData.append();
-					formData.append();
-					formData.append();
-					*/
-					
 					/* /!\ Si g1 = " " NE PAS ENVOYER !!!!*/
 					genre1=document.getElementById("genre1");
 					g1= genre1[genre1.selectedIndex].value;
@@ -56,25 +45,37 @@
 						genre3=document.getElementById("genre3");
 						g3= genre3[genre3.selectedIndex].value;
 					}
-					console.log('genre:'+ g1);
+					console.log('genre:'+ g1);					
 					
+					formData = new FormData();
+					formData.append('title',$('#title').val());
+					formData.append('director',$('#realisateur').val());
+					formData.append('actors',$('#acteurs').val());
+					formData.append('genre1',g1);
+					formData.append('genre2',g2);
+					formData.append('genre3',g3);
+					formData.append('synopsis',$('#synopsis').val());
+					formData.append('why',$('#justification').val());
+					
+					/*
 					var data = {
 						"title":$('#title').val(),
 						"director":$('#realisateur').val(),
 						"actors": $('#acteurs').val(),
 						"synopsis":$('#synopsis').val(),
-						/*affiche stocké localement, chemin DB*/
+						//affiche stocké localement, chemin DB
 						"genre1":g1,
 						"genre2":g2,
 						"genre3":g3,
 						"why":$('#justification').val(),
-					}
+					}*/
 					
 					$.ajax( {
 						type:'POST',
 						url:$this.attr('action'),
-						data:data,
-						/*processData: false,*/
+						data:formData,
+						processData: false,
+						contentType:false,
 
 						success:function(content) {
 						alert(content);

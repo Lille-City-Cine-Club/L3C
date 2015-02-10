@@ -8,7 +8,7 @@ var bodyParser = require('body-parser')	// to parse req
 var fs = require('fs')					// to read Files
 var mongoose = require('mongoose') 		// for DB
 var moment = require('moment'); 		// for date
-var multer = require('multer');
+var multer = require('multer');			// for receiving multipart form
 
 var app = express()
 
@@ -91,7 +91,7 @@ app.get('/', function(req,res){
 app.get('/suggestion', function(req,res){
 	
 	
-	movieModel.findOne({},null,{sort:{'date':-1}},function(err,movie){
+	movieModel.findOne({},{},{sort:{date:1}},function(err,movie){
 		if(err){
 			console.log('Error find!');
 			throw err;
@@ -104,6 +104,8 @@ app.get('/suggestion', function(req,res){
 				console.log('Error Suggestion!');
 				throw err;
 			}
+			
+			
 			
 			// disable "actors1, undefined ..."
 			var actors = "";
@@ -166,7 +168,12 @@ app.get('/about', function(req,res){
 //posting content to DB
 app.post('/postContent',function(req,res){
 	console.log('posting content...\n');
-	console.dir(req.headers['content-type']); // PB HERE !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+	console.dir(req.headers['content-type']); // bien recu en mutlipart/form-data
+	
+	
+	// https://www.google.fr/url?sa=t&rct=j&q=&esrc=s&source=web&cd=1&cad=rja&uact=8&ved=0CCMQFjAA&url=http%3A%2F%2Fstackoverflow.com%2Fquestions%2F26994439%2Fnode-js-expressjs-multer-req-files-outputs-empty&ei=S7vZVIPYMMi1UaXSgagK&usg=AFQjCNHIr8mHKBpzh1rZ407ggM-dH5I7lQ&sig2=1cVFST83yUyh6mCX_JhNWg&bvm=bv.85464276,d.d24
+	// https://www.google.fr/url?sa=t&rct=j&q=&esrc=s&source=web&cd=6&cad=rja&uact=8&ved=0CEoQFjAF&url=http%3A%2F%2Fexpertland.net%2Fquestion%2Fq3l8l31c21925b53r2t518520b9mwa7r6241%2Fdetail.html&ei=S7vZVIPYMMi1UaXSgagK&usg=AFQjCNFz-gWMIev8JVem3TOQhwdi7gUFKg&sig2=2UgUYQPuWuTvHdWHIxaoWw&bvm=bv.85464276,d.d24
+	// https://www.google.fr/url?sa=t&rct=j&q=&esrc=s&source=web&cd=9&cad=rja&uact=8&ved=0CGIQFjAI&url=http%3A%2F%2Fwww.hacksparrow.com%2Fhandle-file-uploads-in-express-node-js.html&ei=S7vZVIPYMMi1UaXSgagK&usg=AFQjCNG91TPy4_ryrTOf4F6nxofrzORuxg&sig2=MoWZxjee8Qr3Z-4Zzr9E1g&bvm=bv.85464276,d.d24
 	
 	var title,director,actors,genre,synopsis,poster,why,date;
 	title = req.body.title;
@@ -175,7 +182,7 @@ app.post('/postContent',function(req,res){
 	genre = []; 							// creating an array of genre
 	genre.push(req.body.genre1,req.body.genre2,req.body.genre3);
 	synopsis=req.body.synopsis;
-	poster=req.body.poster;					/* Will change soon /!\*/
+	poster=req.body.poster;					// Will change soon /!\ pb here multer seems to not work
 	why=req.body.why;
 	date=moment().format('MMMM Do YYYY, h:mm:ss a');
 	
