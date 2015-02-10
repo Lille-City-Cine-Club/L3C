@@ -9,7 +9,10 @@ var fs = require('fs')					// to read Files
 var mongoose = require('mongoose') 		// for DB
 var moment = require('moment'); 		// for date
 var multer = require('multer');			// for receiving multipart form
-
+var passport = require('passport')		// to identify members etc...
+	, LocalStrategy = require('passport-local').Strategy
+	, ensureLoggedIn = require('connect-ensure-login').ensureLoggedIn;
+	
 var app = express()
 
 /* needed to use multer?!
@@ -40,6 +43,33 @@ app.use(multer({dest: './ressources/poster',
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended : true}));
 
+//credientials for localStrategy {usernameField:'email',passwordField:'password'}
+passport.use(new LocalStrategy({usernameField:'email',passwordField:'password'},function(email,password,done){
+	User.findOne({'email':email,'password': password },
+				{'_id':1,'email':1}, function(err, user){
+					if(err){
+						console.log('Erreur loggin user!');
+						return done(err);
+						throw err;
+					}
+					if(!user){
+						return done(null,false,{message:'Incorrect username!'});
+					}
+					return done(null,user);	
+				});
+}));
+
+passport.serializeUser(function(user,done){
+	done(null,user);
+});
+
+passport.deserializeUser(function(user,done){
+	done(null,user);
+});
+
+// for passport
+app.use(passport.initialize());
+app.use(passport.session());
 
 // -------------------------------------------------------- Start -------------------------------------------------------------------------
 console.log("City Ciné Club, a.k.a CCC, Web Server!\nListening on : 7777 \n");
@@ -62,14 +92,21 @@ var movieSchema = new Schema({
 	actors: [String],
 	genre:[String],
 	synopsis: String,
-	/*affiche:String Chemin de l'image ,*/
+	/*poster:String Chemin de l'image ,*/
 	poster: String,
 	why: String,
 	date: String
 });
 
-var movieModel = mongoose.model('Movie', movieSchema,'Movie');
+var userSchema = new Schema({
+	name: String,
+	email: String,
+	password: String,
+	isAdmin:{type: Boolean, default: false}
+});
 
+var movieModel = mongoose.model('Movie', movieSchema,'Movie');
+var userModel = mongoose.model('Users', userSchema, 'Users');
 
 // -------------------------------------------------------- Routes ------------------------------------------------------------------------
 //Home page
@@ -137,7 +174,7 @@ app.get('/admin', function(req,res){
 	console.log('\n Admin Home page loaded');
 	
 	var html;
-	fs.readFile(__dirname+'/html/admin.html','utf8',function(err, data){
+	fs.readFile(__dirname+'/html/admin/admin.html','utf8',function(err, data){
 		if(err){
 			console.log('Error Admin home page!');
 			throw err;
@@ -155,7 +192,7 @@ app.get('/admin-suggestion', function(req,res){
 	console.log('\nAdminSuggestion loaded');
 	
 	var html;
-	fs.readFile(__dirname+'/html/adminSuggestion.html','utf8',function(err,data){
+	fs.readFile(__dirname+'/html/admin/admin-suggestion.html','utf8',function(err,data){
 		if(err){
 			console.log('Error adminSuggestion!');
 			throw err;
@@ -239,6 +276,11 @@ app.post('/postContent',function(req,res){
 	});	
 })
 
+// ------------------------------------------------------- PASSPORT -----------------------------------------------------------------------
+app.post('/login',passport.authenticate('local',{succesReturntoOrRedirect:'/home', failureRedirect:'/login'}));;
+
+	
+	
 
 
 // to get CSS/ressourcs etc...
