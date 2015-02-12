@@ -21,7 +21,7 @@
 	
 		<script><!-- Ajax command to add new movie to DB -->
 			$(document).ready(function(){
-				$('#formFilm').on('submit', function(e) {
+				$('#formInscription').on('submit', function(e) {
 					e.preventDefault(); // J'empêche le comportement par défaut du navigateur, c-à-d de soumettre le formulaire
 	 
 					var $this = $(this); // L'objet jQuery du formulaire	
@@ -29,15 +29,32 @@
 					//----Multer
 					//http://codeforgeek.com/2014/11/file-uploads-using-node-js/
 					
+					var genre1,genre2,genre3,g1,g2,g3,formData;
+					
+					/* /!\ Si g1 = " " NE PAS ENVOYER !!!!*/
+					genre1=document.getElementById("genre1");
+					g1= genre1[genre1.selectedIndex].value;
+					
+					if($('#genre2').val != " "){
+						genre2=document.getElementById("genre2");
+						g2= genre2[genre2.selectedIndex].value;
+					}
+					if($('#genre3').val != " "){
+						genre3=document.getElementById("genre3");
+						g3= genre3[genre3.selectedIndex].value;
+					}			
+					
 					formData = new FormData();
 					formData.append('pseudo',$('#pseudo').val());
 					formData.append('mail',$('#mail').val());
 					formData.append('password',$('#pass').val());
-					formData.append('genre1',$('#genre1').val());
-					formData.append('genre2',$('#genre2').val());
-					formData.append('genre3',$('#genre3').val());
+					formData.append('genre1',g1);
+					formData.append('genre2',g2);
+					formData.append('genre3',g3);
 					formData.append('description',$('#description').val());
 					
+					console.log(formData);
+					console.log('genre1: '+g1);
 					
 					$.ajax( {
 						type:'POST',
@@ -85,7 +102,7 @@
 		</div>
 	
 		<div id="form">	
-			<form id="formInscription" method="post" action="inscription">
+			<form id="formInscription" method="post" action="newMember">
 				<h2> Inscription : </h2>			
 				<ul>
 					<li id="Pseudo" >

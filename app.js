@@ -104,7 +104,8 @@ var userSchema = new Schema({
 	password: String,
 	isAdmin:{type: Boolean, default: false},
 	description:String,
-	genre:[String]
+	genre:[String],
+	date:{type:Date, default:Date.now}
 });
 
 var movieModel = mongoose.model('Movie', movieSchema,'Movie');
@@ -137,7 +138,7 @@ app.get('/suggestion', function(req,res){
 			console.log('Error find!');
 			throw err;
 		}
-		console.log('\nSuggestion Loaded! Movie:'+ movie.title +'\n');
+		console.log('\nSuggestion Loaded! Movie: '+ movie.title +'\n');
 		
 		var html;
 		fs.readFile(__dirname+'/html/suggestion.html','utf8',function(err,data){
@@ -267,7 +268,7 @@ app.post('/postContent',function(req,res){
 	
 	console.log("file: "+req.files);
 	
-	console.log('title: '+title+'\n director: '+director+'\n actors: '+actors+'\n synopsis: '+synopsis+'\n poster:'+poster+'\n why:'+why+'\n Date: '+ date+'\n');
+	console.log('title: '+title+'\n director: '+director+'\n actors: '+actors+'\n synopsis: '+synopsis+'\n poster:'+poster+'\n why:'+why+'\n');
 	
 	var movie = {
 		"title":title,
@@ -294,6 +295,52 @@ app.post('/postContent',function(req,res){
 		res.send("success! Movie added to DB.");
 	});	
 })
+
+// Adding new member into DB
+app.post('/newMember', function(req,res){
+	console.log('Adding new member...');
+	console.log(req.headers['content-type']);
+	
+	var pseudo,mail,password,genre,description;
+	
+	pseudo = req.body.pseudo;
+	mail = req.body.mail;
+	password = req.body.password;
+	
+	genre =[]; //need to be changed! Verification will be made ClientSide
+	if(req.body.genre1 !="" || req.body.genre1 != undefined){
+		genre.push(req.body.genre1);
+	}
+	if(req.body.genre2 !="" || req.body.genre2 != undefined){
+		genre.push(req.body.genre2);
+	}
+	if(req.body.genre3 !="" || req.body.genre3 != undefined){
+		genre.push(req.body.genre3);
+	}
+	
+	description = req.body.description;
+	
+	var user = {
+		"name":pseudo,
+		"email":mail,
+		"password":password,
+		"isAdmin":false,
+		"description":description,
+		"genre":genre
+	};
+
+	user = new userModel(user);
+	user.save(function(err,member){
+		if(err){
+			console.log('Error saving new member!!');
+			throw err;
+		}
+		console.log('New member '+user.name+' added!!');
+		res.send('New member '+user.name+' added!!');
+	});
+})
+
+
 
 // ------------------------------------------------------- PASSPORT -----------------------------------------------------------------------
 app.post('/login',passport.authenticate('local',{succesReturntoOrRedirect:'/home', failureRedirect:'/login'}));;
