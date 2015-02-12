@@ -7,7 +7,7 @@ var express = require('express')		// main FW
 var bodyParser = require('body-parser')	// to parse req
 var fs = require('fs')					// to read Files
 var mongoose = require('mongoose') 		// for DB
-var moment = require('moment'); 		// for date
+var moment = require('moment'); 		// for date //date=moment().format('MMMM Do YYYY, h:mm:ss a');
 var multer = require('multer');			// for receiving multipart form
 var passport = require('passport')		// to identify members etc...
 	, LocalStrategy = require('passport-local').Strategy
@@ -95,14 +95,16 @@ var movieSchema = new Schema({
 	/*poster:String Chemin de l'image ,*/
 	poster: String,
 	why: String,
-	date: String
+	date: {type:Date, default:Date.now}
 });
 
 var userSchema = new Schema({
 	name: String,
 	email: String,
 	password: String,
-	isAdmin:{type: Boolean, default: false}
+	isAdmin:{type: Boolean, default: false},
+	description:String,
+	genre:[String]
 });
 
 var movieModel = mongoose.model('Movie', movieSchema,'Movie');
@@ -130,8 +132,7 @@ app.get('/', function(req,res){
 //Suggestion page
 app.get('/suggestion', function(req,res){
 	
-	
-	movieModel.findOne({},{},{sort:{date:1}},function(err,movie){
+	movieModel.findOne({},{},{sort:{date:-1}},function(err,movie){
 		if(err){
 			console.log('Error find!');
 			throw err;
@@ -143,10 +144,7 @@ app.get('/suggestion', function(req,res){
 			if(err){
 				console.log('Error Suggestion!');
 				throw err;
-			}
-			
-			
-			
+			}		
 			// disable "actors1, undefined ..."
 			var actors = "";
 			for(var i = 0; i<movie.actors.length ; i++){
@@ -179,7 +177,6 @@ app.get('/admin', function(req,res){
 			console.log('Error Admin home page!');
 			throw err;
 		}
-		
 		html = data;
 		res.charset='utf-8';
 		res.setHeader("Access-Control-Allow-Origin","*");
@@ -197,7 +194,6 @@ app.get('/admin-suggestion', function(req,res){
 			console.log('Error adminSuggestion!');
 			throw err;
 		}
-		
 		html = data;
 		res.charset='utf-8';
 		res.setHeader("Access-Control-Allow-Origin","*");
@@ -215,7 +211,6 @@ app.get('/about', function(req,res){
 			console.log('Error about!');
 			throw err;
 		}
-		
 		html = data;
 		res.charset='utf-8';
 		res.setHeader("Access-Control-Allow-Origin","*");
@@ -223,29 +218,54 @@ app.get('/about', function(req,res){
 	});
 })
 
+//Inscription page
+app.get('/inscription',function(req,res){
+	console.log('\n Inscription loaded');
+	
+	var html;
+	fs.readFile(__dirname+'/html/inscription.html','utf8',function(err,data){
+		if(err){
+			console.log('Error inscription page!');
+			throw err;
+		}
+		html = data;
+		res.charset='utf-8';
+		res.setHeader("Access-Control-Allow-Origin","*");
+		res.send(html);
+	});
+})
+
+
 //posting content to DB
 app.post('/postContent',function(req,res){
 	console.log('posting content...\n');
 	console.dir(req.headers['content-type']); // bien recu en mutlipart/form-data
-	
 	
 	// https://www.google.fr/url?sa=t&rct=j&q=&esrc=s&source=web&cd=1&cad=rja&uact=8&ved=0CCMQFjAA&url=http%3A%2F%2Fstackoverflow.com%2Fquestions%2F26994439%2Fnode-js-expressjs-multer-req-files-outputs-empty&ei=S7vZVIPYMMi1UaXSgagK&usg=AFQjCNHIr8mHKBpzh1rZ407ggM-dH5I7lQ&sig2=1cVFST83yUyh6mCX_JhNWg&bvm=bv.85464276,d.d24
 	// https://www.google.fr/url?sa=t&rct=j&q=&esrc=s&source=web&cd=6&cad=rja&uact=8&ved=0CEoQFjAF&url=http%3A%2F%2Fexpertland.net%2Fquestion%2Fq3l8l31c21925b53r2t518520b9mwa7r6241%2Fdetail.html&ei=S7vZVIPYMMi1UaXSgagK&usg=AFQjCNFz-gWMIev8JVem3TOQhwdi7gUFKg&sig2=2UgUYQPuWuTvHdWHIxaoWw&bvm=bv.85464276,d.d24
 	// https://www.google.fr/url?sa=t&rct=j&q=&esrc=s&source=web&cd=9&cad=rja&uact=8&ved=0CGIQFjAI&url=http%3A%2F%2Fwww.hacksparrow.com%2Fhandle-file-uploads-in-express-node-js.html&ei=S7vZVIPYMMi1UaXSgagK&usg=AFQjCNG91TPy4_ryrTOf4F6nxofrzORuxg&sig2=MoWZxjee8Qr3Z-4Zzr9E1g&bvm=bv.85464276,d.d24
 	
 	var title,director,actors,genre,synopsis,poster,why,date;
+	
 	title = req.body.title;
 	director=req.body.director;
 	actors = req.body.actors.split(', '); 	// transformation of string to array, parsing to ', '
+	
 	genre = []; 							// creating an array of genre
-	genre.push(req.body.genre1,req.body.genre2,req.body.genre3);
+	if(req.body.genre1!=""){				// Needed to disable server crash when they're is no genre /!\ need to be changed
+		genre.push(req.body.genre1);
+	}
+	if(req.body.genre2!=""){
+		genre.push(req.body.genre2);
+	}
+	if(req.body.genre3!=""){
+		genre.push(req.body.genre3);
+	}
 	synopsis=req.body.synopsis;
 	poster=req.body.poster;					// Will change soon /!\ pb here multer seems to not work
 	why=req.body.why;
-	date=moment().format('MMMM Do YYYY, h:mm:ss a');
 	
-	console.log("file");
-	console.log(req.files);
+	console.log("file: "+req.files);
 	
 	console.log('title: '+title+'\n director: '+director+'\n actors: '+actors+'\n synopsis: '+synopsis+'\n poster:'+poster+'\n why:'+why+'\n Date: '+ date+'\n');
 	
@@ -256,8 +276,7 @@ app.post('/postContent',function(req,res){
 		"genre":genre,
 		"synopsis":synopsis,
 		"poster":poster,
-		"why":why,
-		"date":date
+		"why":why
 	};
 
 	if(done){
