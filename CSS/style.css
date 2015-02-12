@@ -296,6 +296,194 @@ color:#FFF;
 }
 
 /* -------------------------------------------------------- Admin ------------------------------------------------------------------------- */
+#cssmenu ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  line-height: 1;
+}
+#cssmenu > ul {
+  position: relative;
+  display: block;
+  background: #171717;
+  width: 100%;
+  z-index: 500;
+vertical-align: center;
+  }
+#cssmenu:after,
+#cssmenu > ul:after {
+  content: ".";
+  display: block;
+  clear: both;
+  visibility: hidden;
+  line-height: 0;
+  height: 0;
+}
+#cssmenu.align-right > ul > li {
+  float: right;
+}
+#cssmenu.align-center ul {
+  text-align: center;
+}
+#cssmenu.align-center ul ul {
+  text-align: left;
+}
+#cssmenu > ul > li {
+  display: inline-block;
+  position: relative;
+  margin-right: 0px;
+  padding: 0;
+}
+.Retour {
+padding-right:50px;
+}
+
+#cssmenu > ul > #menu-button {
+  display: none;
+}
+#cssmenu ul li a {
+  display: block;
+  text-decoration: none;
+}
+#cssmenu > ul > li > a {
+  font-size: 14px;
+  font-family: Helvetica, Georgia, serif;
+  font-family: Helvetica;
+  padding: 15px 20px;
+  color: #ffffff;
+  text-transform: uppercase;
+  -webkit-transition: color 0.25s ease-out;
+  -moz-transition: color 0.25s ease-out;
+  -ms-transition: color 0.25s ease-out;
+  -o-transition: color 0.25s ease-out;
+  transition: color 0.25s ease-out;
+}
+#cssmenu > ul > li.has-sub > a {
+  padding-right: 32px;
+}
+#cssmenu > ul > li:hover > a {
+  color: #7a8189;
+}
+#cssmenu li.has-sub::after {
+  display: block;
+  content: "";
+  position: absolute;
+  width: 0;
+  height: 0;
+}
+#cssmenu > ul > li.has-sub::after {
+  right: 10px;
+  top: 20px;
+  border: 5px solid transparent;
+  border-top-color: #ffffff;
+}
+#cssmenu > ul > li:hover::after {
+  border-top-color: #7a8189;
+}
+
+#pIndicator {
+  position: absolute;
+  height: 0;
+  width: 100%;
+  border: 12px solid transparent;
+  border-top-color: #2b2f3a;
+  z-index: -2;
+  -webkit-transition: left .25s ease;
+  -moz-transition: left .25s ease;
+  -ms-transition: left .25s ease;
+  -o-transition: left .25s ease;
+  transition: left .25s ease;
+}
+#cIndicator {
+  position: absolute;
+  height: 0;
+  width: 100%;
+  border: 12px solid transparent;
+  border-top-color: #2b2f3a;
+  top: -12px;
+  right: 100%;
+  z-index: -2;
+}
+#cssmenu ul ul {
+  position: absolute;
+  left: -9999px;
+  top: 70px;
+  opacity: 0;
+  -webkit-transition: opacity .3s ease, top .25s ease;
+  -moz-transition: opacity .3s ease, top .25s ease;
+  -ms-transition: opacity .3s ease, top .25s ease;
+  -o-transition: opacity .3s ease, top .25s ease;
+  transition: opacity .3s ease, top .25s ease;
+  z-index: 1000;
+}
+
+#cssmenu ul ul li {
+  position: relative;
+}
+#cssmenu > ul > li:hover > ul {
+  left: auto;
+  top: 44px;
+  opacity: 1;
+}
+#cssmenu.align-right > ul > li:hover > ul {
+  left: auto;
+  right: 0;
+  opacity: 1;
+}
+#cssmenu ul ul li:hover > ul {
+  left: 170px;
+  top: 0;
+  opacity: 1;
+}
+#cssmenu.align-right ul ul li:hover > ul {
+  left: auto;
+  right: 170px;
+  top: 0;
+  opacity: 1;
+  padding-right: 5px;
+}
+/*sous-menu*/
+#cssmenu ul ul li a {
+  width: 180px;
+  border-bottom: 1px solid #eeeeee;
+  padding: 10px 20px;
+  font-size: 16px;
+  color: #9ea2a5;
+  background: #ffffff;
+  -webkit-transition: all .35s ease;
+  -moz-transition: all .35s ease;
+  -ms-transition: all .35s ease;
+  -o-transition: all .35s ease;
+  transition: all .35s ease;
+}
+#cssmenu.align-right ul ul li a {
+  text-align: right;
+}
+#cssmenu ul ul li:hover > a {
+  background: #8c9195;
+  color: #f2f2f2;
+}
+#cssmenu ul ul li:last-child > a,
+#cssmenu ul ul li.last > a {
+  border-bottom: 0;
+}
+#cssmenu > ul > li > ul::after {
+  content: '';
+  border: 6px solid transparent;
+  width: 0;
+  height: 0;
+  border-bottom-color: #ffffff;
+  position: absolute;
+  top: -12px;
+  left: 30px;
+}
+#cssmenu.align-right > ul > li > ul::after {
+  left: auto;
+  right: 30px;
+}
+
+
+/* -------------------------------------------------------- Soumettre un film ------------------------------------------------------------- */
 #form #formFilm{
 height:auto;
 border: 2px solid;
@@ -356,6 +544,7 @@ float:left;
 padding-left:20px;
 padding-top:3px;
 }
+
 #form ul #justification label{
 margin-left:-105px;
 padding-top:5px;

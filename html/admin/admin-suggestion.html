@@ -6,13 +6,14 @@
 		<![endif]-->
 		<meta charset="utf-8" />
 		<!-- Import de Bootstrap et de FontAwesome (pour les icônes)-->
-		<link rel="stylesheet" href="../css/bootstrap.min.css" />
+		<link rel="stylesheet" href="../../css/bootstrap.min.css" />
 		<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
-		<link rel="stylesheet" href="../css/font-awesome.min.css" />
+		<link rel="stylesheet" href="../../css/font-awesome.min.css" />
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
 		<script src="http://code.jquery.com/ui/1.9.2/jquery-ui.js"></script>
+		<script src="../../js/bootstrap.min.js"></script>
 		<!-- CSS de la page -->
-		<link rel="stylesheet" href="../CSS/style.css" />
+		<link rel="stylesheet" href="../../CSS/style.css" />
 		<title> L3C: Panel Admin </title>
 		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
 	
@@ -95,7 +96,7 @@
 			<div class="logo-wrapper">
 				<div class="site-logo">
 					<a href="http://localhost:7777/">
-						<img src="../ressources/logo/L3C.jpg" alt="Lille City Cine Club" />
+						<img src="../../ressources/logo/L3C.jpg" alt="Lille City Cine Club" />
 					</a>
 				</div>
 			</div>
@@ -187,11 +188,13 @@
 						<textarea id="synopsis" placeholder="Synopsis"></textarea> 
 					</li>		
 					<li id="Affiche" >
-						<label class="description">L'affiche du film: </label>
-						<input id="affiche" type="file"/> 					
+						<div id="affiche-wrapper">
+							<label class="description" id="affiche-description">L'affiche du film: </label>
+							<input id="affiche" type="file"/> 					
+						</div>
 					</li>		
 					<li id="Justification" >
-						<label class="description">Pourquoi ce film: </label>
+						<label class="description" >Pourquoi ce film: </label>
 						<textarea id="justification" placeholder="Pourquoi?"></textarea> 
 					</li>
 					<li id="buttons">
@@ -207,7 +210,7 @@
 		<div class="footer-wrapper">
 		<div id="menu-logo" >
 			<a href="http://www.univ-lille1.fr/" target="_blank">
-				<img src="../ressources/logo/logoLille1Mini.png" alt="Université Lille1" >
+				<img src="../../ressources/logo/logoLille1Mini.png" alt="Université Lille1" >
 			</a>
 			<ul id="footer-menu">
 				<li><span class="fa fa-lg fa-facebook" style="margin-left:0.2%"></span> <a href=http://www.facebook.com/LilleCityCineClub target="_blank" style="margin-left:0.8%"> Facebook </a></li>
