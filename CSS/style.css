@@ -295,18 +295,23 @@ text-align:center;
 color:#FFF;
 }
 
-/* -------------------------------------------------------- Admin ------------------------------------------------------------------------- */
+/* ======================================================== Admin ========================================================================= */
+/* --------------------------------------------------- Accueil Panel Admin ---------------------------------------------------------------- */
+/*DropDownMenu*/
 #cssmenu ul {
   list-style: none;
   padding: 0;
-  margin: 0;
+  margin: -5;
   line-height: 1;
+  float: left;
+  top : 20px;
+  margin-right: -165px;
 }
 #cssmenu > ul {
   position: relative;
   display: block;
   background: #171717;
-  width: 100%;
+  width:100%;
   z-index: 500;
 vertical-align: center;
   }
@@ -334,9 +339,6 @@ vertical-align: center;
   margin-right: 0px;
   padding: 0;
 }
-.Retour {
-padding-right:50px;
-}
 
 #cssmenu > ul > #menu-button {
   display: none;
@@ -349,7 +351,7 @@ padding-right:50px;
   font-size: 14px;
   font-family: Helvetica, Georgia, serif;
   font-family: Helvetica;
-  padding: 15px 20px;
+  padding: 15px 15px;
   color: #ffffff;
   text-transform: uppercase;
   -webkit-transition: color 0.25s ease-out;
@@ -359,7 +361,7 @@ padding-right:50px;
   transition: color 0.25s ease-out;
 }
 #cssmenu > ul > li.has-sub > a {
-  padding-right: 32px;
+  padding-right: 60px;
 }
 #cssmenu > ul > li:hover > a {
   color: #7a8189;
@@ -372,7 +374,7 @@ padding-right:50px;
   height: 0;
 }
 #cssmenu > ul > li.has-sub::after {
-  right: 10px;
+  right: 37px;
   top: 20px;
   border: 5px solid transparent;
   border-top-color: #ffffff;
@@ -481,7 +483,20 @@ padding-right:50px;
   left: auto;
   right: 30px;
 }
+/* Message d'Accueil */
+.admin-body{
+text-align : center;
+font-weight: bold;
+margin-top : 190px;
+margin-bottom : 25px;
+}
+.admin-body.h1{}
 
+.admin-message{
+text-align : center;
+font-size : 16px;
+margin-bottom : 180px;
+}
 
 /* -------------------------------------------------------- Soumettre un film ------------------------------------------------------------- */
 #form #formFilm{
