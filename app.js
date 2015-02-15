@@ -221,7 +221,7 @@ app.get('/about', function(req,res){
 
 //Inscription page
 app.get('/inscription',function(req,res){
-	console.log('\n Inscription loaded');
+	console.log('\nInscription loaded');
 	
 	var html;
 	fs.readFile(__dirname+'/html/inscription.html','utf8',function(err,data){
@@ -232,6 +232,24 @@ app.get('/inscription',function(req,res){
 		html = data;
 		res.charset='utf-8';
 		res.setHeader("Access-Control-Allow-Origin","*");
+		res.send(html);
+	});
+})
+
+//Login page
+app.get('/login',function(req,res){
+	console.log('\nLoginpage loaded');
+	
+	var html;
+	fs.readFile(__dirname+'/html/login.html','utf8',function(err,data){
+		if(err){
+			console.log('Error login page!');
+			throw err;
+		}
+		
+		html = data;
+		res.charset='utf-8';
+		res.setHeader("Access-Control-Allows-Origin","*");
 		res.send(html);
 	});
 })

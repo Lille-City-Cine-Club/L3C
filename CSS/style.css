@@ -661,7 +661,6 @@ padding-left: 40px;
 #form ul li {
 list-style-type:none;
 line-height:2em;
-
 }
 #form ul li .description{
 font-style:italic;
@@ -711,6 +710,89 @@ margin-left:-40px;
 line-height:1.5em;
 }
 
+/* -------------------------------------------------------- Login ------------------------------------------------------------------------- */
+#form #formLogin{
+height:auto;
+width:30%;
+border: 2px solid;
+border-radius:25px;
+margin-top : 50px;
+margin-left: 35%;
+margin-right: 30%;
+margin-bottom:25px;
+padding-bottom:10px;
+}
+
+#form h2{
+padding-left: 40px;
+}
+#form ul li {
+list-style-type:none;
+line-height:2em;
+}
+#form input{
+line-height:1.8em;
+}
+#form ul #PseudoLogin #pseudoLogin{
+margin-left:12.6%;
+}
+
+#inscription{
+margin-top:3%;
+margin-left:20%;
+margin-right:20%;
+margin-bottom:5%;
+}
+#inscription h2{
+text-align:center;
+}
+#inscription #accrocheInscription{
+font-size:16px;
+text-align:justify;
+}
+#inscription #accrocheInscription #dvlpt{
+font-size:12px;
+}
+#inscription {
+text-align:center;
+}
+#inscription #buttonInscription{
+text-align:center;
+border: 1px solid;
+border-radius:25px;
+width:20%;
+height:7%;
+color:#FFF;
+background:#171717;
+margin-left:42%;
+margin-right:42%;
+font-weight:bold;
+font-size:20px;
+}
+#inscription #buttonInscription a:link{
+text-decoration:none;
+}
+#inscription #buttonInscription a:visited{
+color:#FFF;
+}
+#inscription #buttonInscription p{
+padding:10px;
+}
+#ButtonsWrapper{
+margin-top:2%;
+margin-left:-40px;
+text-align:center;
+}
+
+.buttonValider{
+border-radius:25px;
+background:#171717;
+color:#FFF;
+border: 2px solid;
+height:5%;
+width:auto;
+font-weight:bold;
+}
 
 /* -------------------------------------------------------- General ----------------------------------------------------------------------- */
 body {
