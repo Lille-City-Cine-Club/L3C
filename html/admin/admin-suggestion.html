@@ -35,19 +35,14 @@
 					
 					var genre1,genre2,genre3,g1,g2,g3,formData;
 					
-					/* /!\ Si g1 = " " NE PAS ENVOYER !!!!*/
 					genre1=document.getElementById("genre1");
 					g1= genre1[genre1.selectedIndex].value;
 					
-					if($('#genre2').val != " "){
-						genre2=document.getElementById("genre2");
-						g2= genre2[genre2.selectedIndex].value;
-					}
-					if($('#genre3').val != " "){
-						genre3=document.getElementById("genre3");
-						g3= genre3[genre3.selectedIndex].value;
-					}
-					console.log('genre:'+ g1);					
+					genre2=document.getElementById("genre2");
+					g2= genre2[genre2.selectedIndex].value;
+				
+					genre3=document.getElementById("genre3");
+					g3= genre3[genre3.selectedIndex].value;			
 					
 					formData = new FormData();
 					formData.append('title',$('#title').val());
@@ -67,7 +62,7 @@
 						contentType:false,
 
 						success:function(content) {
-						alert(content);
+							alert(content);
 						},
 						error:function(){
 							alert('Error Ajax!');
@@ -75,11 +70,43 @@
 					});
 				});
 			});
+			
+			// Checking form completed before submit
+			function checkForm(){
+				
+				genre1=document.getElementById("genre1");
+				g1= genre1[genre1.selectedIndex].value;
+			
+				if($('#title').val()=="" || $('#title').val() === null ){
+					alert("Le champs Title doit être complété");
+					return false;
+				}
+				if($('#realisateur').val()=="" || $('#realisateur').val() == null ){
+					alert("Le champs Réalisateur doit être complété");
+					return false;
+				}
+				if($('#acteurs').val()=="" || $('#acteurs').val() == null ){
+					alert("Le champs Acteurs doit être complété");
+					return false;
+				}
+				if(g1 == "" || g1 == null ){
+					alert("Le premier genre doit au moins être complété");
+					return false;
+				}
+				if($('#synopsis').val()=="" || $('#synopsis').val() == null ){
+					alert("Le champs synopsis doit être complété");
+					return false;
+				}
+				if($('#justification').val()=="" || $('#justification').val() == null ){
+					alert("Le champs Justification doit être complété");
+					return false;
+				}
+			}
 		</script>
 	</head>
 
 	<body>
-	<div class="body-wrapper" ><!--Div qui regroupe toute la page -->
+	<div class="bo*dy-wrapper" ><!--Div qui regroupe toute la page -->
 		
 		<!-- logo+site -->
 		<div class="logo-nav-wrapper"><!-- Regroupe le logo-->
@@ -105,7 +132,7 @@
 		</div>
 	
 		<div id="form">	
-			<form id="formFilm" method="post" action="postContent">
+			<form id="formFilm" method="post" action="postContent" onsubmit="return checkForm();">
 				<h2> Ajouter un film : </h2>			
 				<ul>
 					<li id="Title" >
