@@ -20,9 +20,9 @@
 	
 		<script><!-- Ajax command to add new movie to DB -->
 			$(document).ready(function(){
-				$('#formFilm').on('submit', function(e) {
+				$('#formFilm').submit(function(e) {
 					e.preventDefault(); // J'empêche le comportement par défaut du navigateur, c-à-d de soumettre le formulaire
-	 
+					
 					var $this = $(this); // L'objet jQuery du formulaire	
 			
 					//http://stackoverflow.com/questions/5392344/sending-multipart-formdata-with-jquery-ajax/5976031#5976031
