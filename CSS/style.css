@@ -226,7 +226,7 @@ height:auto;
 	-moz-box-shadow: 0 0 8px rgba(0, 0, 0, .8);
 	float : left;
 	margin-left: 16%;
-	padding-top: 1% ;
+	margin-top: 0.5% ;
 }
 
 .about-circular-suf {
@@ -241,7 +241,7 @@ height:auto;
 	-moz-box-shadow: 0 0 8px rgba(0, 0, 0, .8);
 	float : right;
 	margin-right: 16%;
-	padding-top: 1% ;
+	margin-top: 0.5% ;
 }
 
 .about-title{
@@ -259,7 +259,7 @@ height:auto;
 	margin-right : 16%;
 	text-align : justify;
 	padding-top:2%;
-	margin-bottom : 2%;
+	margin-bottom : 4%;
 }
 
 /* -------------------------------------------------------- Footer ------------------------------------------------------------------------ */
