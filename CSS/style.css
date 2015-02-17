@@ -225,7 +225,7 @@ height:auto;
 	-webkit-box-shadow: 0 0 8px rgba(0, 0, 0, .8);
 	-moz-box-shadow: 0 0 8px rgba(0, 0, 0, .8);
 	float : left;
-	margin-left: 17.5%;
+	margin-left: 16%;
 	padding-top: 1% ;
 }
 
@@ -240,7 +240,7 @@ height:auto;
 	-webkit-box-shadow: 0 0 8px rgba(0, 0, 0, .8);
 	-moz-box-shadow: 0 0 8px rgba(0, 0, 0, .8);
 	float : right;
-	margin-right: 17.5%;
+	margin-right: 16%;
 	padding-top: 1% ;
 }
 
@@ -254,7 +254,7 @@ height:auto;
 
 .about-description{
 	font-size : 16.5px;
-	margin-top : 6%;
+	margin-top : 5%;
 	margin-left : 16%;
 	margin-right : 16%;
 	text-align : justify;
