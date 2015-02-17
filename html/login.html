@@ -51,14 +51,14 @@
 				
 				$.ajax({
 					type:'POST',
-					url:$this.attr('action');
-					data:formData;
+					url:$this.attr('action'),
+					data:formData,
 					processData:false,
 					contentType:false,
 					
 					success:function(content){
-						alert(content);
-					}
+						console.log('login ok!');
+					},
 					error:function(){
 						alert('Error Ajax!');
 					}

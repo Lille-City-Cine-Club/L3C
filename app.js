@@ -359,6 +359,10 @@ app.post('/newMember', function(req,res){
 })
 
 
+app.post('/loginConnection',function(req,res){
+	res.redirect('/');
+})
+
 
 // ------------------------------------------------------- PASSPORT -----------------------------------------------------------------------
 // login
