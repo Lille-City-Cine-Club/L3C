@@ -358,15 +358,17 @@ app.post('/newMember', function(req,res){
 	});
 })
 
-
+/*
 app.post('/loginConnection',function(req,res){
-	res.redirect('/');
+	console.log('log COnnectionn');
 })
-
+*/
 
 // ------------------------------------------------------- PASSPORT -----------------------------------------------------------------------
 // login
-app.post('/loginConnection',passport.authenticate('local',{succesReturntoOrRedirect:'/home', failureRedirect:'/login'}));;
+app.post('/loginConnection',passport.authenticate('local',{succesReturntoOrRedirect:'/home', failureRedirect:'/login'}),function(req,res){
+	console.log('test login');
+});
 
 // logout
 app.get('/logout', function(req,res){
@@ -377,6 +379,7 @@ app.get('/logout', function(req,res){
 // Function that assure that isAdmin = T for all pages in admin folder
 var requiresAdmin = function(){
 	return[ensureLoggedIn('/login'),function(req,res,next){
+			console.log(req.user);
 			if(req.user && req.user.isAdmin == true){
 				next();
 			}else{

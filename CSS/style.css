@@ -815,3 +815,7 @@ display:block;
 *:focus {
     outline: 0;
 }
+
+a {
+color:#FFF;
+}
