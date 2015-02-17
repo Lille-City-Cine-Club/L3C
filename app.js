@@ -45,7 +45,7 @@ app.use(bodyParser.urlencoded({extended : true}));
 
 //credientials for localStrategy {usernameField:'email',passwordField:'password'}
 passport.use(new LocalStrategy({usernameField:'email',passwordField:'password'},function(email,password,done){
-	User.findOne({'email':email,'password': password },
+	userModel.findOne({'email':email,'password': password },
 				{'_id':1,'email':1}, function(err, user){
 					if(err){
 						console.log('Erreur loggin user!');
@@ -238,7 +238,7 @@ app.get('/inscription',function(req,res){
 
 //Login page
 app.get('/login',function(req,res){
-	console.log('\nLoginpage loaded');
+	console.log('\nLogin page loaded');
 	
 	var html;
 	fs.readFile(__dirname+'/html/login.html','utf8',function(err,data){
@@ -361,7 +361,28 @@ app.post('/newMember', function(req,res){
 
 
 // ------------------------------------------------------- PASSPORT -----------------------------------------------------------------------
-app.post('/login',passport.authenticate('local',{succesReturntoOrRedirect:'/home', failureRedirect:'/login'}));;
+// login
+app.post('/loginConnection',passport.authenticate('local',{succesReturntoOrRedirect:'/home', failureRedirect:'/login'}));;
+
+// logout
+app.get('/logout', function(req,res){
+	req.logout();
+	res.redirect('/');
+})
+
+// Function that assure that isAdmin = T for all pages in admin folder
+var requiresAdmin = function(){
+	return[ensureLoggedIn('/login'),function(req,res,next){
+			if(req.user && req.user.isAdmin == true){
+				next();
+			}else{
+				res.send(401,'Vous n\'êtes pas autorisé à acceder à cette partie du site !');
+			}
+		}
+	]
+};
+
+app.all('/admin/*',requiresAdmin());
 
 	
 	
