@@ -34,7 +34,8 @@ app.use(multer({dest: './ressources/poster',
 					done=true;
 				},
 				onError: function(error, next){
-					console.log('Error! Uploading '+ file.name+'failed!');
+					console.log('Error! Uploading failed!');
+					console.log(error);
 					next(error);
 				}
 }));
@@ -75,13 +76,14 @@ app.use(passport.session());
 console.log("City Ciné Club, a.k.a CCC, Web Server!\nListening on : 7777 \n");
 
 //connection to the DB
-// mongoose.connect('mongodb://localhost:27017'); // connect to test DB collection
-//  mongodb://<dbuser>:<dbpassword>@ds045031.mongolab.com:45031/lille_city_cine_club
-//mongoose.connect('mongodb://adminL3C:Herculesproject@ds045031.mongolab.com:45031/lille_city_cine_club');
-mongoose.connect('mongodb://localhost:27017/CCC');
+
+mongoose.connect('mongodb://adminL3C:Herculesproject@ds045031.mongolab.com:45031/lille_city_cine_club');
+// mongoose.connect('mongodb://localhost:27017/CCC');
 
 var db = mongoose.connection;
-
+db.on('error',function(){
+	console.log("Error connecting to DB ! Check your network and restart the server.");
+});
 db.once('connected', function(){
 	console.log('Connected to DataBase');
 });
@@ -262,6 +264,7 @@ app.get('/login',function(req,res){
 app.post('/postContent',function(req,res){
 	console.log('posting content...\n');
 	console.dir(req.headers['content-type']); // bien recu en mutlipart/form-data
+	console.log(req.files);
 	
 	// https://www.google.fr/url?sa=t&rct=j&q=&esrc=s&source=web&cd=1&cad=rja&uact=8&ved=0CCMQFjAA&url=http%3A%2F%2Fstackoverflow.com%2Fquestions%2F26994439%2Fnode-js-expressjs-multer-req-files-outputs-empty&ei=S7vZVIPYMMi1UaXSgagK&usg=AFQjCNHIr8mHKBpzh1rZ407ggM-dH5I7lQ&sig2=1cVFST83yUyh6mCX_JhNWg&bvm=bv.85464276,d.d24
 	// https://www.google.fr/url?sa=t&rct=j&q=&esrc=s&source=web&cd=6&cad=rja&uact=8&ved=0CEoQFjAF&url=http%3A%2F%2Fexpertland.net%2Fquestion%2Fq3l8l31c21925b53r2t518520b9mwa7r6241%2Fdetail.html&ei=S7vZVIPYMMi1UaXSgagK&usg=AFQjCNFz-gWMIev8JVem3TOQhwdi7gUFKg&sig2=2UgUYQPuWuTvHdWHIxaoWw&bvm=bv.85464276,d.d24
@@ -269,52 +272,57 @@ app.post('/postContent',function(req,res){
 	
 	var title,director,actors,genre,synopsis,poster,why,date;
 	
-	title = req.body.title;
-	director=req.body.director;
-	actors = req.body.actors.split(', '); 	// transformation of string to array, parsing to ', '
+	response = checkFormFilm(req);				// verification du formulaire
+	if(response.codeResponse == "ko"){
+		res.send(response.message);
+	}else{
 	
-	genre = []; 							// creating an array of genre
-	if(req.body.genre1!=""){				// Needed to disable server crash when they're is no genre /!\ need to be changed
+		title = req.body.title;
+		director=req.body.director;
+		actors = req.body.actors.split(', '); 	// transformation of string to array, parsing to ', '
+		
+		genre = []; 							// creating an array of genre
 		genre.push(req.body.genre1);
-	}
-	if(req.body.genre2!=""){
-		genre.push(req.body.genre2);
-	}
-	if(req.body.genre3!=""){
-		genre.push(req.body.genre3);
-	}
-	synopsis=req.body.synopsis;
-	poster=req.body.poster;					// Will change soon /!\ pb here multer seems to not work
-	why=req.body.why;
-	
-	console.log("file: "+req.files);
-	
-	console.log('title: '+title+'\n director: '+director+'\n actors: '+actors+'\n synopsis: '+synopsis+'\n poster:'+poster+'\n why:'+why+'\n');
-	
-	var movie = {
-		"title":title,
-		"director":director,
-		"actors":actors,
-		"genre":genre,
-		"synopsis":synopsis,
-		"poster":poster,
-		"why":why
-	};
+		
+		if(req.body.genre2!=""){
+			genre.push(req.body.genre2);
+		};
+		if(req.body.genre3!=""){
+			genre.push(req.body.genre3);
+		};
+		synopsis=req.body.synopsis;
+		poster=req.body.poster;					// Will change soon /!\ pb here multer seems to not work
+		why=req.body.why;
+		
+		console.log("file: "+req.files);
+		
+		console.log('title: '+title+'\n director: '+director+'\n actors: '+actors+'\n synopsis: '+synopsis+'\n poster:'+poster+'\n why:'+why+'\n');
+		
+		var movie = {
+			"title":title,
+			"director":director,
+			"actors":actors,
+			"genre":genre,
+			"synopsis":synopsis,
+			"poster":poster,
+			"why":why
+		};
 
-	if(done){
-		console.log("uploading files complete!");
-	}
-	
-	var movie = new movieModel(movie);
-	
-	movie.save(function(err,data){
-		if(err){
-			console.log('Error saving movie!');
-			throw err;
-		}
-		console.log('movie added!\n');
-		res.send("success! Movie added to DB.");
-	});	
+		if(done){										//used with multer to notify the upload sucess
+			console.log("uploading files complete!");
+		};
+		
+		var movie = new movieModel(movie);
+		
+		movie.save(function(err,data){
+			if(err){
+				console.log('Error saving movie!');
+				throw err;
+			};
+			console.log('movie added!\n');
+			res.send("success! Movie added to DB.");
+		});	
+	};
 })
 
 // Adding new member into DB
@@ -324,41 +332,51 @@ app.post('/newMember', function(req,res){
 	
 	var pseudo,mail,password,genre,description;
 	
-	pseudo = req.body.pseudo;
-	mail = req.body.mail;
-	password = req.body.password;
-	
-	genre =[]; //need to be changed! Verification will be made ClientSide
-	if(req.body.genre1 !="" || req.body.genre1 != undefined){
+	var response = checkFormMember(req);
+	if(response.codeResponse == "ko"){
+		console.log("Adding failed! form wasn't valid.");
+		res.send(response.message);
+	}else{
+		pseudo = req.body.pseudo;
+		mail = req.body.mail;
+		password = req.body.password;
+		
+		genre =[]; 
 		genre.push(req.body.genre1);
-	}
-	if(req.body.genre2 !="" || req.body.genre2 != undefined){
-		genre.push(req.body.genre2);
-	}
-	if(req.body.genre3 !="" || req.body.genre3 != undefined){
-		genre.push(req.body.genre3);
-	}
-	
-	description = req.body.description;
-	
-	var user = {
-		"name":pseudo,
-		"email":mail,
-		"password":password,
-		"isAdmin":false,
-		"description":description,
-		"genre":genre
-	};
+		
+		if(req.body.genre2 != undefined){
+			genre.push(req.body.genre2);
+		};
+		if(req.body.genre3 != undefined){
+			genre.push(req.body.genre3);
+		};
+		
+		if(req.body.description != undefined){
+			description = req.body.description;
+		}else{
+			description = pseudo +" est encore un peu timide.. Souhaitez lui la bienvenue ! ";
+		};
+		
+		var user = {
+			"name":pseudo,
+			"email":mail,
+			"password":password,
+			"isAdmin":false,
+			"description":description,
+			"genre":genre
+		};
 
-	user = new userModel(user);
-	user.save(function(err,member){
-		if(err){
-			console.log('Error saving new member!!');
-			throw err;
-		}
-		console.log('New member '+user.name+' added!!');
-		res.send('New member '+user.name+' added!!');
-	});
+		user = new userModel(user);
+		user.save(function(err,member){
+			if(err){
+				console.log('Error saving new member!!');
+				throw err;
+			};
+			console.log('New member '+user.name+' added!!');
+			console.log(user);
+			res.send('New member '+user.name+' added!!');
+		});
+	};
 })
 
 /*
@@ -394,9 +412,97 @@ var requiresAdmin = function(){
 
 app.all('/admin/*',requiresAdmin());
 
-	
-	
+// ------------------------------------------------------- Fonction de verification des forms ---------------------------------------------
+var checkFormFilm = function(req){	
+	var response = {
+		codeResponse:"",
+		message:""
+	};
+	if(req.body.title == "" || req.body.title === null ){
+		response.codeResponse = "ko";
+		response.message ="Le TITRE doit au moins être completé !";
+		return response;
+	};
+	if(req.body.director == "" || req.body.director == null ){
+		response.codeResponse = "ko";
+		response.message ="Le REALISATEUR doit au moins être completé !";
+		return response;
+	};
+	if(req.body.actors == "" || req.body.actors == null ){
+		response.codeResponse = "ko";
+		response.message ="Les ACTEURS doivent au moins être completés !";
+		return response;
+	};
+	if(req.body.genre1 == "" || req.body.genre1 == null ){
+		response.codeResponse = "ko";
+		response.message ="Le premier GENRE doit au moins être completé !";
+		return response;
+	};
+	if(req.body.synopsis == "" || req.body.synopsis == null ){
+		response.codeResponse = "ko";
+		response.message ="Le SYNOPSIS doit au moins être completé !";
+		return response;
+	};
+	if(req.body.why == "" || req.body.why == null ){
+		response.codeResponse = "ko";
+		response.message ="La JUSTIFICATION doit au moins être completée !";
+		return response;
+	};
+	response.codeResponse = "ok";
+	response.message ="Success ! Movie " + req.body.title + " added into L3C DB;" 
+	return response;
+};
 
+var checkFormMember = function(req){
+	var response = {
+		codeResponse:"",
+		message:""
+	};
+	if(req.body.pseudo == "" || req.body.pseudo === null ){
+		response.codeResponse = "ko";
+		response.message ="Le PSEUDO doit au moins être completé !";
+		return response;
+	};
+	if(req.body.mail == "" || req.body.mail === null ){
+		response.codeResponse = "ko";
+		response.message ="Le MAIL doit au moins être completé !";
+		return response;
+	};
+	if(req.body.password == "" || req.body.password == null ){
+		response.codeResponse = "ko";
+		response.message ="Le REALISATEUR doit au moins être completé !";
+		return response;
+	};
+	if(req.body.genre1 == "" || req.body.genre1 == null ){
+		response.codeResponse = "ko";
+		response.message ="Le premier GENRE doit au moins être completé !";
+		return response;
+	};
+	
+	response.codeResponse = "ok";
+	response.message ="Success ! Movie " + req.body.title + " added into L3C DB;" 
+	return response;
+};
+	
+var checkFormLogin = function(req){
+	var response = {
+			codeResponse:"",
+			message:""
+		};
+	if(req.body.email == "" || req.body.email === null ){
+		response.codeResponse = "ko";
+		response.message ="Le E-MAIL doit au moins être completé !";
+		return response;
+	};
+	if(req.body.password == "" || req.body.password === null ){
+		response.codeResponse = "ko";
+		response.message = "Le MOT DE PASSE doit au moins être completé !";
+		return response;
+	};
+	response.codeResponse = "ok";
+	response.message ="" 
+	return response;
+};	
 
 // to get CSS/ressourcs etc...
 var staticMiddleware = express.static(__dirname);

@@ -21,6 +21,8 @@
 		<script><!-- Ajax command to add new movie to DB -->
 			$(document).ready(function(){
 				$('#formFilm').submit(function(e) {
+					//if ( !checkForm() ) return false;
+				
 					e.preventDefault(); // J'empêche le comportement par défaut du navigateur, c-à-d de soumettre le formulaire
 					
 					var $this = $(this); // L'objet jQuery du formulaire	
@@ -33,26 +35,8 @@
 					//----Multer
 					//http://codeforgeek.com/2014/11/file-uploads-using-node-js/
 					
-					var genre1,genre2,genre3,g1,g2,g3,formData;
-					
-					genre1=document.getElementById("genre1");
-					g1= genre1[genre1.selectedIndex].value;
-					
-					genre2=document.getElementById("genre2");
-					g2= genre2[genre2.selectedIndex].value;
-				
-					genre3=document.getElementById("genre3");
-					g3= genre3[genre3.selectedIndex].value;			
-					
-					formData = new FormData();
-					formData.append('title',$('#title').val());
-					formData.append('director',$('#realisateur').val());
-					formData.append('actors',$('#acteurs').val());
-					formData.append('genre1',g1);
-					formData.append('genre2',g2);
-					formData.append('genre3',g3);
-					formData.append('synopsis',$('#synopsis').val());
-					formData.append('why',$('#justification').val());
+					var formData;
+					formData = new FormData($('#formFilm')[0]);
 					
 					$.ajax( {
 						type:'POST',
@@ -70,38 +54,6 @@
 					});
 				});
 			});
-			
-			// Checking form completed before submit
-			function checkForm(){
-				
-				genre1=document.getElementById("genre1");
-				g1= genre1[genre1.selectedIndex].value;
-			
-				if($('#title').val()=="" || $('#title').val() === null ){
-					alert("Le champs Title doit être complété");
-					return false;
-				}
-				if($('#realisateur').val()=="" || $('#realisateur').val() == null ){
-					alert("Le champs Réalisateur doit être complété");
-					return false;
-				}
-				if($('#acteurs').val()=="" || $('#acteurs').val() == null ){
-					alert("Le champs Acteurs doit être complété");
-					return false;
-				}
-				if(g1 == "" || g1 == null ){
-					alert("Le premier genre doit au moins être complété");
-					return false;
-				}
-				if($('#synopsis').val()=="" || $('#synopsis').val() == null ){
-					alert("Le champs synopsis doit être complété");
-					return false;
-				}
-				if($('#justification').val()=="" || $('#justification').val() == null ){
-					alert("Le champs Justification doit être complété");
-					return false;
-				}
-			}
 		</script>
 	</head>
 
@@ -133,25 +85,25 @@
 		</div>
 	
 		<div id="form">	
-			<form id="formFilm" method="post" action="postContent" onsubmit="return checkForm();">
+			<form id="formFilm" method="post" action="postContent">
 				<h2> Ajouter un film : </h2>			
 				<ul>
 					<li id="Title" >
 						<label class="description" >Titre: </label>
-						<input id="title" type="text" maxlength="255" value="" placeholder="Titre"/> 
+						<input name="title" id="title" type="text" maxlength="255" value="" placeholder="Titre"/> 
 					</li>		
 					<li id="Real" >
 						<label class="description" >Réalisateur: </label>
-						<input id="realisateur" type="text" maxlength="255" value="" placeholder="Réalisateur"/> 
+						<input name="director" id="realisateur" type="text" maxlength="255" value="" placeholder="Réalisateur"/> 
 					</li>		
 					<li id="Acteurs" >
 						<label class="description" >Acteurs: </label>
-						<input id="acteurs"  type="text" maxlength="255" value="" placeholder="acteur 1, acteur 2, ..."/> 
+						<input name="actors" id="acteurs"  type="text" maxlength="255" value="" placeholder="acteur 1, acteur 2, ..."/> 
 					</li>		
 					<!-- ComboBox: Genre-->
 					<li id="Genre">
 						<label class="description"> Genre(s) : </label>
-						<select id="genre1">
+						<select name="genre1" id="genre1">
 							<option value="" ></option>
 							<option value="action">Action</option>
 							<option value="aventure">Aventure</option>
@@ -169,7 +121,7 @@
 							<option value="thriller">Thriller</option>
 							<option value="western">Western</option>
 						</select>
-						<select id="genre2">
+						<select name="genre2" id="genre2">
 							<option value="" ></option>
 							<option value="action">Action</option>
 							<option value="aventure">Aventure</option>
@@ -187,7 +139,7 @@
 							<option value="thriller">Thriller</option>
 							<option value="western">Western</option>
 						</select>
-						<select id="genre3">
+						<select name="genre3" id="genre3">
 							<option value="" ></option>
 							<option value="action">Action</option>
 							<option value="aventure">Aventure</option>
@@ -208,17 +160,17 @@
 					</li>
 					<li id="Synopsis" >
 						<label class="description" >Synopsis: </label>
-						<textarea id="synopsis" placeholder="Synopsis"></textarea> 
+						<textarea name="synopsis" id="synopsis" placeholder="Synopsis"></textarea> 
 					</li>		
 					<li id="Affiche" >
 						<div id="affiche-wrapper">
 							<label class="description" id="affiche-description">L'affiche du film: </label>
-							<input id="affiche" type="file"/> 					
+							<input name="poster" id="affiche" type="file"/> 					
 						</div>
 					</li>		
 					<li id="Justification" >
 						<label class="description" >Pourquoi ce film: </label>
-						<textarea id="justification" placeholder="Pourquoi?"></textarea> 
+						<textarea name="why" id="justification" placeholder="Pourquoi?"></textarea> 
 					</li>
 					<li id="buttons">
 						<div id="ButtonsWrapper" >
