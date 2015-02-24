@@ -15,26 +15,24 @@ var passport = require('passport')		// to identify members etc...
 	
 var app = express()
 
-/* needed to use multer?!
-var router =  express.Router(); 
-app.use('/postContent', router);	
-*/
 
 // to store img in form (i.e poster)
 var done = false;
+var posterPath;
 app.use(multer({dest: './ressources/poster',
 				rename: function(fieldname, filename){
-					return filename+moment().format('MMMM Do YYYY, h:mm:ss a');
+					return moment().format('YYYY_MM_DD')+'_'+filename;
 				},
-				onFileUploadStart: function(file){
-					console.log(file.name + 'uploading . . .');
+				onFileUploadStart: function(file, req, res){
+					console.log(file.name + ' uploading . . .');
 				},
-				onFileUploadComplete: function(file){
+				onFileUploadComplete: function(file, req, res){
 					console.log(file.name + ' successfully uploaded to :'+ file.path);
+					posterPath = file.path;
 					done=true;
 				},
 				onError: function(error, next){
-					console.log('Error! Uploading failed!');
+					console.log('Error! Uploading failed! ');
 					console.log(error);
 					next(error);
 				}
@@ -77,8 +75,8 @@ console.log("City Ciné Club, a.k.a CCC, Web Server!\nListening on : 7777 \n");
 
 //connection to the DB
 
-mongoose.connect('mongodb://adminL3C:Herculesproject@ds045031.mongolab.com:45031/lille_city_cine_club');
-// mongoose.connect('mongodb://localhost:27017/CCC');
+//mongoose.connect('mongodb://adminL3C:Herculesproject@ds045031.mongolab.com:45031/lille_city_cine_club');
+mongoose.connect('mongodb://localhost:27017/CCC');
 
 var db = mongoose.connection;
 db.on('error',function(){
@@ -95,9 +93,9 @@ var movieSchema = new Schema({
 	title: String,
 	director: String,
 	actors: [String],
-	genre:[String],
+	genre: [String],
 	synopsis: String,
-	/*poster:String Chemin de l'image ,*/
+	poster: String,
 	poster: String,
 	why: String,
 	date: {type:Date, default:Date.now}
@@ -144,7 +142,7 @@ app.get('/suggestion', function(req,res){
 			throw err;
 		}
 		console.log('\nSuggestion Loaded! Movie: '+ movie.title +'\n');
-		
+		var img;
 		var html;
 		fs.readFile(__dirname+'/html/suggestion.html','utf8',function(err,data){
 			if(err){
@@ -156,7 +154,7 @@ app.get('/suggestion', function(req,res){
 			for(var i = 0; i<movie.actors.length ; i++){
 				actors += movie.actors[i]+', ';
 			}
-			
+
 			html = data;
 			html = html.replace('%%title%%',movie.title);
 			html = html.replace('%%genre%%',movie.genre[0]+", "+movie.genre[1]+", "+movie.genre[2]);
@@ -164,6 +162,7 @@ app.get('/suggestion', function(req,res){
 			html = html.replace('%%actors%%',actors +" ...");
 			html = html.replace('%%why%%',movie.why);
 			html = html.replace('%%synopsis%%',movie.synopsis);
+			html = html.replace('%%poster%%', movie.poster);
 			
 			res.charset='utf-8';
 			res.setHeader("Access-Control-Allow-Origin","*");
@@ -263,25 +262,19 @@ app.get('/login',function(req,res){
 //posting content to DB
 app.post('/postContent',function(req,res){
 	console.log('posting content...\n');
-	console.dir(req.headers['content-type']); // bien recu en mutlipart/form-data
-	console.log(req.files);
 	
-	// https://www.google.fr/url?sa=t&rct=j&q=&esrc=s&source=web&cd=1&cad=rja&uact=8&ved=0CCMQFjAA&url=http%3A%2F%2Fstackoverflow.com%2Fquestions%2F26994439%2Fnode-js-expressjs-multer-req-files-outputs-empty&ei=S7vZVIPYMMi1UaXSgagK&usg=AFQjCNHIr8mHKBpzh1rZ407ggM-dH5I7lQ&sig2=1cVFST83yUyh6mCX_JhNWg&bvm=bv.85464276,d.d24
-	// https://www.google.fr/url?sa=t&rct=j&q=&esrc=s&source=web&cd=6&cad=rja&uact=8&ved=0CEoQFjAF&url=http%3A%2F%2Fexpertland.net%2Fquestion%2Fq3l8l31c21925b53r2t518520b9mwa7r6241%2Fdetail.html&ei=S7vZVIPYMMi1UaXSgagK&usg=AFQjCNFz-gWMIev8JVem3TOQhwdi7gUFKg&sig2=2UgUYQPuWuTvHdWHIxaoWw&bvm=bv.85464276,d.d24
-	// https://www.google.fr/url?sa=t&rct=j&q=&esrc=s&source=web&cd=9&cad=rja&uact=8&ved=0CGIQFjAI&url=http%3A%2F%2Fwww.hacksparrow.com%2Fhandle-file-uploads-in-express-node-js.html&ei=S7vZVIPYMMi1UaXSgagK&usg=AFQjCNG91TPy4_ryrTOf4F6nxofrzORuxg&sig2=MoWZxjee8Qr3Z-4Zzr9E1g&bvm=bv.85464276,d.d24
+	var title,director,actors,genre,synopsis,why;	// le poster est géré par multer. On rajoute juste le chemmin du poster à la base(cf posterPath)
 	
-	var title,director,actors,genre,synopsis,poster,why,date;
-	
-	response = checkFormFilm(req);				// verification du formulaire
+	response = checkFormFilm(req);					// verification du formulaire
 	if(response.codeResponse == "ko"){
 		res.send(response.message);
 	}else{
 	
 		title = req.body.title;
 		director=req.body.director;
-		actors = req.body.actors.split(', '); 	// transformation of string to array, parsing to ', '
+		actors = req.body.actors.split(', '); 		// transformation of string to array, parsing to ', '
 		
-		genre = []; 							// creating an array of genre
+		genre = []; 								// creating an array of genre
 		genre.push(req.body.genre1);
 		
 		if(req.body.genre2!=""){
@@ -291,12 +284,9 @@ app.post('/postContent',function(req,res){
 			genre.push(req.body.genre3);
 		};
 		synopsis=req.body.synopsis;
-		poster=req.body.poster;					// Will change soon /!\ pb here multer seems to not work
 		why=req.body.why;
 		
-		console.log("file: "+req.files);
-		
-		console.log('title: '+title+'\n director: '+director+'\n actors: '+actors+'\n synopsis: '+synopsis+'\n poster:'+poster+'\n why:'+why+'\n');
+		console.log('title: '+title+'\n director: '+director+'\n actors: '+actors+'\n synopsis: '+synopsis+'\n poster:'+posterPath+'\n why:'+why+'\n');
 		
 		var movie = {
 			"title":title,
@@ -304,7 +294,7 @@ app.post('/postContent',function(req,res){
 			"actors":actors,
 			"genre":genre,
 			"synopsis":synopsis,
-			"poster":poster,
+			"poster":posterPath,
 			"why":why
 		};
 

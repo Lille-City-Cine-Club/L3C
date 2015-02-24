@@ -21,19 +21,10 @@
 		<script><!-- Ajax command to add new movie to DB -->
 			$(document).ready(function(){
 				$('#formFilm').submit(function(e) {
-					//if ( !checkForm() ) return false;
 				
 					e.preventDefault(); // J'empêche le comportement par défaut du navigateur, c-à-d de soumettre le formulaire
 					
 					var $this = $(this); // L'objet jQuery du formulaire	
-			
-					//http://stackoverflow.com/questions/5392344/sending-multipart-formdata-with-jquery-ajax/5976031#5976031
-					//http://stackoverflow.com/questions/6974684/how-to-send-formdata-objects-with-ajax-requests-in-jquery
-					//http://stackoverflow.com/questions/9344455/unable-to-send-a-multipart-mixed-request-to-spring-mvc-based-rest-service
-					//https://www.google.fr/webhp?sourceid=chrome-instant&ion=1&espv=2&ie=UTF-8#q=multipart%20boundary%20not%20found
-					
-					//----Multer
-					//http://codeforgeek.com/2014/11/file-uploads-using-node-js/
 					
 					var formData;
 					formData = new FormData($('#formFilm')[0]);
