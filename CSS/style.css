@@ -573,6 +573,35 @@ text-align:center;
 margin-left:-40px;
 line-height:1.5em;
 }
+/* ------------------------------------------------------- Carousel ----------------------------------------------------------------------- */
+.carousel-image-wrapper{
+padding-bottom : 5px;
+display:block;
+}
+
+.carousel-affiche-label{
+font-style:italic;
+font-weight:200;
+padding-top: 10px;	
+}
+
+.carousel-affiche{
+float:right;
+padding-right:130px;
+padding-top:13px;
+}
+
+#form #formCarousel{
+height:auto;
+border: 2px solid;
+border-radius:25px;
+margin-top : 50px;
+margin-left: 30%;
+margin-right: 30%;
+margin-bottom:25px;
+padding-bottom:10px;
+}
+
 /* ------------------------------------------------------- Inscription -------------------------------------------------------------------- */
 #form #formInscription{
 height:auto;

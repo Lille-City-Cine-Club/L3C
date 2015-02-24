@@ -1,0 +1,150 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html lang="fr">
+	<head>
+		<!--[if lt IE 9]>
+		<script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+		<![endif]-->
+		<meta charset="utf-8" />
+		<!-- Import de Bootstrap et de FontAwesome (pour les icônes)-->
+		<link rel="stylesheet" href="../../CSS/bootstrap.min.css">
+		<link rel="stylesheet" href="../../CSS/font-awesome.min.css" />
+		<!-- Import de notre fichier CSS -->
+		<link rel="stylesheet" href="../../CSS/style.css" />
+		<!-- Import des fichiers Javacript-->
+		<script src="../../js/jquery-1.9.1.min.js"></script>
+		<script src="../../js/jquery-ui.js"></script>
+		<!--favicon-->
+		<link rel="icon" type="image/png" href="../../ressources/logo/favicon.png" />
+		<title> L3C: Panel Admin </title>
+		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+	
+		<script><!-- Ajax command to add new movie to DB -->
+			$(document).ready(function(){
+				$('#formCarousel').on('submit', function(e) {
+					e.preventDefault(); // J'empêche le comportement par défaut du navigateur, c-à-d de soumettre le formulaire
+	 
+					var $this = $(this); // L'objet jQuery du formulaire	
+			
+					formData = new FormData($("formCarousel")[0]);
+					
+					$.ajax( {
+						type:'POST',
+						url:$this.attr('action'),
+						data:formData,
+						processData: false,
+						contentType:false,
+
+						success:function(content) {
+							alert(content);
+						},
+						error:function(){
+							alert('Error Ajax!');
+						}
+					});
+				});
+			});
+		</script>
+	</head>
+
+	<body>
+	<div class="bo*dy-wrapper" ><!--Div qui regroupe toute la page -->
+		
+		<!-- logo+site -->
+		<div class="logo-nav-wrapper"><!-- Regroupe le logo-->
+			<div class="logo-wrapper">
+				<div class="site-logo">
+					<a href="http://localhost:7777/">
+						<img src="../../ressources/logo/L3C.jpg" alt="Lille City Cine Club" />
+					</a>
+				</div>
+			</div>
+		
+			<div id='cssmenu'>
+				<ul>
+				   <li class='active has-sub'><a href='#'><span>Administration</span></a>
+					  <ul>
+						 <li><a href='admin-suggestion'><span>Soumettre un film</span></a></li>
+						 <li class="admin-retour"><a href='admin-carousel'><span>Modifier Carousel</span></a></li>
+						 <li><a href=""> <span> Gérer les Admins</span></a></li>
+					  </ul>
+				   </li>
+				   <li><a id="Retour" href="admin"> Retour </a></li>
+				</ul>
+			</div>
+		</div>
+	
+		<div id="form">	
+			<form id="formCarousel" method="post" action="postCarousel">
+				<h2> Modifier les affiches du carousel : </h2>			
+				<ul>
+					<li id="Film1" >
+						<div class="carousel-affiche-wrapper">
+							<label class="carousel-affiche-label">Affiche 1: </label>
+							<input class="carousel-affiche" name="film1" type="file"/> 					
+						</div>
+					</li>
+					
+					<li id="Film2" >
+						<div class="carousel-affiche-wrapper">
+							<label class="carousel-affiche-label">Affiche 2: </label>
+							<input class="carousel-affiche" name="film2" type="file"/> 					
+						</div>
+					</li>
+					
+					<li id="Film3" >
+						<div class="carousel-affiche-wrapper">
+							<label class="carousel-affiche-label">Affiche 3: </label>
+							<input class="carousel-affiche" name="film3" type="file"/> 					
+						</div>
+					</li>
+					
+					<li id="Film4" >
+						<div class="carousel-affiche-wrapper">
+							<label class="carousel-affiche-label">Affiche 4: </label>
+							<input class="carousel-affiche" name="film4" type="file"/> 					
+						</div>
+					</li>
+					
+					<li id="Film5" >
+						<div class="carousel-affiche-wrapper">
+							<label class="carousel-affiche-label">Affiche 5: </label>
+							<input class="carousel-affiche" name="film5" type="file"/> 					
+						</div>
+					</li>
+					
+					<li id="Film6" >
+						<div class="carousel-affiche-wrapper">
+							<label class="carousel-affiche-label">Affiche 6: </label>
+							<input class="carousel-affiche" name="film6" type="file"/> 					
+						</div>
+					</li>
+					
+					<li id="buttons">
+						<div id="ButtonsWrapper" >
+							<input type="hidden" name="form_id" value="955925" />
+							<input id="saveForm" class="buttonValider" type="submit" value="Valider" />
+						</div>
+					</li>
+				</ul>
+			</form>
+		</div>
+		
+		<div class="footer-wrapper">
+		<div id="menu-logo" >
+			<a href="http://www.univ-lille1.fr/" target="_blank">
+				<img src="../../ressources/logo/logoLille1Mini.png" alt="Université Lille1" >
+			</a>
+			<ul id="footer-menu">
+				<li><span class="fa fa-lg fa-facebook" style="margin-left:0.2%"></span> <a href=http://www.facebook.com/LilleCityCineClub target="_blank" style="margin-left:0.8%"> Facebook </a></li>
+				<li><span class="glyphicon glyphicon-info-sign" style="font-size:16px;" ></span> <a href="about" style="margin-left:0.5%"> A propos </a></li>
+			</ul>
+		</div>
+		<div id="copyright">
+			<p>
+				&copy Benny-P & DonDiego. En collaboration avec M.Dufrêne. Université Lille 1.
+			</p>	
+		</div>
+	</div>
+	</div>
+	</body>
+</html>
