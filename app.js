@@ -77,6 +77,8 @@ console.log("City Ciné Club, a.k.a CCC, Web Server!\nListening on : 7777 \n");
 //connection to the DB
 // mongoose.connect('mongodb://localhost:27017'); // connect to test DB collection
 mongoose.connect('mongodb://localhost:27017/CCC');
+
+
 var db = mongoose.connection;
 
 db.once('connected', function(){
