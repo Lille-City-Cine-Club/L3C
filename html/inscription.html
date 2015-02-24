@@ -30,18 +30,14 @@
 					
 					var genre1,genre2,genre3,g1,g2,g3,formData;
 					
-					/* /!\ Si g1 = " " NE PAS ENVOYER !!!!*/
 					genre1=document.getElementById("genre1");
 					g1= genre1[genre1.selectedIndex].value;
 					
-					if($('#genre2').val != " "){
-						genre2=document.getElementById("genre2");
-						g2= genre2[genre2.selectedIndex].value;
-					}
-					if($('#genre3').val != " "){
-						genre3=document.getElementById("genre3");
-						g3= genre3[genre3.selectedIndex].value;
-					}			
+					genre2=document.getElementById("genre2");
+					g2= genre2[genre2.selectedIndex].value;
+					
+					genre3=document.getElementById("genre3");
+					g3= genre3[genre3.selectedIndex].value;
 					
 					formData = new FormData();
 					formData.append('pseudo',$('#pseudo').val());
@@ -52,9 +48,6 @@
 					formData.append('genre3',g3);
 					formData.append('description',$('#description').val());
 					
-					console.log(formData);
-					console.log('genre1: '+g1);
-					
 					$.ajax( {
 						type:'POST',
 						url:$this.attr('action'),
@@ -64,6 +57,7 @@
 
 						success:function(content) {
 						alert(content);
+						window.location.href="/";
 						},
 						error:function(){
 							alert('Error Ajax!');

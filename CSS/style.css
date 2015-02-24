@@ -844,3 +844,16 @@ display:block;
 *:focus {
     outline: 0;
 }
+
+a {
+color:#FFF;
+}
+a:hover{
+color:#FFF;
+}
+a:link{
+text-decoration:none;
+}
+a:visited{
+color:#FFF;
+}
