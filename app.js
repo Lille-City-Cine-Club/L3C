@@ -20,7 +20,18 @@ var app = express()
 var done = false;
 var posterPath;
 app.use(multer({dest: './ressources/poster',
-				rename: function(fieldname, filename){
+				/*changeDest : function(dest, req, res){
+					if(req.body.form_id =="carousel"){
+						console.log('Changement du fichier de destination pour les fichiers du carousel');
+						return dest +'/carousel';
+					};
+				},*/
+				rename: function(fieldname, filename, req, res){
+					// if(req.body.form_id =="carousel"){
+						// return filename;
+					// }else{
+						// return moment().format('YYYY_MM_DD')+'_'+filename;
+					// }
 					return moment().format('YYYY_MM_DD')+'_'+filename;
 				},
 				onFileUploadStart: function(file, req, res){
@@ -77,12 +88,6 @@ console.log("City Ciné Club, a.k.a CCC, Web Server!\nListening on : 7777 \n");
 
 //mongoose.connect('mongodb://adminL3C:Herculesproject@ds045031.mongolab.com:45031/lille_city_cine_club');
 mongoose.connect('mongodb://localhost:27017/CCC');
-<<<<<<< HEAD
-
-
-var db = mongoose.connection;
-=======
->>>>>>> origin/master
 
 var db = mongoose.connection;
 db.on('error',function(){
@@ -264,6 +269,24 @@ app.get('/login',function(req,res){
 	});
 })
 
+// Admin modif carousel page
+app.get('/admin-carousel', function(req,res){
+	console.log('\n Admin carousel loaded');
+	
+	var html;
+	fs.readFile(__dirname+'/html/admin/admin-carousel.html','utf8',function(err,data){
+		if(err){
+			console.log('Error Admin carousel!');
+			throw err;
+		};
+		
+		html = data;
+		res.charset='utf-8';
+		res.setHeader("Access-Control-Allows-Origin","*");
+		res.send(html);
+	});
+})
+
 
 //posting content to DB
 app.post('/postContent',function(req,res){
@@ -372,6 +395,22 @@ app.post('/newMember', function(req,res){
 			console.log(user);
 			res.send('New member '+user.name+' added!!');
 		});
+	};
+})
+
+app.post('/postCarousel', function(req,res){
+	console.log('\nAdding new movie poster to the carousel');
+	console.log(req.headers['content-type']);
+	console.log(req.files);
+	console.log('film1'+req.body.film1);
+
+	var response = checkFormCarousel(req);
+	if(response.codeResponse =="ko"){
+		console.log('Error! Invalid form.');
+		res.send(response.message);
+	}else{
+		console.log("\nSuccess! All movies correctly added into Server.");
+		res.send("Success! All movies correctly added into Server.");
 	};
 })
 
@@ -496,9 +535,52 @@ var checkFormLogin = function(req){
 		return response;
 	};
 	response.codeResponse = "ok";
-	response.message ="" 
+	response.message ="";
 	return response;
 };	
+
+var checkFormCarousel = function(req){
+	var response = {
+			codeResponse:"",
+			message:""
+		};
+	if(req.body.film1 == undefined ){
+		response.codeResponse = "ko";
+		response.message = "Toutes les affiches de films doivent être complété!(1)";
+		return response;
+	};
+	if(req.body.film2 == undefined ){
+		response.codeResponse = "ko";
+		response.message = "Toutes les affiches de films doivent être complété!(2)";
+		return response;
+	};
+	if(req.body.film3 == undefined ){
+		response.codeResponse = "ko";
+		response.message = "Toutes les affiches de films doivent être complété!(3)";
+		return response;
+	};
+	if(req.body.film4 == undefined){
+		response.codeResponse = "ko";
+		response.message = "Toutes les affiches de films doivent être complété!(4)";
+		return response;
+	};
+	if(req.body.film5 == undefined ){
+		response.codeResponse = "ko";
+		response.message = "Toutes les affiches de films doivent être complété!(5)";
+		return response;
+	};
+	if(req.body.film6 == undefined ){
+		response.codeResponse = "ko";
+		response.message = "Toutes les affiches de films doivent être complété!(6)";
+		return response;
+	};
+	
+	response.codeResponse = "ok";
+	response.message ="" ;
+	return response;
+};	
+
+
 
 // to get CSS/ressourcs etc...
 var staticMiddleware = express.static(__dirname);

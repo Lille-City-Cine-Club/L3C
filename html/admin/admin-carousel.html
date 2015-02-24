@@ -20,12 +20,13 @@
 	
 		<script><!-- Ajax command to add new movie to DB -->
 			$(document).ready(function(){
-				$('#formCarousel').on('submit', function(e) {
+				$('#formCarousel').submit(function(e) {
 					e.preventDefault(); // J'empêche le comportement par défaut du navigateur, c-à-d de soumettre le formulaire
 	 
 					var $this = $(this); // L'objet jQuery du formulaire	
 			
-					formData = new FormData($("formCarousel")[0]);
+					var formData;
+					formData = new FormData($('formCarousel')[0]);
 					
 					$.ajax( {
 						type:'POST',
@@ -121,7 +122,7 @@
 					
 					<li id="buttons">
 						<div id="ButtonsWrapper" >
-							<input type="hidden" name="form_id" value="955925" />
+							<input type="hidden" name="form_id" value="carousel" />
 							<input id="saveForm" class="buttonValider" type="submit" value="Valider" />
 						</div>
 					</li>
