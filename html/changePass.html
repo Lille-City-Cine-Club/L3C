@@ -1,0 +1,133 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html lang="fr">
+	<head>
+		<!--[if lt IE 9]>
+			<script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+		<![endif]-->
+		<meta charset="utf-8" />
+		<!-- Import de Bootstrap et de FontAwesome (pour les icônes)-->
+		<link rel="stylesheet" href="../CSS/bootstrap.min.css">
+		<link rel="stylesheet" href="../CSS/font-awesome.min.css" />
+		<!-- Import de notre fichier CSS -->
+		<link rel="stylesheet" href="../CSS/style.css" />
+		<!-- Import des fichiers Javacript-->
+		<script src="../js/jquery-1.9.1.min.js"></script>
+		<!--favicon-->
+		<link rel="icon" type="image/png" href="../ressources/logo/favicon.png" />
+		<title>L3C : Modifier votre mot de passe </title>
+		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+		
+		<script>
+		function checkForm(){
+			if($('#pseudoLogin').val()=="" || $('#pseudoLogin').val() == null ){
+			alert("Le champs E-Mail doit être complété");
+			return false;
+			}
+			if($('#passwordLogin').val()=="" || $('#passwordLogin').val() == null ){
+			alert("Le champs mot de passe doit être complété");
+			return false;
+			}
+		}
+		//https://scotch.io/tutorials/easy-node-authentication-setup-and-local
+		//https://www.npmjs.com/package/bcrypt-nodejs
+		//http://code.tutsplus.com/tutorials/authenticating-nodejs-applications-with-passport--cms-21619
+		
+		$(document).ready(function(){
+			$('#formLogin').on('submit', function(e){
+				e.preventDefault();
+				
+				var $this = $(this);
+				
+				var formData = new FormData();
+				formData.append('email',$('#pseudoLogin').val());
+				formData.append('password',$('#passwordLogin').val());
+				
+				$.ajax({
+					type:'POST',
+					url:$this.attr('action'),
+					data:formData,
+					processData:false,
+					contentType:false,
+					
+					success:function(content){
+						console.log('login ok!');
+						window.location.href="/";
+					},
+					error:function(){
+						alert('Error Ajax!');
+					}
+				});
+			});
+		});
+		
+		
+		
+		</script>
+	</head>
+	
+	<body>
+		<!-- logo+site -->
+		<div class="logo-nav-wrapper">
+		<!-- Regroupe le logo-->
+			<div class="logo-wrapper">
+				<div class="site-logo">
+					<a href="http://localhost:7777/">
+						<img src="../ressources/logo/L3C.jpg" alt="Lille City Cine Club" />
+					</a>
+				</div>
+			</div>
+			<!-- le menu -->
+			<div class="nav-wrapper">
+				<ul id="menu">
+					<li>
+						<a id="Seance" href="suggestion">Le Film du mois</a>
+					</li>
+					<li>
+						<a id="about" href="about">A propos</a>
+					</li>
+				</ul>
+			</div>
+		</div>
+		<div id="form">
+			<form id="formChangeMdp" action="changeMdp" method="post">
+				<h2> Modifier votre mot de passe : </h2>
+				<ul>
+					<li id="ChampMDP">
+						<label class="description"> Entrez votre ancien mot de passe : </label>
+						<input id="oldMDP" maxlength="255" type="password" value="" placeholder="Ancien Mot de Passe"/>
+					</li>
+					<hr>
+					<div id="separateur"></div>
+					<li id="PseudoLogin">
+						<label class="description"> Nouveau mot de passe : </label>
+						<input id="newMDP" maxlength="255" type="password" value="" placeholder="Nouveau mot de passe"/>
+					</li>
+					<li id="PasswordLogin">
+						<label class="description"> Confirmez-le : </label>
+						<input id="confirm" maxlength="255" type="password" value="" placeholder="Confirmez-le ici"/>
+					</li>
+					<li>
+						<div id="ButtonsWrapper" >
+							<input type="hidden" name="form_id" value="955925" />
+							<input id="saveForm" class="buttonValider" type="submit"  value="Se connecter" />
+						</div>
+					</li>
+			</form>
+		</div>
+		<div class="footer-wrapper">
+		<div id="menu-logo" >
+			<a href="http://www.univ-lille1.fr/" target="_blank">
+				<img src="../ressources/logo/logoLille1Mini.png" alt="Université Lille1" >
+			</a>
+			<ul id="footer-menu">
+				<li><span class="fa fa-lg fa-facebook" style="margin-left:0.2%"></span> <a href=http://www.facebook.com/LilleCityCineClub target="_blank" style="margin-left:0.8%"> Facebook </a></li>
+				<li><span class="glyphicon glyphicon-info-sign" style="font-size:16px;" ></span> <a href="about" style="margin-left:0.5%"> A propos </a></li>
+			</ul>
+		</div>
+		<div id="copyright">
+			<p>
+				&copy Benny-P & DonDiego. En collaboration avec M.Dufrêne. Université Lille 1.
+			</p>	
+		</div>
+	</body>
+</html>
