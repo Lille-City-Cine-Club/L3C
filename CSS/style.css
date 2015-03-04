@@ -822,6 +822,40 @@ height:5%;
 width:auto;
 font-weight:bold;
 }
+/* -------------------------------------------------------- MDP Oublié ------------------------------------------------------------------ */
+#formForgottenPass{
+height:auto;
+width:35%;
+border: 2px solid;
+border-radius:25px;
+margin-top : 7.3%;
+margin-left: 32.5%;
+margin-right: 32.5%;
+margin-bottom:6.4%;
+padding-bottom:1.3%;
+}
+
+#forgotten-title{
+margin-left : -1%;
+color : #171717;
+font-size:30px;
+}
+
+#forgotten-message{
+padding-right : 5%;
+padding-left : 6%;
+text-align: justify;
+}
+
+#forgotten-email{
+margin-top : 0%;
+padding-left : 1%;
+margin-left:2%;
+margin-bottom : 4%;
+margin-top : 2%;
+}
+
+
 /* -------------------------------------------------------- Modifier MDP ------------------------------------------------------------------ */
 #form #formChangeMdp{
 height:auto;
