@@ -365,7 +365,7 @@ app.post('/newMember', function(req,res){
 	var response = checkFormMember(req);
 	if(response.codeResponse == "ko"){
 		console.log("Adding failed! form wasn't valid.");
-		res.send(response.message);
+		res.send(response);
 	}else{
 		pseudo = req.body.pseudo;
 		mail = req.body.mail;
@@ -518,7 +518,7 @@ var checkFormMember = function(req){
 	};
 	if(req.body.password == "" || req.body.password == null ){
 		response.codeResponse = "ko";
-		response.message ="Le REALISATEUR doit au moins être completé !";
+		response.message ="Le MOT DE PASSE doit au moins être completé !";
 		return response;
 	};
 	if(req.body.password != req.body.confirmPass){
@@ -533,7 +533,7 @@ var checkFormMember = function(req){
 	};
 	
 	response.codeResponse = "ok";
-	response.message ="Success ! Movie " + req.body.title + " added into L3C DB;" 
+	response.message ="Success ! User " + req.body.pseudo + " added into L3C DB;" 
 	return response;
 };
 

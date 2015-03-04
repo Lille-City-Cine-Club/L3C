@@ -57,8 +57,12 @@
 						contentType:false,
 
 						success:function(content) {
-						alert(content);
-						window.location.href="/";
+							if(content.codeResponse === "ko"){
+								alert(content.message);
+							}else{
+								alert(content)
+								window.location.href="/";
+							};
 						},
 						error:function(){
 							alert('Error Ajax!');
