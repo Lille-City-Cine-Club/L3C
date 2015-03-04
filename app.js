@@ -86,8 +86,8 @@ console.log("City Ciné Club, a.k.a CCC, Web Server!\nListening on : 7777 \n");
 
 //connection to the DB
 
-//mongoose.connect('mongodb://adminL3C:Herculesproject@ds045031.mongolab.com:45031/lille_city_cine_club');
-mongoose.connect('mongodb://localhost:27017/CCC');
+mongoose.connect('mongodb://adminL3C:Herculesproject@ds045031.mongolab.com:45031/lille_city_cine_club');
+//mongoose.connect('mongodb://localhost:27017/CCC');
 
 var db = mongoose.connection;
 db.on('error',function(){
@@ -165,10 +165,20 @@ app.get('/suggestion', function(req,res){
 			for(var i = 0; i<movie.actors.length ; i++){
 				actors += movie.actors[i]+', ';
 			}
+			// Disable the 'undefined' genre when a movie have less than 3 genre. 
+			var genre ="";
+			genre += movie.genre[0];
+			if (typeof movie.genre[1] != 'undefined'){
+				genre +=", "+movie.genre[1];
+			};
+			if(typeof movie.genre[2] != 'undefined'){
+				genre +=", "+movie.genre[2];
+			};
+			
 
 			html = data;
 			html = html.replace('%%title%%',movie.title);
-			html = html.replace('%%genre%%',movie.genre[0]+", "+movie.genre[1]+", "+movie.genre[2]);
+			html = html.replace('%%genre%%', genre);
 			html = html.replace('%%real%%',movie.director);
 			html = html.replace('%%actors%%',actors +" ...");
 			html = html.replace('%%why%%',movie.why);
@@ -306,16 +316,17 @@ app.post('/postContent',function(req,res){
 		genre = []; 								// creating an array of genre
 		genre.push(req.body.genre1);
 		
-		if(req.body.genre2!=""){
+		// Allow a movie to have less than 3 genre
+		if(typeof req.body.genre2 != 'undefined'){
 			genre.push(req.body.genre2);
 		};
-		if(req.body.genre3!=""){
+		if(typeof req.body.genre3 != 'undefined'){
 			genre.push(req.body.genre3);
 		};
 		synopsis=req.body.synopsis;
 		why=req.body.why;
 		
-		console.log('title: '+title+'\n director: '+director+'\n actors: '+actors+'\n synopsis: '+synopsis+'\n poster:'+posterPath+'\n why:'+why+'\n');
+		console.log('title: '+title+'\n genre: '+genre+'\n director: '+director+'\n actors: '+actors+'\n synopsis: '+synopsis+'\n poster:'+posterPath+'\n why:'+why+'\n');
 		
 		var movie = {
 			"title":title,
