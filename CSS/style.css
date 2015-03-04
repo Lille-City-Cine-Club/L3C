@@ -173,8 +173,8 @@ margin-bottom:20px;
 color:#7D0000;
 font-size:1.5em;
 }
-#GenreTitle{
-margin-left:25px;;
+#duration{
+margin-left:10px;;
 }
 .poster img{
 width:100%;
@@ -539,7 +539,10 @@ line-height:1.5em;
 #form ul #Genre #genre1{
 margin-left:17px;
 }
-
+#form ul #duree #duree {
+line-height:1.5em;
+width:20%;
+}
 #form ul #synopsis #synopsis{
 resize:none;
 height:75px;
@@ -573,6 +576,7 @@ text-align:center;
 margin-left:-40px;
 line-height:1.5em;
 }
+
 /* ------------------------------------------------------- Carousel ----------------------------------------------------------------------- */
 .carousel-image-wrapper{
 padding-bottom : 5px;

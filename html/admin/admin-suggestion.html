@@ -20,6 +20,7 @@
 	
 		<script><!-- Ajax command to add new movie to DB -->
 			$(document).ready(function(){
+				
 				$('#formFilm').submit(function(e) {
 				
 					e.preventDefault(); // J'empêche le comportement par défaut du navigateur, c-à-d de soumettre le formulaire
@@ -38,6 +39,7 @@
 
 						success:function(content) {
 							alert(content);
+							
 						},
 						error:function(){
 							alert('Error Ajax!');
@@ -49,7 +51,7 @@
 	</head>
 
 	<body>
-	<div class="bo*dy-wrapper" ><!--Div qui regroupe toute la page -->
+	<div class="body-wrapper" ><!--Div qui regroupe toute la page -->
 		
 		<!-- logo+site -->
 		<div class="logo-nav-wrapper"><!-- Regroupe le logo-->
@@ -148,6 +150,10 @@
 							<option value="thriller">Thriller</option>
 							<option value="western">Western</option>
 						</select>
+					</li>
+					<li id="duree">
+						<label class="description"> Durée du Film : </label>
+						<input name="duree" id="duree" placeholder="Durée du film" type="text"/> 
 					</li>
 					<li id="Synopsis" >
 						<label class="description" >Synopsis: </label>
