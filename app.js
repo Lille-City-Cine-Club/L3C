@@ -459,6 +459,7 @@ var requiresAdmin = function(){
 app.all('/admin/*',requiresAdmin());
 
 // ------------------------------------------------------- Fonction de verification des forms ---------------------------------------------
+// checkForm for admin-suggestion
 var checkFormFilm = function(req){	
 	var response = {
 		codeResponse:"",
@@ -499,6 +500,7 @@ var checkFormFilm = function(req){
 	return response;
 };
 
+// CheckForm for inscription
 var checkFormMember = function(req){
 	var response = {
 		codeResponse:"",
@@ -519,6 +521,11 @@ var checkFormMember = function(req){
 		response.message ="Le REALISATEUR doit au moins être completé !";
 		return response;
 	};
+	if(req.body.password != req.body.confirmPass){
+		response.codeResponse = "ko";
+		response.message = "Le MOT DE PASSE et la CONFIRMATION doivent être IDENTIQUES !";
+		return response;
+	};
 	if(req.body.genre1 == "" || req.body.genre1 == null ){
 		response.codeResponse = "ko";
 		response.message ="Le premier GENRE doit au moins être completé !";
@@ -529,7 +536,8 @@ var checkFormMember = function(req){
 	response.message ="Success ! Movie " + req.body.title + " added into L3C DB;" 
 	return response;
 };
-	
+
+// checkForm for login	
 var checkFormLogin = function(req){
 	var response = {
 			codeResponse:"",
@@ -550,6 +558,7 @@ var checkFormLogin = function(req){
 	return response;
 };	
 
+// checkForm for admin-carousel
 var checkFormCarousel = function(req){
 	var response = {
 			codeResponse:"",
