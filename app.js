@@ -314,7 +314,7 @@ app.post('/postContent',function(req,res){
 	
 	response = checkFormFilm(req);					// verification du formulaire
 	if(response.codeResponse == "ko"){
-		res.send(response.message);
+		res.send(response);
 	}else{
 	
 		title = req.body.title;
@@ -360,7 +360,7 @@ app.post('/postContent',function(req,res){
 				throw err;
 			};
 			console.log('movie added!\n');
-			res.send("success! Movie: "+req.body.title+ " to DB.");
+			res.send(response);
 		});	
 	};
 })

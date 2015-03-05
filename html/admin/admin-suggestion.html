@@ -38,8 +38,18 @@
 						contentType:false,
 
 						success:function(content) {
-							alert(content);
-							
+							if(content.codeResponse != "ko"){ 
+								window.scrollTo(0,0);
+								$(".error").hide(0);
+								$(".success").append(content.message);
+								$(".success").show();
+								$(".success").fadeOut(5500);
+								$('#formFilm')[0].reset();
+							}else{
+								window.scrollTo(0,0);
+								$(".error").append(content.message);
+								$(".error").show();
+							}
 						},
 						error:function(){
 							alert('Error Ajax!');
@@ -76,7 +86,8 @@
 				</ul>
 			</div>
 		</div>
-	
+		<div class="success"></div>
+		<div class="error"></div>
 		<div id="form">	
 			<form id="formFilm" method="post" action="postContent">
 				<h2> Ajouter un film : </h2>			

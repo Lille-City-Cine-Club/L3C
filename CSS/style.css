@@ -576,7 +576,21 @@ text-align:center;
 margin-left:-40px;
 line-height:1.5em;
 }
-
+.success, .error {
+    display: none;
+	border-radius:25px;
+    margin-top: 35px;
+	margin-bottom:-30px;
+	margin-left: 30%;
+	margin-right: 30%;
+    padding: 10px;
+    border: solid 2px #bd8;
+	font-weight:600;
+	text-align:center;
+}
+.error{
+	border: solid 2px #FF0000;
+}
 /* ------------------------------------------------------- Carousel ----------------------------------------------------------------------- */
 .carousel-image-wrapper{
 padding-bottom : 5px;
