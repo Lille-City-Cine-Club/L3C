@@ -107,7 +107,7 @@ var movieSchema = new Schema({
 	genre: [String],
 	synopsis: String,
 	poster: String,
-	duration: String,
+	poster: String,
 	why: String,
 	date: {type:Date, default:Date.now}
 });
@@ -175,17 +175,9 @@ app.get('/suggestion', function(req,res){
 				genre +=", "+movie.genre[2];
 			};
 			
-			var duration;
-			if( typeof movie.duration === 'undefined'){
-				duration = "Un film sans durée :O !";
-			}else{
-				duration = movie.duration;
-			};
-			
 
 			html = data;
 			html = html.replace('%%title%%',movie.title);
-			html = html.replace('%%duration%%',duration);
 			html = html.replace('%%genre%%', genre);
 			html = html.replace('%%real%%',movie.director);
 			html = html.replace('%%actors%%',actors +" ...");
@@ -310,11 +302,11 @@ app.get('/admin-carousel', function(req,res){
 app.post('/postContent',function(req,res){
 	console.log('posting content...\n');
 	
-	var title,director,actors,genre,duration,synopsis,why;	// le poster est géré par multer. On rajoute juste le chemmin du poster à la base(cf posterPath)
+	var title,director,actors,genre,synopsis,why;	// le poster est géré par multer. On rajoute juste le chemmin du poster à la base(cf posterPath)
 	
 	response = checkFormFilm(req);					// verification du formulaire
 	if(response.codeResponse == "ko"){
-		res.send(response);
+		res.send(response.message);
 	}else{
 	
 		title = req.body.title;
@@ -331,11 +323,10 @@ app.post('/postContent',function(req,res){
 		if(typeof req.body.genre3 != 'undefined'){
 			genre.push(req.body.genre3);
 		};
-		duration = req.body.duration;
 		synopsis=req.body.synopsis;
 		why=req.body.why;
 		
-		console.log('title: '+title+'\n genre: '+genre+'\n duration: '+duration+'\ndirector: '+director+'\n actors: '+actors+'\n synopsis: '+synopsis+'\n poster:'+posterPath+'\n why:'+why+'\n');
+		console.log('title: '+title+'\n genre: '+genre+'\n director: '+director+'\n actors: '+actors+'\n synopsis: '+synopsis+'\n poster:'+posterPath+'\n why:'+why+'\n');
 		
 		var movie = {
 			"title":title,
@@ -344,7 +335,6 @@ app.post('/postContent',function(req,res){
 			"genre":genre,
 			"synopsis":synopsis,
 			"poster":posterPath,
-			"duration":duration,
 			"why":why
 		};
 
@@ -360,7 +350,7 @@ app.post('/postContent',function(req,res){
 				throw err;
 			};
 			console.log('movie added!\n');
-			res.send(response);
+			res.send("success! Movie added to DB.");
 		});	
 	};
 })
