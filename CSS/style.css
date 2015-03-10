@@ -581,6 +581,7 @@ line-height:1.5em;
 }
 .success, .error {
     display: none;
+	color:white;
 	border-radius:25px;
     margin-top: 35px;
 	margin-bottom:-30px;
@@ -590,9 +591,23 @@ line-height:1.5em;
     border: solid 2px #bd8;
 	font-weight:600;
 	text-align:center;
+	background: repeating-linear-gradient(
+		  45deg,
+		  #bd8,
+		  #bd8 10px,
+		  #5EFF5B 10px,
+		  #5EFF5B 20px
+		);
 }
 .error{
-	border: solid 2px #FF0000;
+	border: solid 2px #F20600;
+	background: repeating-linear-gradient(
+		  45deg,
+		  #E81900,
+		  #E81900 10px,
+		  #E83521 10px,
+		  #E83521 20px
+		);
 }
 /* ------------------------------------------------------- Carousel ----------------------------------------------------------------------- */
 .carousel-image-wrapper{

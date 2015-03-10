@@ -26,7 +26,8 @@
 				
 				var formData = new FormData();
 				formData.append('email',$('#pseudoLogin').val());
-				formData.append('password',$('#passwordLogin').val());
+				formData.append('password',$('#newMDP').val());
+				formData.append('confirmPass',$('#confirm').val());
 				
 				$.ajax({
 					type:'POST',

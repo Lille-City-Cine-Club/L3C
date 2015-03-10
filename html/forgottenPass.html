@@ -25,8 +25,7 @@
 				var $this = $(this);
 				
 				var formData = new FormData();
-				formData.append('email',$('#pseudoLogin').val());
-				formData.append('password',$('#passwordLogin').val());
+				formData.append('email',$('#forgotten-email').val());
 				
 				$.ajax({
 					type:'POST',
@@ -45,9 +44,6 @@
 				});
 			});
 		});
-		
-		
-		
 		</script>
 	</head>
 	

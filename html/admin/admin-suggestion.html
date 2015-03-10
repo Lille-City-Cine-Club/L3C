@@ -41,13 +41,15 @@
 							if(content.codeResponse != "ko"){ 
 								window.scrollTo(0,0);
 								$(".error").hide(0);
-								$(".success").append(content.message);
+								var successMessage = document.getElementById('success');
+								successMessage.innerHTML = content.message;							
 								$(".success").show();
 								$(".success").fadeOut(5500);
 								$('#formFilm')[0].reset();
 							}else{
 								window.scrollTo(0,0);
-								$(".error").append(content.message);
+								var errorMessage = document.getElementById('error');
+								errorMessage.innerHTML = content.message;
 								$(".error").show();
 							}
 						},
@@ -86,8 +88,8 @@
 				</ul>
 			</div>
 		</div>
-		<div class="success"></div>
-		<div class="error"></div>
+		<div id="success" class="success"></div>
+		<div id="error" class="error"></div>
 		<div id="form">	
 			<form id="formFilm" method="post" action="postContent">
 				<h2> Ajouter un film : </h2>			

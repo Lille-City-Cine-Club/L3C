@@ -3,18 +3,26 @@
 // Author : Sufiane 'DonDiego' Souissi
 //			Benjamin 'BennyP' Parant
 
-var express = require('express')		// main FW
-var bodyParser = require('body-parser')	// to parse req
-var fs = require('fs')					// to read Files
-var mongoose = require('mongoose') 		// for DB
-var moment = require('moment'); 		// for date //date=moment().format('MMMM Do YYYY, h:mm:ss a');
-var multer = require('multer');			// for receiving multipart form
-var passport = require('passport')		// to identify members etc...
+var express = require('express')			// main FW
+var bodyParser = require('body-parser')		// to parse req
+var fs = require('fs')						// to read Files
+var mongoose = require('mongoose') 			// for DB
+var moment = require('moment'); 			// for date //date=moment().format('MMMM Do YYYY, h:mm:ss a');
+var multer = require('multer');				// for receiving multipart form
+var session = require('express-session');	// to handle session storage
+var passport = require('passport')			// to identify members etc...
 	, LocalStrategy = require('passport-local').Strategy
 	, ensureLoggedIn = require('connect-ensure-login').ensureLoggedIn;
 	
 var app = express()
 
+// for the session
+var sess;
+app.use(session({secret:'Hercules Project'}));
+
+//for post request
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({extended : true}));
 
 // to store img in form (i.e poster)
 var done = false;
@@ -49,10 +57,6 @@ app.use(multer({dest: './ressources/poster',
 				}
 }));
 
-//for post request
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({extended : true}));
-
 //credientials for localStrategy {usernameField:'email',passwordField:'password'}
 passport.use(new LocalStrategy({usernameField:'email',passwordField:'password'},function(email,password,done){
 	userModel.findOne({'email':email,'password': password },
@@ -85,7 +89,6 @@ app.use(passport.session());
 console.log("City Ciné Club, a.k.a CCC, Web Server!\nListening on : 7777 \n");
 
 //connection to the DB
-
 mongoose.connect('mongodb://adminL3C:Herculesproject@ds045031.mongolab.com:45031/lille_city_cine_club');
 //mongoose.connect('mongodb://localhost:27017/CCC');
 
@@ -130,6 +133,8 @@ var userModel = mongoose.model('Users', userSchema, 'Users');
 app.get('/', function(req,res){
 	console.log('\nHome loaded');
 	
+	sess = req.session;
+	
 	var html;
 	fs.readFile(__dirname+'/html/home.html','utf8',function(err,data){
 		if(err){
@@ -146,93 +151,109 @@ app.get('/', function(req,res){
 
 //Suggestion page
 app.get('/suggestion', function(req,res){
-	
-	movieModel.findOne({},{},{sort:{date:-1}},function(err,movie){
-		if(err){
-			console.log('Error find!');
-			throw err;
-		}
-		console.log('\nSuggestion Loaded! Movie: '+ movie.title +'\n');
-		var img;
-		var html;
-		fs.readFile(__dirname+'/html/suggestion.html','utf8',function(err,data){
+	if(session.email){
+		movieModel.findOne({},{},{sort:{date:-1}},function(err,movie){
 			if(err){
-				console.log('Error Suggestion!');
+				console.log('Error find!');
 				throw err;
-			}		
-			// disable "actors1, undefined ..."
-			var actors = "";
-			for(var i = 0; i<movie.actors.length ; i++){
-				actors += movie.actors[i]+', ';
 			}
-			// Disable the 'undefined' genre when a movie have less than 3 genre. 
-			var genre ="";
-			genre += movie.genre[0];
-			if (typeof movie.genre[1] != 'undefined'){
-				genre +=", "+movie.genre[1];
-			};
-			if(typeof movie.genre[2] != 'undefined'){
-				genre +=", "+movie.genre[2];
-			};
-			
-			var duration;
-			if( typeof movie.duration === 'undefined'){
-				duration = "Un film sans durée :O !";
-			}else{
-				duration = movie.duration;
-			};
-			
+			console.log('\nSuggestion Loaded! Movie: '+ movie.title +'\n');
+			var img;
+			var html;
+			fs.readFile(__dirname+'/html/suggestion.html','utf8',function(err,data){
+				if(err){
+					console.log('Error Suggestion!');
+					throw err;
+				}		
+				// disable "actors1, undefined ..."
+				var actors = "";
+				for(var i = 0; i<movie.actors.length ; i++){
+					actors += movie.actors[i]+', ';
+				}
+				// Disable the 'undefined' genre when a movie have less than 3 genre. 
+				var genre ="";
+				genre += movie.genre[0];
+				if (typeof movie.genre[1] != 'undefined'){
+					genre +=", "+movie.genre[1];
+				};
+				if(typeof movie.genre[2] != 'undefined'){
+					genre +=", "+movie.genre[2];
+				};
+				
+				var duration;
+				if( typeof movie.duration === 'undefined'){
+					duration = "Un film sans durée :O !";
+				}else{
+					duration = movie.duration;
+				};
+				
 
-			html = data;
-			html = html.replace('%%title%%',movie.title);
-			html = html.replace('%%duration%%',duration);
-			html = html.replace('%%genre%%', genre);
-			html = html.replace('%%real%%',movie.director);
-			html = html.replace('%%actors%%',actors +" ...");
-			html = html.replace('%%why%%',movie.why);
-			html = html.replace('%%synopsis%%',movie.synopsis);
-			html = html.replace('%%poster%%', movie.poster);
+				html = data;
+				html = html.replace('%%title%%',movie.title);
+				html = html.replace('%%duration%%',duration);
+				html = html.replace('%%genre%%', genre);
+				html = html.replace('%%real%%',movie.director);
+				html = html.replace('%%actors%%',actors +" ...");
+				html = html.replace('%%why%%',movie.why);
+				html = html.replace('%%synopsis%%',movie.synopsis);
+				html = html.replace('%%poster%%', movie.poster);
+				
+				res.charset='utf-8';
+				res.setHeader("Access-Control-Allow-Origin","*");
+				res.send(html);
 			
-			res.charset='utf-8';
-			res.setHeader("Access-Control-Allow-Origin","*");
-			res.send(html);
-		
+			});
 		});
-	});
+	}else{
+		console.log('Seul les membres peuvent se rendre sur la page de suggestion. Inscrivez vous!');
+		res.redirect('/login');
+	}
 })
 
 // Admin Home page
 app.get('/admin', function(req,res){
-	console.log('\n Admin Home page loaded');
+	if(!sess.isAdmin){
+		console.log('Vous n\'avez pas les droit pour vous rendre sur cette page.');
+		res.redirect('/');
+	}else{
 	
-	var html;
-	fs.readFile(__dirname+'/html/admin/admin.html','utf8',function(err, data){
-		if(err){
-			console.log('Error Admin home page!');
-			throw err;
-		}
-		html = data;
-		res.charset='utf-8';
-		res.setHeader("Access-Control-Allow-Origin","*");
-		res.send(html);
-	});
+		console.log('\n Admin Home page loaded');
+		
+		var html;
+		fs.readFile(__dirname+'/html/admin/admin.html','utf8',function(err, data){
+			if(err){
+				console.log('Error Admin home page!');
+				throw err;
+			}
+			html = data;
+			res.charset='utf-8';
+			res.setHeader("Access-Control-Allow-Origin","*");
+			res.send(html);
+		});
+	}
 })
 
 // Admin Adding content page
 app.get('/admin-suggestion', function(req,res){
-	console.log('\nAdminSuggestion loaded');
-	
-	var html;
-	fs.readFile(__dirname+'/html/admin/admin-suggestion.html','utf8',function(err,data){
-		if(err){
-			console.log('Error adminSuggestion!');
-			throw err;
-		}
-		html = data;
-		res.charset='utf-8';
-		res.setHeader("Access-Control-Allow-Origin","*");
-		res.send(html);
-	});
+	if(!sess.isAdmin){
+		console('Vous n\'avez pas les droits pour vous rendre sur cette page.');
+		res.redirect('/');
+	}else{
+
+		console.log('\nAdminSuggestion loaded');
+		
+		var html;
+		fs.readFile(__dirname+'/html/admin/admin-suggestion.html','utf8',function(err,data){
+			if(err){
+				console.log('Error adminSuggestion!');
+				throw err;
+			}
+			html = data;
+			res.charset='utf-8';
+			res.setHeader("Access-Control-Allow-Origin","*");
+			res.send(html);
+		});
+	}
 })
 
 //About page
@@ -289,22 +310,43 @@ app.get('/login',function(req,res){
 
 // Admin modif carousel page
 app.get('/admin-carousel', function(req,res){
-	console.log('\n Admin carousel loaded');
-	
-	var html;
-	fs.readFile(__dirname+'/html/admin/admin-carousel.html','utf8',function(err,data){
-		if(err){
-			console.log('Error Admin carousel!');
-			throw err;
-		};
+	if(!sess.isAdmin){
+		console('Vous n\'avez pas les droits pour vous rendre sur cette page');
+		res.redirect('/');
+	}else{
+		console.log('\n Admin carousel loaded');
 		
-		html = data;
-		res.charset='utf-8';
-		res.setHeader("Access-Control-Allows-Origin","*");
-		res.send(html);
-	});
+		var html;
+		fs.readFile(__dirname+'/html/admin/admin-carousel.html','utf8',function(err,data){
+			if(err){
+				console.log('Error Admin carousel!');
+				throw err;
+			};
+			
+			html = data;
+			res.charset='utf-8';
+			res.setHeader("Access-Control-Allows-Origin","*");
+			res.send(html);
+		});
+	}
 })
 
+// logout
+app.get('/logout', function(req,res){
+	console.log('Merci de votre visite et à bientôt ! ');
+	req.session.destroy(function(err){
+		if(err){
+			console.log('Error logout!');
+			console.log(err);
+			throw err;
+		}
+		res.redirect('/');
+	});
+	/*
+	req.logout();
+	res.redirect('/');
+	*/
+})
 
 //posting content to DB
 app.post('/postContent',function(req,res){
@@ -419,6 +461,7 @@ app.post('/newMember', function(req,res){
 	};
 })
 
+// Adding new poster for the carousel
 app.post('/postCarousel', function(req,res){
 	console.log('\nAdding new movie poster to the carousel');
 	console.log(req.headers['content-type']);
@@ -435,23 +478,64 @@ app.post('/postCarousel', function(req,res){
 	};
 })
 
-/*
-app.post('/loginConnection',function(req,res){
-	console.log('log COnnectionn');
+// Post loggin page
+app.post('/loginConnection', function(req,res){
+	
+	var response = {
+		codeResponse:"",
+		message:"",
+		isAdmin:""
+	};
+
+	userModel.findOne({"email":req.body.email},{},function(err,user){
+		if(err){
+			console.log('Error login! User not found!');
+			throw err;
+		}
+		
+		if(user == null || user.password != req.body.password){
+			response.codeResponse = "ko"
+			response.message="Email ou Mot de Passe incorrect!";
+			response.isAdmin = "";
+			
+			console.log('email or password invalid');
+			res.send(response);
+		}else{
+			sess = req.session;
+			console.log(user);
+			if(user.isAdmin != true){
+				sess.email = user.mail;
+				sess.name = user.name;
+				sess.isAdmin = user.isAdmin;
+				//rajout dans la sessions des autres attributs d'un membre possible ici.
+				
+				response.codeResponse = "ok";
+				response.message = "Bienvenue "+user.name+" !";
+				res.send(response);
+			}else{
+				console.log('session');
+				console.log(sess);
+				
+				sess.email = user.mail;
+				sess.name = user.name;
+				sess.isAdmin = user.isAdmin;
+				
+				response.codeResponse = "ok";
+				response.message = "Au boulot "+user.name+" !";
+				response.isAdmin = user.isAdmin;
+				
+				res.send(response);
+			}
+		}
+	});
 })
-*/
 
 // ------------------------------------------------------- PASSPORT -----------------------------------------------------------------------
 // login
-app.post('/loginConnection',passport.authenticate('local',{succesReturntoOrRedirect:'/home', failureRedirect:'/login'}),function(req,res){
+/*app.post('/loginConnection',passport.authenticate('local',{succesReturntoOrRedirect:'/home', failureRedirect:'/login'}),function(req,res){
 	console.log('test login');
 });
-
-// logout
-app.get('/logout', function(req,res){
-	req.logout();
-	res.redirect('/');
-})
+*/
 
 // Function that assure that isAdmin = T for all pages in admin folder
 var requiresAdmin = function(){
@@ -475,34 +559,34 @@ var checkFormFilm = function(req){
 		codeResponse:"",
 		message:""
 	};
-	if(req.body.title == "" || req.body.title === null ){
+	if(req.body.title == "" || req.body.title == null ){
 		response.codeResponse = "ko";
-		response.message ="Le TITRE doit au moins être completé !";
+		response.message ="Le champ TITRE doit au moins être complété !";
 		return response;
 	};
 	if(req.body.director == "" || req.body.director == null ){
 		response.codeResponse = "ko";
-		response.message ="Le REALISATEUR doit au moins être completé !";
+		response.message ="Le champ REALISATEUR doit au moins être complété !";
 		return response;
 	};
 	if(req.body.actors == "" || req.body.actors == null ){
 		response.codeResponse = "ko";
-		response.message ="Les ACTEURS doivent au moins être completés !";
+		response.message ="Les champ ACTEURS doivent au moins être complétés !";
 		return response;
 	};
 	if(req.body.genre1 == "" || req.body.genre1 == null ){
 		response.codeResponse = "ko";
-		response.message ="Le premier GENRE doit au moins être completé !";
+		response.message ="Le premier GENRE doit au moins être complété !";
 		return response;
 	};
 	if(req.body.synopsis == "" || req.body.synopsis == null ){
 		response.codeResponse = "ko";
-		response.message ="Le SYNOPSIS doit au moins être completé !";
+		response.message ="Le champ SYNOPSIS doit au moins être complété !";
 		return response;
 	};
 	if(req.body.why == "" || req.body.why == null ){
 		response.codeResponse = "ko";
-		response.message ="La JUSTIFICATION doit au moins être completée !";
+		response.message ="Le champ JUSTIFICATION doit au moins être complétée !";
 		return response;
 	};
 	response.codeResponse = "ok";
@@ -518,22 +602,22 @@ var checkFormMember = function(req){
 	};
 	if(req.body.pseudo == "" || req.body.pseudo === null ){
 		response.codeResponse = "ko";
-		response.message ="Le PSEUDO doit au moins être completé !";
+		response.message ="Le champ PSEUDO doit au moins être complété !";
 		return response;
 	};
 	if(req.body.mail == "" || req.body.mail === null ){
 		response.codeResponse = "ko";
-		response.message ="Le MAIL doit au moins être completé !";
+		response.message ="Le champ MAIL doit au moins être complété !";
 		return response;
 	};
 	if(req.body.password == "" || req.body.password == null ){
 		response.codeResponse = "ko";
-		response.message ="Le MOT DE PASSE doit au moins être completé !";
+		response.message ="Le champ MOT DE PASSE doit au moins être complété !";
 		return response;
 	};
 	if(req.body.password != req.body.confirmPass){
 		response.codeResponse = "ko";
-		response.message = "Le MOT DE PASSE et la CONFIRMATION doivent être IDENTIQUES !";
+		response.message = "Les champs MOT DE PASSE et CONFIRMATION doivent être IDENTIQUES !";
 		return response;
 	};
 	if(req.body.genre1 == "" || req.body.genre1 == null ){
@@ -555,12 +639,12 @@ var checkFormLogin = function(req){
 		};
 	if(req.body.email == "" || req.body.email === null ){
 		response.codeResponse = "ko";
-		response.message ="Le E-MAIL doit au moins être completé !";
+		response.message ="Le champ E-MAIL doit au moins être complété !";
 		return response;
 	};
 	if(req.body.password == "" || req.body.password === null ){
 		response.codeResponse = "ko";
-		response.message = "Le MOT DE PASSE doit au moins être completé !";
+		response.message = "Le champ MOT DE PASSE doit au moins être complété !";
 		return response;
 	};
 	response.codeResponse = "ok";
