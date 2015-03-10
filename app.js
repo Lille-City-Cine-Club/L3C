@@ -151,7 +151,8 @@ app.get('/', function(req,res){
 
 //Suggestion page
 app.get('/suggestion', function(req,res){
-	if(session.email){
+	console.log(sess);
+	if(sess.email){
 		movieModel.findOne({},{},{sort:{date:-1}},function(err,movie){
 			if(err){
 				console.log('Error find!');
@@ -504,7 +505,7 @@ app.post('/loginConnection', function(req,res){
 			sess = req.session;
 			console.log(user);
 			if(user.isAdmin != true){
-				sess.email = user.mail;
+				sess.email = user.email;
 				sess.name = user.name;
 				sess.isAdmin = user.isAdmin;
 				//rajout dans la sessions des autres attributs d'un membre possible ici.
@@ -516,7 +517,7 @@ app.post('/loginConnection', function(req,res){
 				console.log('session');
 				console.log(sess);
 				
-				sess.email = user.mail;
+				sess.email = user.email;
 				sess.name = user.name;
 				sess.isAdmin = user.isAdmin;
 				

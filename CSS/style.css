@@ -858,6 +858,15 @@ height:5%;
 width:auto;
 font-weight:bold;
 }
+.buttonValider:hover{
+color:#C6C7B3;
+}
+.buttonValider:active{
+color:#171717;
+border-color:#171717;
+background:#FAF5F5;
+}
+
 /* -------------------------------------------------------- MDP Oublié ------------------------------------------------------------------ */
 #formForgottenPass{
 height:auto;
