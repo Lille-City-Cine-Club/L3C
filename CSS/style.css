@@ -339,7 +339,6 @@ vertical-align: center;
   margin-right: 0px;
   padding: 0;
 }
-
 #cssmenu > ul > #menu-button {
   display: none;
 }
@@ -348,10 +347,11 @@ vertical-align: center;
   text-decoration: none;
 }
 #cssmenu > ul > li > a {
-  font-size: 14px;
+  font-size: 15px;
   font-family: Helvetica, Georgia, serif;
   font-family: Helvetica;
-  padding: 15px 15px;
+  padding: 23px 17px;
+  margin-top : -8px;
   color: #ffffff;
   text-transform: uppercase;
   -webkit-transition: color 0.25s ease-out;
@@ -361,7 +361,7 @@ vertical-align: center;
   transition: color 0.25s ease-out;
 }
 #cssmenu > ul > li.has-sub > a {
-  padding-right: 60px;
+  padding-right: 35px;
 }
 #cssmenu > ul > li:hover > a {
   color: #7a8189;
@@ -378,6 +378,7 @@ vertical-align: center;
   top: 20px;
   border: 5px solid transparent;
   border-top-color: #ffffff;
+  margin-right : -20px;
 }
 #cssmenu > ul > li:hover::after {
   border-top-color: #7a8189;
@@ -446,9 +447,10 @@ vertical-align: center;
 }
 /*sous-menu*/
 #cssmenu ul ul li a {
-  width: 180px;
+text-align:center;
+  width: 190px;
   border-bottom: 1px solid #eeeeee;
-  padding: 10px 20px;
+  padding: 10px 13px;
   font-size: 16px;
   color: #9ea2a5;
   background: #ffffff;
@@ -457,6 +459,7 @@ vertical-align: center;
   -ms-transition: all .35s ease;
   -o-transition: all .35s ease;
   transition: all .35s ease;
+  margin-left : 3px;
 }
 #cssmenu.align-right ul ul li a {
   text-align: right;
