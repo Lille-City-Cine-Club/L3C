@@ -10,6 +10,7 @@ var mongoose = require('mongoose') 			// for DB
 var moment = require('moment'); 			// for date //date=moment().format('MMMM Do YYYY, h:mm:ss a');
 var multer = require('multer');				// for receiving multipart form
 var session = require('express-session');	// to handle session storage
+var bcrypt = require('bcryptjs');			// to crypt password before puting them into DB
 var passport = require('passport')			// to identify members etc...
 	, LocalStrategy = require('passport-local').Strategy
 	, ensureLoggedIn = require('connect-ensure-login').ensureLoggedIn;
@@ -133,7 +134,12 @@ var userModel = mongoose.model('Users', userSchema, 'Users');
 app.get('/', function(req,res){
 	console.log('\nHome loaded');
 	
-	sess = req.session;
+	if(req.session.email == undefined){
+		console.log('on cree une session.');
+		sess = req.session;
+	}else{
+		console.log('Il y à deja une session');
+	}
 	
 	var html;
 	fs.readFile(__dirname+'/html/home.html','utf8',function(err,data){
@@ -151,7 +157,11 @@ app.get('/', function(req,res){
 
 //Suggestion page
 app.get('/suggestion', function(req,res){
-	console.log(sess);
+
+	if(typeof sess == "undefined"){
+		console.log('redirection car pas de sess');
+		res.redirect('/');
+	}
 	if(sess.email){
 		movieModel.findOne({},{},{sort:{date:-1}},function(err,movie){
 			if(err){
@@ -187,8 +197,7 @@ app.get('/suggestion', function(req,res){
 				}else{
 					duration = movie.duration;
 				};
-				
-
+			
 				html = data;
 				html = html.replace('%%title%%',movie.title);
 				html = html.replace('%%duration%%',duration);
@@ -202,7 +211,6 @@ app.get('/suggestion', function(req,res){
 				res.charset='utf-8';
 				res.setHeader("Access-Control-Allow-Origin","*");
 				res.send(html);
-			
 			});
 		});
 	}else{
@@ -213,8 +221,13 @@ app.get('/suggestion', function(req,res){
 
 // Admin Home page
 app.get('/admin', function(req,res){
+	
+	if(typeof sess == "undefined"){
+		console.log('redirection car pas de sess');
+		res.redirect('/');
+	}
 	if(!sess.isAdmin){
-		console.log('Vous n\'avez pas les droit pour vous rendre sur cette page.');
+		console.log('\nVous n\'avez pas les droit pour vous rendre sur cette page.');
 		res.redirect('/');
 	}else{
 	
@@ -236,8 +249,13 @@ app.get('/admin', function(req,res){
 
 // Admin Adding content page
 app.get('/admin-suggestion', function(req,res){
+	
+	if(typeof sess == "undefined"){
+		console.log('redirection car pas de sess');
+		res.redirect('/');
+	}
 	if(!sess.isAdmin){
-		console('Vous n\'avez pas les droits pour vous rendre sur cette page.');
+		console.log('\nVous n\'avez pas les droits pour vous rendre sur cette page.\n');
 		res.redirect('/');
 	}else{
 
@@ -311,8 +329,13 @@ app.get('/login',function(req,res){
 
 // Admin modif carousel page
 app.get('/admin-carousel', function(req,res){
+	
+	if(typeof sess == "undefined"){
+		console.log('redirection car pas de sess');
+		res.redirect('/');
+	}
 	if(!sess.isAdmin){
-		console('Vous n\'avez pas les droits pour vous rendre sur cette page');
+		console.log('Vous n\'avez pas les droits pour vous rendre sur cette page');
 		res.redirect('/');
 	}else{
 		console.log('\n Admin carousel loaded');
@@ -422,7 +445,8 @@ app.post('/newMember', function(req,res){
 	}else{
 		pseudo = req.body.pseudo;
 		mail = req.body.mail;
-		password = req.body.password;
+		var salt = bcrypt.genSaltSync(10);
+		password = bcrypt.hashSync(req.body.password,salt);
 		
 		genre =[]; 
 		genre.push(req.body.genre1);
@@ -494,7 +518,8 @@ app.post('/loginConnection', function(req,res){
 			throw err;
 		}
 		
-		if(user == null || user.password != req.body.password){
+		if(user == null || !bcrypt.compareSync(req.body.password, user.password)){
+		
 			response.codeResponse = "ko"
 			response.message="Email ou Mot de Passe incorrect!";
 			response.isAdmin = "";
