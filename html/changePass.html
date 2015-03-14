@@ -19,7 +19,7 @@
 		
 		<script>		
 		$(document).ready(function(){
-			$('#formLogin').on('submit', function(e){
+			$('#formChangeMdp').on('submit', function(e){
 				e.preventDefault();
 				
 				var $this = $(this);
@@ -37,8 +37,12 @@
 					contentType:false,
 					
 					success:function(content){
-						console.log('login ok!');
-						window.location.href="/";
+						if(content.codeResponse == "ok"){
+							console.log(content.message);
+							window.location.href="/";
+						}else{
+							console.log(content.message);
+						}
 					},
 					error:function(){
 						alert('Error Ajax!');

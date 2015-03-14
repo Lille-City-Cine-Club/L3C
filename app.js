@@ -161,61 +161,62 @@ app.get('/suggestion', function(req,res){
 	if(typeof sess == "undefined"){
 		console.log('redirection car pas de sess');
 		res.redirect('/');
-	}
-	if(sess.email){
-		movieModel.findOne({},{},{sort:{date:-1}},function(err,movie){
-			if(err){
-				console.log('Error find!');
-				throw err;
-			}
-			console.log('\nSuggestion Loaded! Movie: '+ movie.title +'\n');
-			var img;
-			var html;
-			fs.readFile(__dirname+'/html/suggestion.html','utf8',function(err,data){
-				if(err){
-					console.log('Error Suggestion!');
-					throw err;
-				}		
-				// disable "actors1, undefined ..."
-				var actors = "";
-				for(var i = 0; i<movie.actors.length ; i++){
-					actors += movie.actors[i]+', ';
-				}
-				// Disable the 'undefined' genre when a movie have less than 3 genre. 
-				var genre ="";
-				genre += movie.genre[0];
-				if (typeof movie.genre[1] != 'undefined'){
-					genre +=", "+movie.genre[1];
-				};
-				if(typeof movie.genre[2] != 'undefined'){
-					genre +=", "+movie.genre[2];
-				};
-				
-				var duration;
-				if( typeof movie.duration === 'undefined'){
-					duration = "Un film sans durée :O !";
-				}else{
-					duration = movie.duration;
-				};
-			
-				html = data;
-				html = html.replace('%%title%%',movie.title);
-				html = html.replace('%%duration%%',duration);
-				html = html.replace('%%genre%%', genre);
-				html = html.replace('%%real%%',movie.director);
-				html = html.replace('%%actors%%',actors +" ...");
-				html = html.replace('%%why%%',movie.why);
-				html = html.replace('%%synopsis%%',movie.synopsis);
-				html = html.replace('%%poster%%', movie.poster);
-				
-				res.charset='utf-8';
-				res.setHeader("Access-Control-Allow-Origin","*");
-				res.send(html);
-			});
-		});
 	}else{
-		console.log('Seul les membres peuvent se rendre sur la page de suggestion. Inscrivez vous!');
-		res.redirect('/login');
+		if(sess.email){
+			movieModel.findOne({},{},{sort:{date:-1}},function(err,movie){
+				if(err){
+					console.log('Error find!');
+					throw err;
+				}
+				console.log('\nSuggestion Loaded! Movie: '+ movie.title +'\n');
+				var img;
+				var html;
+				fs.readFile(__dirname+'/html/suggestion.html','utf8',function(err,data){
+					if(err){
+						console.log('Error Suggestion!');
+						throw err;
+					}		
+					// disable "actors1, undefined ..."
+					var actors = "";
+					for(var i = 0; i<movie.actors.length ; i++){
+						actors += movie.actors[i]+', ';
+					}
+					// Disable the 'undefined' genre when a movie have less than 3 genre. 
+					var genre ="";
+					genre += movie.genre[0];
+					if (typeof movie.genre[1] != 'undefined'){
+						genre +=", "+movie.genre[1];
+					};
+					if(typeof movie.genre[2] != 'undefined'){
+						genre +=", "+movie.genre[2];
+					};
+					
+					var duration;
+					if( typeof movie.duration === 'undefined'){
+						duration = "Un film sans durée :O !";
+					}else{
+						duration = movie.duration;
+					};
+				
+					html = data;
+					html = html.replace('%%title%%',movie.title);
+					html = html.replace('%%duration%%',duration);
+					html = html.replace('%%genre%%', genre);
+					html = html.replace('%%real%%',movie.director);
+					html = html.replace('%%actors%%',actors +" ...");
+					html = html.replace('%%why%%',movie.why);
+					html = html.replace('%%synopsis%%',movie.synopsis);
+					html = html.replace('%%poster%%', movie.poster);
+					
+					res.charset='utf-8';
+					res.setHeader("Access-Control-Allow-Origin","*");
+					res.send(html);
+				});
+			});
+		}else{
+			console.log('Seul les membres peuvent se rendre sur la page de suggestion. Inscrivez vous!');
+			res.redirect('/login');
+		}
 	}
 })
 
@@ -225,25 +226,26 @@ app.get('/admin', function(req,res){
 	if(typeof sess == "undefined"){
 		console.log('redirection car pas de sess');
 		res.redirect('/');
-	}
-	if(!sess.isAdmin){
-		console.log('\nVous n\'avez pas les droit pour vous rendre sur cette page.');
-		res.redirect('/');
 	}else{
-	
-		console.log('\n Admin Home page loaded');
+		if(!sess.isAdmin){
+			console.log('\nVous n\'avez pas les droit pour vous rendre sur cette page.');
+			res.redirect('/');
+		}else{
 		
-		var html;
-		fs.readFile(__dirname+'/html/admin/admin.html','utf8',function(err, data){
-			if(err){
-				console.log('Error Admin home page!');
-				throw err;
-			}
-			html = data;
-			res.charset='utf-8';
-			res.setHeader("Access-Control-Allow-Origin","*");
-			res.send(html);
-		});
+			console.log('\n Admin Home page loaded');
+			
+			var html;
+			fs.readFile(__dirname+'/html/admin/admin.html','utf8',function(err, data){
+				if(err){
+					console.log('Error Admin home page!');
+					throw err;
+				}
+				html = data;
+				res.charset='utf-8';
+				res.setHeader("Access-Control-Allow-Origin","*");
+				res.send(html);
+			});
+		}
 	}
 })
 
@@ -253,25 +255,26 @@ app.get('/admin-suggestion', function(req,res){
 	if(typeof sess == "undefined"){
 		console.log('redirection car pas de sess');
 		res.redirect('/');
-	}
-	if(!sess.isAdmin){
-		console.log('\nVous n\'avez pas les droits pour vous rendre sur cette page.\n');
-		res.redirect('/');
 	}else{
+		if(!sess.isAdmin){
+			console.log('\nVous n\'avez pas les droits pour vous rendre sur cette page.\n');
+			res.redirect('/');
+		}else{
 
-		console.log('\nAdminSuggestion loaded');
-		
-		var html;
-		fs.readFile(__dirname+'/html/admin/admin-suggestion.html','utf8',function(err,data){
-			if(err){
-				console.log('Error adminSuggestion!');
-				throw err;
-			}
-			html = data;
-			res.charset='utf-8';
-			res.setHeader("Access-Control-Allow-Origin","*");
-			res.send(html);
-		});
+			console.log('\nAdminSuggestion loaded');
+			
+			var html;
+			fs.readFile(__dirname+'/html/admin/admin-suggestion.html','utf8',function(err,data){
+				if(err){
+					console.log('Error adminSuggestion!');
+					throw err;
+				}
+				html = data;
+				res.charset='utf-8';
+				res.setHeader("Access-Control-Allow-Origin","*");
+				res.send(html);
+			});
+		}
 	}
 })
 
@@ -333,25 +336,53 @@ app.get('/admin-carousel', function(req,res){
 	if(typeof sess == "undefined"){
 		console.log('redirection car pas de sess');
 		res.redirect('/');
+	}else{
+		if(!sess.isAdmin){
+			console.log('Vous n\'avez pas les droits pour vous rendre sur cette page');
+			res.redirect('/');
+		}else{
+			console.log('\n Admin carousel loaded');
+			
+			var html;
+			fs.readFile(__dirname+'/html/admin/admin-carousel.html','utf8',function(err,data){
+				if(err){
+					console.log('Error Admin carousel!');
+					throw err;
+				};
+				
+				html = data;
+				res.charset='utf-8';
+				res.setHeader("Access-Control-Allows-Origin","*");
+				res.send(html);
+			});
+		}
 	}
-	if(!sess.isAdmin){
-		console.log('Vous n\'avez pas les droits pour vous rendre sur cette page');
+})
+
+// ChangePass
+app.get('/changePass', function(req,res){
+	if(typeof sess == 'undefined'){
+		console.log('\nredirection car pas de session');
 		res.redirect('/');
 	}else{
-		console.log('\n Admin carousel loaded');
-		
-		var html;
-		fs.readFile(__dirname+'/html/admin/admin-carousel.html','utf8',function(err,data){
-			if(err){
-				console.log('Error Admin carousel!');
-				throw err;
-			};
-			
-			html = data;
-			res.charset='utf-8';
-			res.setHeader("Access-Control-Allows-Origin","*");
-			res.send(html);
-		});
+		if(sess.email){
+			var html;
+			fs.readFile(__dirname+'/html/changePass.html','utf-8',function(err,data){
+				if(err){
+					console.log('Error! Error loading changePass');
+					throw err;
+				}
+				console.log('\nchangePass loaded!');
+				html = data;
+				
+				res.charset='utf-8';
+				res.setHeader("Access-Control-Allows-Origin","*");
+				res.send(html);
+			});
+		}else{
+			console.log("redirection car vous n\'etes pas connecté");
+			res.redirect('/login');
+		}
 	}
 })
 
@@ -556,6 +587,19 @@ app.post('/loginConnection', function(req,res){
 	});
 })
 
+// ChangeMDP
+app.post('/changeMdp', function(req,res){
+	
+	var response = checkFormMdp(req);
+	if(response.codeResponse == "ok"){
+		console.log('\nChangePass: Password successfully changed!');
+		res.send(response);
+	}else{
+		console.log('\nChangePass: new & confirm not equals');
+		res.send(response)
+	}
+})
+
 // ------------------------------------------------------- PASSPORT -----------------------------------------------------------------------
 // login
 /*app.post('/loginConnection',passport.authenticate('local',{succesReturntoOrRedirect:'/home', failureRedirect:'/login'}),function(req,res){
@@ -681,9 +725,9 @@ var checkFormLogin = function(req){
 // checkForm for admin-carousel
 var checkFormCarousel = function(req){
 	var response = {
-			codeResponse:"",
-			message:""
-		};
+		codeResponse:"",
+		message:""
+	};
 	if(req.body.film1 == undefined ){
 		response.codeResponse = "ko";
 		response.message = "Toutes les affiches de films doivent être complété!(1)";
@@ -720,7 +764,25 @@ var checkFormCarousel = function(req){
 	return response;
 };	
 
-
+// checkFormMdp
+var checkFormMdp = function(req){
+	
+	var response = {
+		codeResponse:"",
+		message:""
+	};
+	
+	if(req.body.password != req.body.confirmPass){
+		response.codeResponde = "ko";
+		response.message = "Le NOUVEAU MDP et la CONFIRMATION doivent être IDENTIQUES!";
+	
+		return response;
+	}
+	response.codeResponse = "ok";
+	response.message = "Le MDP a bien été changé!";
+	
+	return response;
+};
 
 // to get CSS/ressourcs etc...
 var staticMiddleware = express.static(__dirname);
