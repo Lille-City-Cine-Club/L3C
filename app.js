@@ -428,7 +428,7 @@ app.post('/postContent',function(req,res){
 		if(typeof req.body.genre3 != 'undefined'){
 			genre.push(req.body.genre3);
 		};
-		duration = req.body.duration;
+		duration = req.body.duree;
 		synopsis=req.body.synopsis;
 		why=req.body.why;
 		
@@ -592,8 +592,33 @@ app.post('/changeMdp', function(req,res){
 	
 	var response = checkFormMdp(req);
 	if(response.codeResponse == "ok"){
-		console.log('\nChangePass: Password successfully changed!');
-		res.send(response);
+		userModel.findOne({"email":sess.email},{},function(err,user){
+			if(err){
+				console.log('Error login! User not found!');
+				throw err;
+			}
+			
+			if(user == null || !bcrypt.compareSync(req.body.oldMdp, user.password)){
+			
+				response.codeResponse = "ko"
+				response.message="L'ANCIEN MDP n'est pas correct!";
+				response.isAdmin = "";
+				
+				console.log('old mdp invalid');
+				res.send(response);
+			}else{
+				var salt = bcrypt.genSaltSync(10);
+				userModel.findOneAndUpdate({email: sess.email},{password: bcrypt.hashSync(req.body.password,salt)},{}, function(err,user){
+					if(err){
+						console.log('ChangeMdp: Error modify password!');
+						throw err;
+					}
+					
+					console.log('\nChangePass: Password successfully changed!');
+					res.send(response);
+				})
+			}
+		})
 	}else{
 		console.log('\nChangePass: new & confirm not equals');
 		res.send(response)
