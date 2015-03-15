@@ -829,4 +829,21 @@ app.on('close',function(){
 	console.log('Serv closed, see you next time!!');
 });
 
+app.use(function(req,res,next){
+	console.log('\n404 page loaded');
+	var html;
+	fs.readFile(__dirname+'/html/pageNotFound.html','utf8',function(err,data){
+		if(err){
+			console.log('Error PageNotFound!');
+			throw err;
+		};
+		
+		html = data;
+		res.charset='utf-8';
+		res.setHeader("Access-Control-Allows-Origin","*");
+		res.send(html);
+	});
+});
+
+
 app.listen(7777);
