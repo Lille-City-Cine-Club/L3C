@@ -597,7 +597,6 @@ app.post('/changeMdp', function(req,res){
 				console.log('Error login! User not found!');
 				throw err;
 			}
-			
 			if(user == null || !bcrypt.compareSync(req.body.oldMdp, user.password)){
 			
 				response.codeResponse = "ko"
@@ -613,7 +612,6 @@ app.post('/changeMdp', function(req,res){
 						console.log('ChangeMdp: Error modify password!');
 						throw err;
 					}
-					
 					console.log('\nChangePass: Password successfully changed!');
 					res.send(response);
 				})

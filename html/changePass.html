@@ -18,50 +18,47 @@
 		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
 		
 		<script>		
-		$(document).ready(function(){
-			$('#formChangeMdp').on('submit', function(e){
-				e.preventDefault();
-				
-				var $this = $(this);
-				
-				var formData = new FormData();
-				formData.append('email',$('#pseudoLogin').val());
-				formData.append('oldMdp',$('#oldMDP').val());
-				formData.append('password',$('#newMDP').val());
-				formData.append('confirmPass',$('#confirm').val());
-				
-				$.ajax({
-					type:'POST',
-					url:$this.attr('action'),
-					data:formData,
-					processData:false,
-					contentType:false,
+			$(document).ready(function(){
+				$('#formChangeMdp').on('submit', function(e){
+					e.preventDefault();
 					
-					success:function(content){
-						if(content.codeResponse == "ok"){
-							console.log(content.message);
-							$(".error").hide(0);
-							var successMessage = document.getElementById('success');
-							successMessage.innerHTML = content.message;							
-							$(".success").show();
-							$(".success").fadeOut(5500);
-							window.location.href="/";
-						}else{
-							window.scrollTo(0,0);
-							var errorMessage = document.getElementById('error');
-							errorMessage.innerHTML = content.message;
-							$(".error").show();
+					var $this = $(this);
+					
+					var formData = new FormData();
+					formData.append('email',$('#pseudoLogin').val());
+					formData.append('oldMdp',$('#oldMDP').val());
+					formData.append('password',$('#newMDP').val());
+					formData.append('confirmPass',$('#confirm').val());
+					
+					$.ajax({
+						type:'POST',
+						url:$this.attr('action'),
+						data:formData,
+						processData:false,
+						contentType:false,
+						
+						success:function(content){
+							if(content.codeResponse == "ok"){
+								console.log(content.message);
+								$(".error").hide(0);
+								var successMessage = document.getElementById('success');
+								successMessage.innerHTML = content.message;							
+								$(".success").show();
+								$(".success").fadeOut(5500);
+								window.location.href="/";
+							}else{
+								window.scrollTo(0,0);
+								var errorMessage = document.getElementById('error');
+								errorMessage.innerHTML = content.message;
+								$(".error").show();
+							}
+						},
+						error:function(){
+							alert('Error Ajax!');
 						}
-					},
-					error:function(){
-						alert('Error Ajax!');
-					}
+					});
 				});
 			});
-		});
-		
-		
-		
 		</script>
 	</head>
 	
