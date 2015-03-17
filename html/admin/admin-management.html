@@ -78,8 +78,11 @@
 					
 					var $this = $(this); // L'objet jQuery du formulaire	
 					
-					var formData;
-					formData = new FormData($('#DisplayResultSearch')[0]);
+					var formData,pseudo;
+					formData = new FormData();
+
+					pseudo = $('#pseudo2').text();
+					formData.append('pseudo',pseudo);
 					
 					$.ajax( {
 						type:'POST',

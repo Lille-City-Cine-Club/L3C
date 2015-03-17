@@ -787,7 +787,31 @@ app.post('/adminManagement', function(req,res){
 
 // electAdmin
 app.post('/electAdmin', function(req,res){
-	console.log("TODO");
+	userModel.findOneAndUpdate({name:req.body.pseudo},{isAdmin:true},{}, function(err, user){
+		if(err){
+			console.log('adminManagement : error finding membre');
+			throw err;
+		}
+		
+		var response = {
+			codeResponse :"",
+			message :""
+		}
+		console.log(req.body);
+		
+		if(user == null){
+			response.codeResponse = "ko";
+			response.message = "Membre non trouvé!";
+			
+			res.send(response);
+		}else{
+			console.log('\nElectAdmin : '+req.body.pseudo+'is now an admin!');
+			response.codeResponse = "ok";
+			response.message = req.body.pseudo+' is now an admin!';
+			
+			res.send(response);
+		}
+	})
 })
 
 // ------------------------------------------------------- PASSPORT -----------------------------------------------------------------------
