@@ -1,0 +1,81 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html lang="fr">
+	<head>
+		<!--[if lt IE 9]>
+			<script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+		<![endif]-->
+		<meta charset="utf-8" />
+		<!-- Import de Bootstrap et de FontAwesome (pour les icônes)-->
+		<link rel="stylesheet" href="../CSS/bootstrap.min.css">
+		<link rel="stylesheet" href="../CSS/font-awesome.min.css" />
+		<!-- Import de notre fichier CSS -->
+		<link rel="stylesheet" href="../CSS/style.css" />
+		<!-- Import des fichiers Javacript-->
+		<script src="../js/jquery-1.9.1.min.js"></script>
+		<script src="../js/jquery.carouFredSel-6.0.4-packed.js"></script>
+		<!--favicon-->
+		<link rel="icon" type="image/png" href="../ressources/logo/favicon.png" />
+		<title>L3C : Lille City Ciné Club</title>
+		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+	</head>
+	
+	<body>
+	<!-- logo+site -->
+	<div class="logo-nav-wrapper">
+	<!-- Regroupe le logo-->
+		<div class="logo-wrapper">
+			<div class="site-logo">
+				<a href="http://localhost:7777/">
+					<img src="../ressources/logo/L3C.jpg" alt="Lille City Cine Club" />
+				</a>
+			</div>
+        </div>
+        <!-- le menu -->
+		<div id='cssmenu'>
+			<ul>
+				<li><a id="Seance" href="suggestion">Le Film du mois</a></li>
+				<li><a id="logIn" href="login">Connexion</a></li>
+				<li class='active has-sub'><a href='#'><span>Administration</span></a>
+					<ul>
+						<li><a href='/admin-suggestion'><span>Soumettre un film</span></a></li>
+						<li><a href='/admin-carousel'><span>Modifier Carousel</span></a></li>
+						<li><a href=""> <span> Gérer les Admins</span></a></li>
+					</ul>
+				</li>
+				<li class='active has-sub'><a href='#'><span>Gérer mon profil</span></a>
+					<ul>
+						<li><a href='../changePass'><span>Changer Mot de Passe</span></a></li>
+						<li><a href='../logout'><span>Déconnexion</span></a></li>
+					</ul>
+				</li>
+				<li><a id="about" href="about">A propos</a></li>
+			</ul>
+		</div>
+	</div>
+	<div class="admin-body">
+		<h1>
+		Bienvenue, cher membre !
+		</h1>
+	</div>
+	<div class="admin-message">
+		Sélectionnez dans le menu supérieur l'action que vous voulez effectuer.
+	</div>
+	
+    <div class="footer-wrapper">
+		<div id="menu-logo" >
+			<a href="http://www.univ-lille1.fr/" target="_blank">
+				<img src="../ressources/logo/logoLille1Mini.png" alt="Université Lille1" >
+			</a>
+			<ul id="footer-menu">
+				<li><span class="fa fa-lg fa-facebook" style="margin-left:0.2%;"></span> <a href=http://www.facebook.com/LilleCityCineClub target="_blank" style="margin-left:0.8%"> Facebook </a></li>
+				<li><span class="glyphicon glyphicon-info-sign" style="font-size:16px;" ></span> <a href="about" style="margin-left:0.5%"> A propos </a></li>
+			</ul>
+		</div>
+		<div id="copyright">
+			<p>
+				&copy Benny-P & DonDiego. En collaboration avec M.Dufrêne. Université Lille 1.
+			</p>	
+		</div>
+	</div>
+	</body>
+</html>
