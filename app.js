@@ -370,6 +370,34 @@ app.get('/admin-carousel', function(req,res){
 	}
 })
 
+// Admin management
+app.get('/admin-management', function(req,res){
+	if(typeof sess == "undefined"){
+		console.log('Admin management: session non defini. Redirecion vers home');
+		res.redirect('/');
+	}else{
+		if(sess.isAdmin){
+			var html;
+			fs.readFile(__dirname+'/html/admin/admin-management.html', 'utf8', function(err, data){
+				if(err){
+					console.log('Admin management : Error loadin page');
+					throw err;
+				}
+				console.log('\nAdmin management page loaded!');
+				
+				html = data;
+				
+				res.charset='utf-8';
+				res.setHeader("Access-Control-Allows-Origin","*");
+				res.send(html);
+			})
+		}else{
+			console.log('Admin management: Vous n\'etes pas autorisés à vous rendre sur cette page.');
+			res.redirect('/');
+		}
+	}
+})
+
 // ChangePass
 app.get('/changePass', function(req,res){
 	if(typeof sess == 'undefined'){
@@ -721,6 +749,46 @@ app.post('/forgottenPass', function(req,res){
 		}
 	})
 });	
+
+// adminManagement
+app.post('/adminManagement', function(req,res){
+	
+	userModel.findOne({"name":req.body.pseudo},{}, function(err, user){
+		if(err){
+			console.log('adminManagement : error finding membre');
+			throw err;
+		}
+		
+		var response = {
+			codeResponse :"",
+			message :""
+		}
+		
+		if(user == null){
+			response.codeResponse = "ko";
+			response.message = "Membre non trouvé!";
+			
+			res.send(response);
+		}else{
+		
+			response.pseudo = user.name;
+			response.email = user.email;
+			response.date = moment(user.date).format('DD-MM-YYYY'); 
+			response.genre = "";
+			for(var i = 0; i < user.genre.length ; i++){
+				response.genre += user.genre[i]+", ";
+			}
+			response.description = user.description;
+			
+			res.send(response);	
+		}
+	})	
+})
+
+// electAdmin
+app.post('/electAdmin', function(req,res){
+	console.log("TODO");
+})
 
 // ------------------------------------------------------- PASSPORT -----------------------------------------------------------------------
 // login
