@@ -19,7 +19,7 @@
 		
 		<script>		
 		$(document).ready(function(){
-			$('#formLogin').on('submit', function(e){
+			$('#formForgottenPass').on('submit', function(e){
 				e.preventDefault();
 				
 				var $this = $(this);
@@ -35,8 +35,11 @@
 					contentType:false,
 					
 					success:function(content){
-						console.log('login ok!');
-						window.location.href="/";
+						if(content.codeResponse == "ko"){
+							alert(content.message);
+						}else{
+							alert(content.message);
+						}
 					},
 					error:function(){
 						alert('Error Ajax!');

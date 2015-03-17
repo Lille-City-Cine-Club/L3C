@@ -11,6 +11,8 @@ var moment = require('moment'); 			// for date //date=moment().format('MMMM Do Y
 var multer = require('multer');				// for receiving multipart form
 var session = require('express-session');	// to handle session storage
 var bcrypt = require('bcryptjs');			// to crypt password before puting them into DB
+var nodemailer = require('nodemailer');		// to send emails
+var chance = require('chance').Chance()		// to generate random things
 var passport = require('passport')			// to identify members etc...
 	, LocalStrategy = require('passport-local').Strategy
 	, ensureLoggedIn = require('connect-ensure-login').ensureLoggedIn;
@@ -20,6 +22,15 @@ var app = express()
 // for the session
 var sess;
 app.use(session({secret:'Hercules Project'}));
+
+// for sending mails
+var mailer = nodemailer.createTransport({
+	service: "Gmail",
+	auth:{
+		user: "bennyp.dondiego@gmail.com",
+		pass: "herculesproject"
+	}
+});
 
 //for post request
 app.use(bodyParser.json());
@@ -386,6 +397,29 @@ app.get('/changePass', function(req,res){
 	}
 })
 
+// forgottenPass
+app.get('/forgotPass', function (req,res){
+	/*
+	if(typeof sess == "undefined"){
+		console.log('\nForgotPass : redirection car pas de session.');
+		res.redirect('/');
+	}else{
+	*/
+	var html;
+	fs.readFile(__dirname+'/html/forgottenPass.html','utf8',function(err, data){
+		if(err){
+			console.log('\nForgotPass: error loading forgotpass page');
+			throw err;
+		}
+		console.log('\nForgotPass page loaded!');
+		html = data;
+		
+		res.charset='utf-8';
+		res.setHeader("Access-Control-Allows-Origin","*");
+		res.send(data)
+	});	
+})	
+
 // logout
 app.get('/logout', function(req,res){
 	console.log('Merci de votre visite et à bientôt ! ');
@@ -512,6 +546,21 @@ app.post('/newMember', function(req,res){
 			};
 			console.log('New member '+user.name+' added!!');
 			console.log(user);
+			
+			mailer.sendMail({
+				from:"Admin L3C <bennyp.dondiego@gmail.com>",
+				to:mail,
+				subject:"Bienvenue au sein du L3C!",
+				//text: "ne s''affiche pas je ne sais pas pourquoi",
+				html: '<b>Test Nodemailer!</b><br/>Bienvenue au sein de la communauté Lilloise City Cine Club!<br/>Vous retrouverez chaque semaine une suggestion de film choisis par nos soins.<br/> Nous avons deja hâte d\'entendre vos retours sur notre service/projet! A tout de suite sur le site!<br/> Benny-P & DonDiego'
+			},function(err,mail){
+				if(err){
+					console.log("\nNew member: Error Sending mail!");
+					throw err;
+				}
+				console.log('\nMessage successfully sent! Message:'+ mail.response);
+			});
+			
 			res.send('New member '+user.name+' added!!');
 		});
 	};
@@ -622,6 +671,56 @@ app.post('/changeMdp', function(req,res){
 		res.send(response)
 	}
 })
+
+// forgottenPass
+app.post('/forgottenPass', function(req,res){
+	var tmpPass, userEmail, response, mail, salt;
+	tmpPass = chance.string({length: 8, pool: 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789'});
+	userEmail = req.body.email;
+	salt = bcrypt.genSaltSync(10);
+	
+	console.log('email :' + userEmail);
+	console.log('MDP provisoire : '+ tmpPass);
+	
+	response = {
+		codeResponse :"",
+		message :""
+	};
+	userModel.findOneAndUpdate({email: userEmail},{password: bcrypt.hashSync(tmpPass,salt)},{}, function(err,user){
+		if(err){
+			console.log('ForgottenPass : error searching user.');
+			throw err;
+		}
+		if(user == null){
+			console.log('ForgottenPass : no user found');
+			response.codeResponse = "ko";
+			response.message = "Adresse mail non trouvé!";
+			res.send(response);
+		}else{
+			mail = user.email;
+			
+			mailer.sendMail({
+					from:"Admin L3C <bennyp.dondiego@gmail.com>",
+					to:mail,
+					subject:"Mot de passe provisoire",
+					//text: "ne s''affiche pas je ne sais pas pourquoi",
+					html: '<b>Mot de pass provisoire</b><br/>Voici votre mdp provisoire: <strong>'+tmpPass+'</strong><br/>Changez vite votre mot de passe pour en a voir un plus parlant! Et surtout ne l\'oubliez plus cette fois ahah!<br/> Benny-P & DonDiego'
+				},function(err,mail){
+					if(err){
+						console.log("\nForgottenPass: Error Sending mail!");
+						throw err;
+					}
+					console.log('\nForgottenPass : Message successfully sent! Message:'+ mail.response);
+					
+					response.codeResponse = "ok";
+					response.message = "Mdp provisoire envoyé";
+					
+					res.send(response);
+				}
+			);
+		}
+	})
+});	
 
 // ------------------------------------------------------- PASSPORT -----------------------------------------------------------------------
 // login
@@ -829,6 +928,7 @@ app.on('close',function(){
 	console.log('Serv closed, see you next time!!');
 });
 
+// 404 page
 app.use(function(req,res,next){
 	console.log('\n404 page loaded');
 	var html;
@@ -844,6 +944,5 @@ app.use(function(req,res,next){
 		res.send(html);
 	});
 });
-
 
 app.listen(7777);
