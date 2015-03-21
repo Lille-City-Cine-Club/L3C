@@ -19,6 +19,7 @@
 		
 		<script>
 		$(document).ready(function(){
+		
 			$('#formLogin').on('submit', function(e){
 				e.preventDefault();
 				
@@ -93,7 +94,7 @@
 					</li>
 					<li id="PasswordLogin">
 						<label class="description"> Mot de passe : </label>
-						<input id="passwordLogin" maxlength="255" type="password" value="" placeholder="Votre mot de passe"/>
+						<input id="passwordLogin" maxlength="255" type="password" value="" placeholder="Votre mot de passe"/><a  href="forgottenPass" ><span id="forgottenMdp" class="glyphicon glyphicon-question-sign" style="font-size:18px; float:right; padding-right:70px; padding-top:5px; color:black;" title="Mot de passe oublié ?"></span></a>
 					</li>
 					<li>
 						<div id="ButtonsWrapper" >

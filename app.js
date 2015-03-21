@@ -426,7 +426,7 @@ app.get('/changePass', function(req,res){
 })
 
 // forgottenPass
-app.get('/forgotPass', function (req,res){
+app.get('/forgottenPass', function (req,res){
 	/*
 	if(typeof sess == "undefined"){
 		console.log('\nForgotPass : redirection car pas de session.');
@@ -666,7 +666,6 @@ app.post('/loginConnection', function(req,res){
 
 // ChangeMDP
 app.post('/changeMdp', function(req,res){
-	
 	var response = checkFormMdp(req);
 	if(response.codeResponse == "ok"){
 		userModel.findOne({"email":sess.email},{},function(err,user){
@@ -813,6 +812,13 @@ app.post('/electAdmin', function(req,res){
 		}
 	})
 })
+
+// whatsMyName
+app.post('/whatsMyName', function(req,res){
+	console.log('Session asked : ');
+	console.log(sess);
+	res.send(sess);
+});
 
 // ------------------------------------------------------- PASSPORT -----------------------------------------------------------------------
 // login
