@@ -41,13 +41,13 @@ var done = false;
 var posterPath;
 app.use(multer({dest: './ressources/poster',
 				/*changeDest : function(dest, req, res){
-					if(req.body.form_id =="carousel"){
+					if(req.body.form_id =="formCarousel"){
 						console.log('Changement du fichier de destination pour les fichiers du carousel');
 						return dest +'/carousel';
 					};
 				},*/
 				rename: function(fieldname, filename, req, res){
-					// if(req.body.form_id =="carousel"){
+					// if(req.body.form_id =="formCarousel"){
 						// return filename;
 					// }else{
 						// return moment().format('YYYY_MM_DD')+'_'+filename;
