@@ -12,7 +12,8 @@ var multer = require('multer');				// for receiving multipart form
 var session = require('express-session');	// to handle session storage
 var bcrypt = require('bcryptjs');			// to crypt password before puting them into DB
 var nodemailer = require('nodemailer');		// to send emails
-var chance = require('chance').Chance()		// to generate random things
+var chance = require('chance').Chance()		// to generate random number/strings
+var async = require('async');				// to be able to make async work even easier/better
 var passport = require('passport')			// to identify members etc...
 	, LocalStrategy = require('passport-local').Strategy
 	, ensureLoggedIn = require('connect-ensure-login').ensureLoggedIn;
@@ -341,6 +342,27 @@ app.get('/login',function(req,res){
 	});
 })
 
+//PanelMember
+app.get('/PanelMember', function(req,res){
+	if(typeof sess != "undefined"){
+		var html;
+		fs.readFile(__dirname+'/html/home-member.html','utf8', function(err, data){
+			if(err){
+				console.log('PanelMember: error loading page!');
+				throw err;
+			}
+			
+			html = data;
+			res.charset='utf-8';
+			res.setHeader("Access-Control-Allows-Origin","*");
+			res.send(html);
+		});
+	}else{
+		console.log('Seul les membres peuvent acceder à cette page.');
+		res.redirect('/');
+	}
+});
+
 // Admin modif carousel page
 app.get('/admin-carousel', function(req,res){
 	
@@ -529,11 +551,11 @@ app.post('/newMember', function(req,res){
 	console.log('Adding new member...');
 	console.log(req.headers['content-type']);
 	
-	var pseudo,mail,password,genre,description;
+	var pseudo,mail,password,genre,description,response;
 	
-	var response = checkFormMember(req);
+	response = checkFormMember(req);
 	if(response.codeResponse == "ko"){
-		console.log("Adding failed! form wasn't valid.");
+		console.log("Adding newMember failed! form wasn't valid.");
 		res.send(response);
 	}else{
 		pseudo = req.body.pseudo;
@@ -915,12 +937,41 @@ var checkFormMember = function(req){
 		response.message ="Le premier GENRE doit au moins être completé !";
 		return response;
 	};
+
+	var emailFound = searchEmail(req);
 	
-	response.codeResponse = "ok";
-	response.message ="Success ! User " + req.body.pseudo + " added into L3C DB;" 
-	return response;
+	if(emailFound){
+		console.log('email trouvé!');
+		response.codeResponse = "ko";
+		response.message = "L'adresse email est deja utilisée.";
+		return response;
+	}else{
+		console.log('email non trouvé');
+		response.codeResponse = "ok";
+		response.message = "New member added! Welcome "+req.body.name+" !";
+		return response;
+	}
 };
 
+// search if mail already in DB or not.
+var searchEmail = function(req){
+	var result;
+	userModel.findOne({"email": req.body.mail},{},function(err, user){
+		if(err){
+			console.log('checkMemberForm: error findOne');
+			throw err;
+		}
+		if(user == null){
+			console.log('User == null');
+			result = false;
+			
+		}else{
+			console.log('User != null');
+			result = true;
+		}
+	});
+};
+	
 // checkForm for login	
 var checkFormLogin = function(req){
 	var response = {

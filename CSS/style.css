@@ -300,11 +300,9 @@ padding-right : 19%;
 	text-decoration: underline;				
 }
 
-
 .home-body{
 height:490px;
 }
-
 .home-message{
 padding-top : 29%;
 text-align:center;
@@ -397,7 +395,6 @@ height:auto;
 	margin-left: 16%;
 	margin-top: 0.5% ;
 }
-
 .about-circular-suf {
 	width: 235px;
 	height: 235px;
@@ -412,7 +409,6 @@ height:auto;
 	margin-right: 16%;
 	margin-top: 0.5% ;
 }
-
 .about-title{
 	margin-top : 3%;
 	font-size : 17px;
@@ -420,7 +416,6 @@ height:auto;
 	margin-left:2%;
 	margin-right:2%;
 }
-
 .about-description{
 	font-size : 16.5px;
 	margin-top : 5%;
