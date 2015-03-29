@@ -549,11 +549,12 @@ app.post('/postContent',function(req,res){
 // Adding new member into DB
 app.post('/newMember', function(req,res){
 	console.log('Adding new member...');
-	console.log(req.headers['content-type']);
 	
 	var pseudo,mail,password,genre,description,response;
 	
 	response = checkFormMember(req);
+	console.log('response newMember');
+	console.log(response);
 	if(response.codeResponse == "ko"){
 		console.log("Adding newMember failed! form wasn't valid.");
 		res.send(response);
@@ -912,66 +913,52 @@ var checkFormMember = function(req){
 		codeResponse:"",
 		message:""
 	};
-	if(req.body.pseudo == "" || req.body.pseudo === null ){
-		response.codeResponse = "ko";
-		response.message ="Le champ PSEUDO doit au moins être complété !";
-		return response;
-	};
-	if(req.body.mail == "" || req.body.mail === null ){
-		response.codeResponse = "ko";
-		response.message ="Le champ MAIL doit au moins être complété !";
-		return response;
-	};
-	if(req.body.password == "" || req.body.password == null ){
-		response.codeResponse = "ko";
-		response.message ="Le champ MOT DE PASSE doit au moins être complété !";
-		return response;
-	};
-	if(req.body.password != req.body.confirmPass){
-		response.codeResponse = "ko";
-		response.message = "Les champs MOT DE PASSE et CONFIRMATION doivent être IDENTIQUES !";
-		return response;
-	};
-	if(req.body.genre1 == "" || req.body.genre1 == null ){
-		response.codeResponse = "ko";
-		response.message ="Le premier GENRE doit au moins être completé !";
-		return response;
-	};
-
-	var emailFound = searchEmail(req);
 	
-	if(emailFound){
-		console.log('email trouvé!');
-		response.codeResponse = "ko";
-		response.message = "L'adresse email est deja utilisée.";
-		return response;
-	}else{
-		console.log('email non trouvé');
-		response.codeResponse = "ok";
-		response.message = "New member added! Welcome "+req.body.name+" !";
-		return response;
-	}
-};
-
-// search if mail already in DB or not.
-var searchEmail = function(req){
-	var result;
 	userModel.findOne({"email": req.body.mail},{},function(err, user){
 		if(err){
 			console.log('checkMemberForm: error findOne');
 			throw err;
 		}
 		if(user == null){
-			console.log('User == null');
-			result = false;
+			if(req.body.pseudo == "" || req.body.pseudo === null ){
+				response.codeResponse = "ko";
+				response.message ="Le champ PSEUDO doit au moins être complété !";
+				return response;
+			};
+			if(req.body.mail == "" || req.body.mail === null ){
+				response.codeResponse = "ko";
+				response.message ="Le champ MAIL doit au moins être complété !";
+				return response;
+			};
+			if(req.body.password == "" || req.body.password == null ){
+				response.codeResponse = "ko";
+				response.message ="Le champ MOT DE PASSE doit au moins être complété !";
+				return response;
+			};
+			if(req.body.password != req.body.confirmPass){
+				response.codeResponse = "ko";
+				response.message = "Les champs MOT DE PASSE et CONFIRMATION doivent être IDENTIQUES !";
+				return response;
+			};
+			if(req.body.genre1 == "" || req.body.genre1 == null ){
+				response.codeResponse = "ko";
+				response.message ="Le premier GENRE doit au moins être completé !";
+				return response;
+			};
+			console.log('user = null + all ok');
+			response.codeResponse = "ok";
+			response.message = "New member added! Welcome "+req.body.name+" !";
+			return response;
 			
 		}else{
-			console.log('User != null');
-			result = true;
+			console.log('email trouvé!');
+			response.codeResponse = "ko";
+			response.message = "L'adresse email est deja utilisée.";
+			return response;
 		}
 	});
 };
-	
+
 // checkForm for login	
 var checkFormLogin = function(req){
 	var response = {
@@ -1037,7 +1024,6 @@ var checkFormCarousel = function(req){
 
 // checkFormMdp
 var checkFormMdp = function(req){
-	
 	var response = {
 		codeResponse:"",
 		message:""
@@ -1046,12 +1032,10 @@ var checkFormMdp = function(req){
 	if(req.body.password != req.body.confirmPass){
 		response.codeResponde = "ko";
 		response.message = "Le NOUVEAU MDP et la CONFIRMATION doivent être IDENTIQUES!";
-	
 		return response;
 	}
 	response.codeResponse = "ok";
 	response.message = "Le MDP a bien été changé!";
-	
 	return response;
 };
 
