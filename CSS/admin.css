@@ -1,0 +1,40 @@
+/* ======================================================== Admin ========================================================================= */
+/* --------------------------------------------------- Accueil Panel Admin ---------------------------------------------------------------- */
+/*DropDownMenu*/
+
+/* Message d'Accueil */
+.admin-body{
+height : 75%;
+}
+.admin-message{
+font-size : 14px;
+margin-left : 7%;
+line-height: 65%;
+}
+.admin-message-accueil{
+font-weight : bold;
+}
+.button-poster{
+margin-top : 5%;
+margin-left : 5%;
+height : 85%;
+}
+.button-panel{
+height:67%;
+border: 2px solid;
+border-radius:25px;
+margin-top : 3%;
+margin-left : 7%;
+width : 35%;
+cursor : hand;
+}
+.button-film{
+float:right;
+margin-top : 7%;
+margin-right : 7%;
+}
+.button-film-name{
+float:right;
+margin-right: 22%;
+margin-top: -47%;
+}

@@ -1,0 +1,52 @@
+/* -------------------------------------------------------- A Propos ---------------------------------------------------------------------- */
+.about{
+text-align : center;
+width:auto;
+height:auto;
+}
+
+/*Pour faire les images circulaires*/
+.about-circular-ben {
+	width: 235px;
+	height: 235px;
+	border-radius: 150px;
+	-webkit-border-radius: 150px;
+	-moz-border-radius: 150px;
+	background: url(../ressources/about_Ben.jpg) no-repeat;
+	box-shadow: 0 0 8px rgba(0, 0, 0, .8);
+	-webkit-box-shadow: 0 0 8px rgba(0, 0, 0, .8);
+	-moz-box-shadow: 0 0 8px rgba(0, 0, 0, .8);
+	float : left;
+	margin-left: 16%;
+	margin-top: 0.5% ;
+}
+.about-circular-suf {
+	width: 235px;
+	height: 235px;
+	border-radius: 150px;
+	-webkit-border-radius: 150px;
+	-moz-border-radius: 150px;
+	background: url(../ressources/about_Sufiane4.jpg) no-repeat;
+	box-shadow: 0 0 8px rgba(0, 0, 0, .8);
+	-webkit-box-shadow: 0 0 8px rgba(0, 0, 0, .8);
+	-moz-box-shadow: 0 0 8px rgba(0, 0, 0, .8);
+	float : right;
+	margin-right: 16%;
+	margin-top: 0.5% ;
+}
+.about-title{
+	margin-top : 3%;
+	font-size : 17px;
+	padding-top: 10%;
+	margin-left:2%;
+	margin-right:2%;
+}
+.about-description{
+	font-size : 16.5px;
+	margin-top : 5%;
+	margin-left : 16%;
+	margin-right : 16%;
+	text-align : justify;
+	padding-top:2%;
+	margin-bottom : 4%;
+}

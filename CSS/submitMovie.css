@@ -1,0 +1,78 @@
+/* -------------------------------------------------------- Soumettre un film ------------------------------------------------------------- */
+#form #formFilm{
+height:auto;
+border: 2px solid;
+border-radius:25px;
+margin-top : 50px;
+margin-left: 30%;
+margin-right: 30%;
+margin-bottom:25px;
+padding-bottom:10px;
+}
+#form #formFilm h2{
+padding-left: 40px;
+}
+#form ul li {
+list-style-type:none;
+line-height:2em;
+}
+#form ul li .description{
+font-style:italic;
+font-weight:200; /*need it so the name of the label doesn't look bold*/
+}
+#form ul #Title #title{
+margin-left:50px;
+width:379px;
+line-height:1.5em;
+}
+#form ul #Real #realisateur {
+margin-left:7px;
+width:379px;
+line-height:1.5em;
+}
+#form ul #Acteurs #acteurs {
+margin-left:31px;
+width:379px;
+line-height:1.5em;
+}
+
+#form ul #Genre #genre1{
+margin-left:17px;
+}
+#form ul #duree #duree {
+line-height:1.5em;
+width:20%;
+}
+#form ul #synopsis #synopsis{
+resize:none;
+height:75px;
+width:95%;
+border-radius:10px;
+border: 1px solid;
+}
+
+#form ul #Affiche #affiche-description{
+float:left;
+}
+#form ul #Affiche #affiche{
+padding-left:20px;
+padding-top:3px;
+}
+
+#form ul #justification label{
+margin-left:-105px;
+padding-top:5px;
+}
+
+#form ul #justification #justification{
+resize:none;
+height:75px;
+width:95%;
+border-radius:10px;
+border: 1px solid;
+}
+#form ul #buttons #ButtonsWrapper{
+text-align:center;
+margin-left:-40px;
+line-height:1.5em;
+}

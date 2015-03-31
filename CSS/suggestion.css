@@ -1,0 +1,61 @@
+/* -------------------------------------------------------- Suggestion -------------------------------------------------------------------- */
+.poster-about{
+display:inline-block;
+box-sizing:border-box;
+}
+.about_movie{
+display:inline-block;
+float:right;
+width:56%;
+margin-right:5%;
+padding-top:4%;
+padding-right:2%;
+text-align:justify;
+line-height: 1.2em;
+}
+.about_movie h1{
+margin-top:-5px;
+padding-bottom:25px;
+}
+
+.about_movie h4{
+padding-top:10px;
+}
+#TitleMovie{
+margin-bottom:20px;
+}
+#MovieTitle{
+color:#7D0000;
+font-size:1.5em;
+}
+#duration{
+margin-left:10px;;
+}
+.poster img{
+width:100%;
+}
+.poster{
+display:inline-block;
+float:left;
+/*resizing the img to 75%*/
+/*transform:scale(0.75);*/
+padding-top:4%;
+padding-left:7%;
+width:30%
+}
+.seance-wrapper{
+padding-top:20px;
+}
+.seance-wrapper #div-img img{
+margin-left:550px;
+width:20%;
+height:auto;
+}
+.seance-wrapper #div-title h2{
+float:right;
+width:63%;
+}
+.about{
+margin-top:50px;
+height:64%;
+}

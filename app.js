@@ -699,7 +699,7 @@ app.post('/changeMdp', function(req,res){
 			if(user == null || !bcrypt.compareSync(req.body.oldMdp, user.password)){
 			
 				response.codeResponse = "ko"
-				response.message="L'ANCIEN MDP n'est pas correct!";
+				response.message="L'ANCIEN Mot de Passe n'est pas correct!";
 				response.isAdmin = "";
 				
 				console.log('old mdp invalid');
@@ -1031,11 +1031,11 @@ var checkFormMdp = function(req){
 	
 	if(req.body.password != req.body.confirmPass){
 		response.codeResponde = "ko";
-		response.message = "Le NOUVEAU MDP et la CONFIRMATION doivent être IDENTIQUES!";
+		response.message = "Le NOUVEAU Mot de Passe et la CONFIRMATION doivent être IDENTIQUES!";
 		return response;
 	}
 	response.codeResponse = "ok";
-	response.message = "Le MDP a bien été changé!";
+	response.message = "Le Mot de Passe a bien été changé!";
 	return response;
 };
 

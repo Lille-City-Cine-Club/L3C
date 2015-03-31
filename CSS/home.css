@@ -1,0 +1,96 @@
+/* -------------------------------------------------------- Page D'accueil----------------------------------------------------------------- */
+/* -------------------------------------------------------- Carousel----------------------------------------------------------------- */
+#carousel-wrapper {
+	width:800px;
+	height: 220px;
+	margin: -110px 0 0 -367px;
+	position: absolute;
+	left: 53.5%;
+	top: 39%;
+}
+
+#carousel {
+	width: 800px;
+	position:vrelative;
+}
+
+#carousel ul {
+	list-style: none;
+	display: block;
+	margin: 0;
+	padding: 0;
+}
+
+#carousel li {
+	background: transparent url(../ressources/home-carousel/carousel_polaroid.png) no-repeat 0 0;
+	font-size: 40px;
+	color: #999;
+	text-align: center;
+	display: block;
+	width: 203px;
+	height: 305px;
+	padding: 0;
+	margin: 6px;
+	float: left;
+	position: relative;
+}
+
+#carousel li img {
+	width: 175px;
+	height: 237px;
+	margin-top: 13px;
+	margin-right : 4px;
+}
+
+#carousel li span {
+	text-indent: -999px;
+	display: block;
+	overflow: hidden;
+	width: 203px;
+	height: 305px;
+	position: absolute;
+	z-index: 2;
+	top: 10px;
+	left: -11px;
+}			
+
+.clearfix {
+	float: none;
+	clear: both;
+}
+
+.pager-wrapper{
+padding-right : 19%;
+}
+			
+			
+#carousel .pager {
+	text-align: center;
+	margin: 0 auto;
+}
+
+#carousel .pager a {
+	background: transparent url(../ressources/home-carousel/carousel_control.png) no-repeat -2px -32px;
+	text-decoration: none;
+	text-indent: -999px;
+	display: inline-block;
+	overflow: hidden;
+	width: 8px;
+	height: 8px;
+	margin: 0 5px 0 0;
+}
+
+#carousel .pager a.selected {
+	background: transparent url(../ressources/home-carousel/carousel_control.png) no-repeat -12px -32px;
+	text-decoration: underline;				
+}
+
+.home-body{
+height:490px;
+}
+.home-message{
+padding-top : 29%;
+text-align:center;
+color : #171717;
+h1.font-weight : 800; 
+}

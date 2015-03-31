@@ -1,0 +1,63 @@
+/* ------------------------------------------------------- Inscription -------------------------------------------------------------------- */
+#form #formInscription{
+height:auto;
+border: 2px solid;
+border-radius:25px;
+margin-top : 50px;
+margin-left: 30%;
+margin-right: 30%;
+margin-bottom:25px;
+padding-bottom:10px;
+}
+
+#form h2{
+padding-left: 40px;
+}
+
+#form ul li {
+list-style-type:none;
+line-height:2em;
+}
+#form ul li .description{
+font-style:italic;
+font-weight:200; /*need it so the name of the label doesn't look bold*/
+}
+#form ul #Pseudo #pseudo{
+margin-left:2.2%;
+width:379px;
+line-height:1.5em;
+}
+#form ul #Mail #mail {
+margin-left:5%;
+width:379px;
+line-height:1.5em;
+}
+#form ul #Pass #pass {
+margin-left:1%;
+width:347px;
+line-height:1.5em;
+}
+#form ul #Pass2 #pass2 {
+margin-left:2%;
+width:347px;
+line-height:1.5em;
+}
+#formInscription ul #Genre #genre1{
+margin-left:-0.5%;
+margin-right:7%;
+}
+#formInscription ul #Genre #genre2{
+margin-right:7%;
+}
+#form ul #Description #description{
+resize:none;
+height:75px;
+width:90%;
+border-radius:10px;
+border: 1px solid;
+}
+#form ul #buttons #ButtonsWrapper{
+text-align:center;
+margin-left:-40px;
+line-height:1.5em;
+}

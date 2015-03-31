@@ -1,0 +1,335 @@
+/* -------------------------------------------------------- General ----------------------------------------------------------------------- */
+body {
+color: #333;
+background-color: #FAF5F5;
+font-family: Helvetica, Georgia, serif;
+font-family: Helvetica;
+font-size: 14px;
+line-height: 1.6em;
+letter-spacing: 0px;
+font-weight: lighter;
+font-style: normal;
+margin: 0;
+}
+
+div {
+display:block;
+}
+/*To disable the outline focus*/
+*:focus {
+    outline: 0;
+}
+
+a {
+color:#FFF;
+}
+a:hover{
+color:#FFF;
+}
+a:link{
+text-decoration:none;
+}
+a:visited{
+color:#FFF;
+}
+
+/* -------------------------------------------------------- Menu -------------------------------------------------------------------------- */
+.logo-nav-wrapper{
+display: table;
+background-color : #171717;
+width: 100%;
+height:85px;
+padding-right:5%;
+vertical-align:middle;
+box-sizing: border-box;
+}
+.site-logo img{
+height:80px;
+width:auto;
+margin-top:-15px;
+padding-left:100px;
+}
+.logo-wrapper{
+display: table-cell;
+}
+.nav-wrapper{
+display: table-cell;
+width:70%;
+text-align: right;
+vertical-align: middle;
+}
+
+#cssmenu ul {
+  list-style: none;
+  padding: 0;
+  margin: -5;
+  line-height: 1;
+  float: left;
+  top : 20px;
+  margin-right: -165px;
+}
+#cssmenu > ul {
+  position: relative;
+  display: block;
+  background: #171717;
+  width:100%;
+  z-index: 500;
+vertical-align: center;
+margin-right : -235px;
+margin-top : 0px;
+  }
+#cssmenu:after,
+#cssmenu > ul:after {
+  content: ".";
+  display: block;
+  clear: both;
+  visibility: hidden;
+  line-height: 0;
+  height: 0;
+}
+#cssmenu.align-right > ul > li {
+  float: right;
+}
+#cssmenu.align-center ul {
+  text-align: center;
+}
+#cssmenu.align-center ul ul {
+  text-align: left;
+}
+#cssmenu > ul > li {
+  display: inline-block;
+  position: relative;
+  margin-right: 10px; /*écart entre les boutons*/
+}
+#cssmenu > ul > #menu-button {
+  display: none;
+}
+#cssmenu ul li a {
+  display: block;
+  text-decoration: none;
+}
+#cssmenu > ul > li > a {
+  font-size: 15px;
+  font-family: Helvetica, Georgia, serif;
+  font-family: Helvetica;
+  padding: 23px 17px;
+  margin-top : -8px;
+  color: #ffffff;
+  text-transform: uppercase;
+  -webkit-transition: color 0.25s ease-out;
+  -moz-transition: color 0.25s ease-out;
+  -ms-transition: color 0.25s ease-out;
+  -o-transition: color 0.25s ease-out;
+  transition: color 0.25s ease-out;
+}
+#cssmenu > ul > li.has-sub > a {
+  padding-right: 35px;
+}
+#cssmenu > ul > li:hover > a {
+  color: #7a8189;
+}
+#cssmenu li.has-sub::after {
+  display: block;
+  content: "";
+  position: absolute;
+  width: 0;
+  height: 0;
+}
+#cssmenu > ul > li.has-sub::after {
+  right: 37px;
+  top: 20px;
+  border: 5px solid transparent;
+  border-top-color: #ffffff;
+  margin-right : -20px;
+}
+#cssmenu > ul > li:hover::after {
+  border-top-color: #7a8189;
+}
+
+#pIndicator {
+  position: absolute;
+  height: 0;
+  width: 100%;
+  border: 12px solid transparent;
+  border-top-color: #2b2f3a;
+  z-index: -2;
+  -webkit-transition: left .25s ease;
+  -moz-transition: left .25s ease;
+  -ms-transition: left .25s ease;
+  -o-transition: left .25s ease;
+  transition: left .25s ease;
+}
+#cIndicator {
+  position: absolute;
+  height: 0;
+  width: 100%;
+  border: 12px solid transparent;
+  border-top-color: #2b2f3a;
+  top: -12px;
+  right: 100%;
+  z-index: -2;
+}
+#cssmenu ul ul {
+  position: absolute;
+  left: -9999px;
+  top: 70px;
+  opacity: 0;
+  -webkit-transition: opacity .3s ease, top .25s ease;
+  -moz-transition: opacity .3s ease, top .25s ease;
+  -ms-transition: opacity .3s ease, top .25s ease;
+  -o-transition: opacity .3s ease, top .25s ease;
+  transition: opacity .3s ease, top .25s ease;
+  z-index: 1000;
+}
+
+#cssmenu ul ul li {
+  position: relative;
+}
+#cssmenu > ul > li:hover > ul {
+  left: auto;
+  top: 44px;
+  opacity: 1;
+}
+#cssmenu.align-right > ul > li:hover > ul {
+  left: auto;
+  right: 0;
+  opacity: 1;
+}
+#cssmenu ul ul li:hover > ul {
+  left: 170px;
+  top: 0;
+  opacity: 1;
+}
+#cssmenu.align-right ul ul li:hover > ul {
+  left: auto;
+  right: 170px;
+  top: 0;
+  opacity: 1;
+  padding-right: 5px;
+}
+/*sous-menu*/
+#cssmenu ul ul li a {
+text-align:center;
+  width: 190px;
+  border-bottom: 1px solid #eeeeee;
+  padding: 10px 13px;
+  font-size: 16px;
+  color: #9ea2a5;
+  background: #ffffff;
+  -webkit-transition: all .35s ease;
+  -moz-transition: all .35s ease;
+  -ms-transition: all .35s ease;
+  -o-transition: all .35s ease;
+  transition: all .35s ease;
+  margin-left : 3px;
+}
+#cssmenu.align-right ul ul li a {
+  text-align: right;
+}
+#cssmenu ul ul li:hover > a {
+  background: #8c9195;
+  color: #f2f2f2;
+}
+#cssmenu ul ul li:last-child > a,
+#cssmenu ul ul li.last > a {
+  border-bottom: 0;
+}
+#cssmenu > ul > li > ul::after {
+  content: '';
+  border: 6px solid transparent;
+  width: 0;
+  height: 0;
+  border-bottom-color: #ffffff;
+  position: absolute;
+  top: -12px;
+  left: 30px;
+}
+#cssmenu.align-right > ul > li > ul::after {
+  left: auto;
+  right: 30px;
+}
+
+/* -------------------------------------------------------- Footer ------------------------------------------------------------------------ */
+.footer-wrapper{
+width:100%;
+height:21%;
+background-color : #171717;
+
+}
+.footer-wrapper #footer-menu li a:link{
+text-decoration:none;
+color:#FFF;
+}
+.footer-wrapper #footer-menu li a:visited{
+color:#FFF;
+}
+#footer-menu{
+color:#FFF;
+letter-spacing:1px;
+padding-top: 20px;
+line-height:2em;
+list-style-type:none;
+margin-left:25px;
+padding-top:35px;
+}
+.footer-wrapper #menu-logo img{
+float:right;
+margin-right:60px;
+padding-top:30px;
+}
+.footer-wrapper #copyright {
+text-align:center;
+color:#FFF;
+}
+
+/* -------------------------------------------------------- Banner ------------------------------------------------------------------------ */
+
+.success, .error {
+    display: none;
+	color:white;
+	border-radius:25px;
+    margin-top: 35px;
+	margin-bottom:-30px;
+	margin-left: 30%;
+	margin-right: 30%;
+    padding: 10px;
+    border: solid 2px #05E500;
+	font-weight:600;
+	text-align:center;
+	background: repeating-linear-gradient(
+		  45deg,
+		  #05E500,
+		  #05E500 10px,
+		  #5EFF5B 10px,
+		  #5EFF5B 20px
+		);
+}
+.error{
+	border: solid 2px #F20600;
+	background: repeating-linear-gradient(
+		  45deg,
+		  #E81900,
+		  #E81900 10px,
+		  #E83521 10px,
+		  #E83521 20px
+		);
+}
+
+/* -------------------------------------------------------- Boutons ----------------------------------------------------------------------- */
+.buttonValider{
+border-radius:25px;
+background:#171717;
+color:#FFF;
+border: 2px solid;
+height:5%;
+width:auto;
+font-weight:bold;
+}
+.buttonValider:hover{
+color:#C6C7B3;
+}
+.buttonValider:active{
+color:#171717;
+border-color:#171717;
+background:#FAF5F5;
+}
