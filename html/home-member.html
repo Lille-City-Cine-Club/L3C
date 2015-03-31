@@ -81,6 +81,8 @@
 					
 					success:function(content){
 						if(content.email){
+							var message-accueil = document.getElementById("member-message-accueil");
+							message-accueil.innerHTML="Bienvenue, "+content.name;	
 							if(!content.isAdmin){
 								console.log('Je suis un membre!');
 								$('#admin').hide();
@@ -139,8 +141,7 @@
 			</div>	
 		</div>
 		<div class="admin-body">
-			<h1>
-			Bienvenue, cher membre !
+			<h1 id="member-message-accueil">
 			</h1>
 		</div>
 		<div class="admin-message">

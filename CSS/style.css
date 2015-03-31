@@ -465,18 +465,47 @@ color:#FFF;
 
 /* Message d'Accueil */
 .admin-body{
-text-align : center;
-font-weight: bold;
-margin-top : 190px;
-margin-bottom : 25px;
+height : 75%;
 }
-.admin-body.h1{}
 
 .admin-message{
-text-align : center;
-font-size : 16px;
-margin-bottom : 180px;
+font-size : 14px;
+margin-left : 7%;
+line-height: 65%;
 }
+
+.admin-message-accueil{
+font-weight : bold;
+}
+
+.button-poster{
+margin-top : 5%;
+margin-left : 5%;
+height : 85%;
+}
+
+.button-panel{
+height:67%;
+border: 2px solid;
+border-radius:25px;
+margin-top : 3%;
+margin-left : 7%;
+width : 35%;
+cursor : hand;
+}
+
+.button-film{
+float:right;
+margin-top : 7%;
+margin-right : 7%;
+}
+
+.button-film-name{
+float:right;
+margin-right: 22%;
+margin-top: -47%;
+}
+
 
 /* -------------------------------------------------------- Soumettre un film ------------------------------------------------------------- */
 #form #formFilm{
