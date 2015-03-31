@@ -1,5 +1,5 @@
 /* -------------------------------------------------------- Navigateur -------------------------------------------------------------------- */
-/*.logo-nav-wrapper{
+.logo-nav-wrapper{
 display: table;
 background-color : #171717;
 width: 100%;
@@ -65,7 +65,7 @@ margin-top : 0px;
   display: inline-block;
   position: relative;
   margin-right: 10px; /*écart entre les boutons*/
-/*}
+}
 #cssmenu > ul > #menu-button {
   display: none;
 }
@@ -172,9 +172,9 @@ margin-top : 0px;
   opacity: 1;
   padding-right: 5px;
 }
-*/
+
 /*sous-menu*/
-/*
+
 #cssmenu ul ul li a {
 text-align:center;
   width: 190px;
@@ -215,10 +215,10 @@ text-align:center;
   left: auto;
   right: 30px;
 }
-*/
+
 /* -------------------------------------------------------- Page D'accueil----------------------------------------------------------------- */
 /* -------------------------------------------------------- Carousel----------------------------------------------------------------- */
-/*
+
 #carousel-wrapper {
 	width:800px;
 	height: 220px;
@@ -312,10 +312,10 @@ padding-top : 29%;
 text-align:center;
 color : #171717;
 h1.font-weight : 800; 
-}*/
+}
 
 /* -------------------------------------------------------- Suggestion -------------------------------------------------------------------- */
-/*.poster-about{
+.poster-about{
 display:inline-block;
 box-sizing:border-box;
 }
@@ -355,7 +355,7 @@ display:inline-block;
 float:left;
 /*resizing the img to 75%*/
 /*transform:scale(0.75);*/
-/*padding-top:4%;
+padding-top:4%;
 padding-left:7%;
 width:30%
 }
@@ -375,9 +375,9 @@ width:63%;
 margin-top:50px;
 height:64%;
 }
-*/
+
 /* -------------------------------------------------------- A Propos ---------------------------------------------------------------------- */
-/*
+
 .about{
 text-align : center;
 width:auto;
@@ -385,7 +385,7 @@ height:auto;
 }
 
 /*Pour faire les images circulaires*/
-/*.about-circular-ben {
+.about-circular-ben {
 	width: 235px;
 	height: 235px;
 	border-radius: 150px;
@@ -428,10 +428,10 @@ height:auto;
 	text-align : justify;
 	padding-top:2%;
 	margin-bottom : 4%;
-}*/
+}
 
 /* -------------------------------------------------------- Footer ------------------------------------------------------------------------ */
-/*.footer-wrapper{
+.footer-wrapper{
 width:100%;
 height:21%;
 background-color : #171717;
@@ -462,13 +462,13 @@ padding-top:30px;
 text-align:center;
 color:#FFF;
 }
-*/
+
 /* ======================================================== Admin ========================================================================= */
 /* --------------------------------------------------- Accueil Panel Admin ---------------------------------------------------------------- */
 /*DropDownMenu*/
 
 /* Message d'Accueil */
-/*
+
 .admin-body{
 height : 75%;
 }
@@ -503,10 +503,11 @@ margin-right : 7%;
 float:right;
 margin-right: 22%;
 margin-top: -47%;
-}*/
+}
+
 
 /* -------------------------------------------------------- Soumettre un film ------------------------------------------------------------- */
-/*
+
 #form #formFilm{
 height:auto;
 border: 2px solid;
@@ -527,7 +528,7 @@ line-height:2em;
 #form ul li .description{
 font-style:italic;
 font-weight:200; /*need it so the name of the label doesn't look bold*/
-/*}
+}
 #form ul #Title #title{
 margin-left:50px;
 width:379px;
@@ -583,7 +584,7 @@ border: 1px solid;
 text-align:center;
 margin-left:-40px;
 line-height:1.5em;
-}*//*
+}
 .success, .error {
     display: none;
 	color:white;
@@ -613,9 +614,9 @@ line-height:1.5em;
 		  #E83521 10px,
 		  #E83521 20px
 		);
-}*/
+}
 /* ------------------------------------------------------- Carousel ----------------------------------------------------------------------- */
-/*
+
 .carousel-image-wrapper{
 padding-bottom : 5px;
 display:block;
@@ -642,10 +643,10 @@ margin-left: 30%;
 margin-right: 30%;
 margin-bottom:25px;
 padding-bottom:10px;
-}*/
+}
 
 /* ------------------------------------------------------- Admin Management --------------------------------------------------------------- */
-/*
+
 #form #formSearchAdmin{
 height:auto;
 border: 2px solid;
@@ -665,7 +666,7 @@ line-height:2em;
 }
 #form ul li .descriptionSearch{
 font-style:italic;
-font-weight:200; /*need it so the name of the label doesn't look bold*//*
+font-weight:200; /*need it so the name of the label doesn't look bold*/
 margin-left:20px;
 }
 #form ul #Recherche {
@@ -692,9 +693,9 @@ margin-right:30%;
 .result{
 font-weight:200;
 }
-*/
+
 /* ------------------------------------------------------- Inscription -------------------------------------------------------------------- */
-/*
+
 #form #formInscription{
 height:auto;
 border: 2px solid;
@@ -716,7 +717,7 @@ line-height:2em;
 }
 #form ul li .description{
 font-style:italic;
-font-weight:200; /*need it so the name of the label doesn't look bold*//*
+font-weight:200; /*need it so the name of the label doesn't look bold*/
 }
 #form ul #Pseudo #pseudo{
 margin-left:2.2%;
@@ -756,10 +757,10 @@ border: 1px solid;
 text-align:center;
 margin-left:-40px;
 line-height:1.5em;
-}*/
+}
 
 /* -------------------------------------------------------- Login ------------------------------------------------------------------------- */
-/*
+
 #form #formLogin{
 height:auto;
 width:30%;
@@ -831,8 +832,8 @@ padding:10px;
 margin-top:2%;
 margin-left:-40px;
 text-align:center;
-}*/
-/*
+}
+
 .buttonValider{
 border-radius:25px;
 background:#171717;
@@ -850,9 +851,9 @@ color:#171717;
 border-color:#171717;
 background:#FAF5F5;
 }
-*/
+
 /* -------------------------------------------------------- MDP Oublié ------------------------------------------------------------------ */
-/*
+
 #formForgottenPass{
 height:auto;
 width:35%;
@@ -885,9 +886,9 @@ margin-bottom : 4%;
 margin-top : 2%;
 }
 
-*/
+
 /* -------------------------------------------------------- Modifier MDP ------------------------------------------------------------------ */
-/*
+
 #form #formChangeMdp{
 height:auto;
 width:35%;
@@ -934,9 +935,9 @@ margin-bottom : 3%;
 	margin-left :0;
 	margin-top : 0;
 	}
-*/	
+
 /* -------------------------------------------------------- Erreur404 --------------------------------------------------------------------- */
-/*	
+	
 #body-404{
 height:70%;
 }	
@@ -952,9 +953,9 @@ font-size : 20px;
 color : #171717;
 h1.font-weight : 1000; 
 }
-*/
+
 /* -------------------------------------------------------- General ----------------------------------------------------------------------- */
-/*body {
+body {
 color: #333;
 background-color: #FAF5F5;
 font-family: Helvetica, Georgia, serif;
@@ -971,7 +972,7 @@ div {
 display:block;
 }
 /*To disable the outline focus*/
-/**:focus {
+*:focus {
     outline: 0;
 }
 
@@ -986,4 +987,4 @@ text-decoration:none;
 }
 a:visited{
 color:#FFF;
-}*/
+}

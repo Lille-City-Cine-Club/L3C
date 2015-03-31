@@ -333,3 +333,24 @@ color:#171717;
 border-color:#171717;
 background:#FAF5F5;
 }
+
+/* -------------------------------------------------------- form -------------------------------------------------------------------------- */
+#form h2{
+padding-left: 40px;
+}
+#form ul li {
+list-style-type:none;
+line-height:2em;
+}
+#form input{
+line-height:1.8em;
+}
+#form ul li .description{
+font-style:italic;
+font-weight:200; /*need it so the name of the label doesn't look bold*/
+}
+#form ul #buttons #ButtonsWrapper{
+text-align:center;
+margin-left:-40px;
+line-height:1.5em;
+}
