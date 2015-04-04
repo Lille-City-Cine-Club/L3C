@@ -64,6 +64,22 @@
 								$("#okSign").hide(0)
 								$("#koSign").show();
 								console.log('Membre non trouvé!');
+								var pseudo, email, date, genre, description;
+								
+								pseudo = document.getElementById('pseudo2');
+								pseudo.innerHTML ="";
+								
+								email = document.getElementById('email');
+								email.innerHTML ="";
+								
+								date = document.getElementById('date');
+								date.innerHTML ="";
+
+								genre = document.getElementById('genre');
+								genre.innerHTML ="";
+								
+								description = document.getElementById('descriptionResult');
+								description.innerHTML ="";				
 							}
 						},
 						error:function(){

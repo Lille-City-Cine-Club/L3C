@@ -33,6 +33,7 @@
 					formData.append('confirmPass',$('#confirm').val());
 					
 					$(".loading").show();
+					$(".fadeMe").show();
 					$.ajax({
 						type:'POST',
 						url:$this.attr('action'),
@@ -61,6 +62,7 @@
 						},
 						complete:function(){
 							$(".loading").hide();
+							$(".fadeMe").hide();
 						}
 					});
 				});
@@ -149,7 +151,7 @@
 		
 		$(document).ready(function(){
 			sayMyName();
-			$(".loading").show();
+
 		});
 		</script>
 	</head>
