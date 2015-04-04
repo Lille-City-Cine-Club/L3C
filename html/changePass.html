@@ -32,6 +32,7 @@
 					formData.append('password',$('#newMDP').val());
 					formData.append('confirmPass',$('#confirm').val());
 					
+					$(".loading").show();
 					$.ajax({
 						type:'POST',
 						url:$this.attr('action'),
@@ -57,58 +58,61 @@
 						},
 						error:function(){
 							alert('Error Ajax!');
+						},
+						complete:function(){
+							$(".loading").hide();
 						}
 					});
 				});
 			});
-				( function( $ ) {
-		$( document ).ready(function() {
-			var activeElement = $('#cssmenu>ul>li:first');
+		( function( $ ) {
+			$( document ).ready(function() {
+				var activeElement = $('#cssmenu>ul>li:first');
 
-			$('#cssmenu>ul>li').each(function() {
-				if ($(this).hasClass('active')) {
-					activeElement = $(this);
-				}
-			});
-
-
-			var posLeft = activeElement.position().left;
-			var elementWidth = activeElement.width();
-			posLeft = posLeft + elementWidth/2 -6;
-			if (activeElement.hasClass('has-sub')) {
-				posLeft -= 6;
-			}
-
-			$('#cssmenu #pIndicator').css('left', posLeft);
-			var element, leftPos, indicator = $('#cssmenu pIndicator');
-			
-			$("#cssmenu>ul>li").hover(function() {
-				element = $(this);
-				var w = element.width();
-				if ($(this).hasClass('has-sub'))
-				{
-					leftPos = element.position().left + w/2 - 12;
-				}
-				else {
-					leftPos = element.position().left + w/2 - 6;
-				}
-
-				$('#cssmenu #pIndicator').css('left', leftPos);
-			}
-			, function() {
-				$('#cssmenu #pIndicator').css('left', posLeft);
-			});
-
-			$('#cssmenu>ul').prepend('<li id="menu-button"><a>Menu</a></li>');
-			$( "#menu-button" ).click(function(){
-					if ($(this).parent().hasClass('open')) {
-						$(this).parent().removeClass('open');
-					}
-					else {
-						$(this).parent().addClass('open');
+				$('#cssmenu>ul>li').each(function() {
+					if ($(this).hasClass('active')) {
+						activeElement = $(this);
 					}
 				});
-		});
+
+
+				var posLeft = activeElement.position().left;
+				var elementWidth = activeElement.width();
+				posLeft = posLeft + elementWidth/2 -6;
+				if (activeElement.hasClass('has-sub')) {
+					posLeft -= 6;
+				}
+
+				$('#cssmenu #pIndicator').css('left', posLeft);
+				var element, leftPos, indicator = $('#cssmenu pIndicator');
+				
+				$("#cssmenu>ul>li").hover(function() {
+					element = $(this);
+					var w = element.width();
+					if ($(this).hasClass('has-sub'))
+					{
+						leftPos = element.position().left + w/2 - 12;
+					}
+					else {
+						leftPos = element.position().left + w/2 - 6;
+					}
+
+					$('#cssmenu #pIndicator').css('left', leftPos);
+				}
+				, function() {
+					$('#cssmenu #pIndicator').css('left', posLeft);
+				});
+
+				$('#cssmenu>ul').prepend('<li id="menu-button"><a>Menu</a></li>');
+				$( "#menu-button" ).click(function(){
+						if ($(this).parent().hasClass('open')) {
+							$(this).parent().removeClass('open');
+						}
+						else {
+							$(this).parent().addClass('open');
+						}
+					});
+			});
 		} )( jQuery );
 		
 		// to load the correct menu
@@ -145,6 +149,7 @@
 		
 		$(document).ready(function(){
 			sayMyName();
+			$(".loading").show();
 		});
 		</script>
 	</head>
@@ -184,6 +189,9 @@
 		</div>
 		<div id="success" class="success"></div>
 		<div id="error" class="error"></div>
+		<div class="fadeMe"></div>
+		<!-- loading gif-->
+		<img class="loading" src="../ressources/loading.gif" alt="loading gif"/>
 		<div id="form">
 			<form id="formChangeMdp" action="changeMdp" method="post">
 				<h2> Modifier votre mot de passe : </h2>
@@ -211,19 +219,20 @@
 			</form>
 		</div>
 		<div class="footer-wrapper">
-		<div id="menu-logo" >
-			<a href="http://www.univ-lille1.fr/" target="_blank">
-				<img src="../ressources/logo/logoLille1Mini.png" alt="Université Lille1" >
-			</a>
-			<ul id="footer-menu">
-				<li><span class="fa fa-lg fa-facebook" style="margin-left:0.2%"></span> <a href=http://www.facebook.com/LilleCityCineClub target="_blank" style="margin-left:0.8%"> Facebook </a></li>
-				<li><span class="glyphicon glyphicon-info-sign" style="font-size:16px;" ></span> <a href="about" style="margin-left:0.5%"> A propos </a></li>
-			</ul>
-		</div>
-		<div id="copyright">
-			<p>
-				&copy Benny-P & DonDiego. En collaboration avec M.Dufrêne. Université Lille 1.
-			</p>	
-		</div>
+			<div id="menu-logo" >
+				<a href="http://www.univ-lille1.fr/" target="_blank">
+					<img src="../ressources/logo/logoLille1Mini.png" alt="Université Lille1" >
+				</a>
+				<ul id="footer-menu">
+					<li><span class="fa fa-lg fa-facebook" style="margin-left:0.2%"></span> <a href=http://www.facebook.com/LilleCityCineClub target="_blank" style="margin-left:0.8%"> Facebook </a></li>
+					<li><span class="glyphicon glyphicon-info-sign" style="font-size:16px;" ></span> <a href="about" style="margin-left:0.5%"> A propos </a></li>
+				</ul>
+			</div>
+			<div id="copyright">
+				<p>
+					&copy Benny-P & DonDiego. En collaboration avec M.Dufrêne. Université Lille 1.
+				</p>	
+			</div>
+		</div>		
 	</body>
 </html>
