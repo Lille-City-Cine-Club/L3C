@@ -7,19 +7,15 @@ border-radius:25px;
 margin-top : 1.7%;
 margin-left: 35%;
 margin-right: 30%;
-margin-bottom:25px;
-padding-bottom:10px;
 }
 
-#form h2{
-padding-left: 40px;
-}
 #form ul li {
 list-style-type:none;
 line-height:2em;
 }
 #form input{
 line-height:1.8em;
+width : 45%;
 }
 #form ul #PseudoLogin #pseudoLogin{
 margin-left:12.6%;
@@ -35,11 +31,11 @@ margin-bottom:5%;
 text-align:center;
 }
 #inscription #accrocheInscription{
-font-size:16px;
+font-size:1.1em;
 text-align:justify;
 }
 #inscription #accrocheInscription #dvlpt{
-font-size:12px;
+font-size:0.9em;
 }
 #inscription {
 text-align:center;
@@ -55,7 +51,7 @@ background:#171717;
 margin-left:42%;
 margin-right:42%;
 font-weight:bold;
-font-size:20px;
+font-size:1.3em;
 }
 #inscription #buttonInscription a:link{
 text-decoration:none;
@@ -64,10 +60,10 @@ text-decoration:none;
 color:#FFF;
 }
 #inscription #buttonInscription p{
-padding:10px;
+padding:6%;
 }
 #ButtonsWrapper{
 margin-top:2%;
-margin-left:-40px;
+margin-left:-1%;
 text-align:center;
 }

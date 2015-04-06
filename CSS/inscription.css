@@ -3,15 +3,15 @@
 height:auto;
 border: 2px solid;
 border-radius:25px;
-margin-top : 50px;
+margin-top : 4%;
 margin-left: 30%;
 margin-right: 30%;
-margin-bottom:25px;
-padding-bottom:10px;
+margin-bottom:3%;
+padding-bottom:1%;
 }
 
 #form h2{
-padding-left: 40px;
+padding-left: 7.33%;
 }
 
 #form ul li {
@@ -24,22 +24,22 @@ font-weight:200; /*need it so the name of the label doesn't look bold*/
 }
 #form ul #Pseudo #pseudo{
 margin-left:2.2%;
-width:379px;
+width:76.5%;
 line-height:1.5em;
 }
 #form ul #Mail #mail {
 margin-left:5%;
-width:379px;
+width:76.4%;
 line-height:1.5em;
 }
 #form ul #Pass #pass {
 margin-left:1%;
-width:347px;
+width:70.2%;
 line-height:1.5em;
 }
 #form ul #Pass2 #pass2 {
 margin-left:2%;
-width:347px;
+width:70.2%;
 line-height:1.5em;
 }
 #formInscription ul #Genre #genre1{
@@ -51,13 +51,12 @@ margin-right:7%;
 }
 #form ul #Description #description{
 resize:none;
-height:75px;
+height:13%;
 width:90%;
 border-radius:10px;
 border: 1px solid;
 }
 #form ul #buttons #ButtonsWrapper{
 text-align:center;
-margin-left:-40px;
 line-height:1.5em;
 }
