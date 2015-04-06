@@ -223,11 +223,7 @@ text-align:center;
 /* -------------------------------------------------------- Footer ------------------------------------------------------------------------ */
 .footer-wrapper{
 width:100%;
-<<<<<<< HEAD
 height:21.3%;
-=======
-height:19%;
->>>>>>> origin/master
 background-color : #171717;
 }
 .footer-wrapper #footer-menu li a:link{
@@ -242,7 +238,6 @@ color:#FFF;
 letter-spacing:1px;
 line-height:2em;
 list-style-type:none;
-<<<<<<< HEAD
 margin-left:1.83%;
 padding-top:2.7%;
 }
@@ -250,24 +245,12 @@ padding-top:2.7%;
 float:right;
 margin-right:4.39%;
 padding-top:2.2%;
-=======
-margin-left:25px;
-padding-top:2%;
-}
-.footer-wrapper #menu-logo img{
-float:right;
-margin-right:60px;
-padding-top:2%;
->>>>>>> origin/master
 }
 .footer-wrapper #copyright {
 text-align:center;
 color:#FFF;
 }
 
-.footer-wrapper #copyright p {
-margin:0px;
-}
 /* -------------------------------------------------------- Banner ------------------------------------------------------------------------ */
 
 .success, .error {
