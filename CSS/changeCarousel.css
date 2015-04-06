@@ -26,3 +26,24 @@ margin-right: 30%;
 margin-bottom:25px;
 padding-bottom:10px;
 }
+
+#posterCarousel{
+margin-left:10%;
+
+margin-top:2%;
+}
+#posterCarousel li {
+list-style: none;
+display:block;
+}
+#posterCarousel li div {
+	
+}
+
+#posterCarousel li label img {
+width: 150px;
+height: 200px;
+margin-right: 2%;
+float: left;
+}
+
