@@ -449,12 +449,6 @@ app.get('/changePass', function(req,res){
 
 // forgottenPass
 app.get('/forgottenPass', function (req,res){
-	/*
-	if(typeof sess == "undefined"){
-		console.log('\nForgotPass : redirection car pas de session.');
-		res.redirect('/');
-	}else{
-	*/
 	var html;
 	fs.readFile(__dirname+'/html/forgottenPass.html','utf8',function(err, data){
 		if(err){
@@ -602,7 +596,7 @@ app.post('/newMember', function(req,res){
 				from:"Admin L3C <bennyp.dondiego@gmail.com>",
 				to:mail,
 				subject:"Bienvenue au sein du L3C!",
-				//text: "ne s''affiche pas je ne sais pas pourquoi",
+				//text: "ne s'affiche pas je ne sais pas pourquoi",
 				html: '<b>Test Nodemailer!</b><br/>Bienvenue au sein de la communauté Lilloise City Cine Club!<br/>Vous retrouverez chaque semaine une suggestion de film choisis par nos soins.<br/> Nous avons deja hâte d\'entendre vos retours sur notre service/projet! A tout de suite sur le site!<br/> Benny-P & DonDiego'
 			},function(err,mail){
 				if(err){
@@ -913,7 +907,7 @@ var checkFormMember = function(req){
 		codeResponse:"",
 		message:""
 	};
-	
+	/*
 	userModel.findOne({"email": req.body.mail},{},function(err, user){
 		if(err){
 			console.log('checkMemberForm: error findOne');
@@ -956,7 +950,38 @@ var checkFormMember = function(req){
 			response.message = "L'adresse email est deja utilisée.";
 			return response;
 		}
-	});
+	});*/
+	if(req.body.pseudo == "" || req.body.pseudo === null ){
+		response.codeResponse = "ko";
+		response.message ="Le champ PSEUDO doit au moins être complété !";
+		return response;
+	};
+	if(req.body.mail == "" || req.body.mail === null ){
+		response.codeResponse = "ko";
+		response.message ="Le champ MAIL doit au moins être complété !";
+		return response;
+	};
+	if(req.body.password == "" || req.body.password == null ){
+		response.codeResponse = "ko";
+		response.message ="Le champ MOT DE PASSE doit au moins être complété !";
+		return response;
+	};
+	if(req.body.password != req.body.confirmPass){
+		response.codeResponse = "ko";
+		response.message = "Les champs MOT DE PASSE et CONFIRMATION doivent être IDENTIQUES !";
+		return response;
+	};
+	if(req.body.genre1 == "" || req.body.genre1 == null ){
+		response.codeResponse = "ko";
+		response.message ="Le premier GENRE doit au moins être completé !";
+		return response;
+	};
+	
+	response.codeResponse = "ok";
+	response.message = "Bienvenue "+req.body.pseudo+" !";
+	
+	return response;
+	
 };
 
 // checkForm for login	
