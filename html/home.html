@@ -88,10 +88,12 @@
 							console.log('Je suis un membre!');
 							$('#admin').hide();
 							$('#connection').hide();
+							$('#inscription').hide();
 							$('#member').show();
 						}else{
 							console.log('Je suis un admin!');
 							$('#connection').hide();
+							$('#inscription').hide();
 						}
 					}else{
 						console.log('Je suis un internaute!');
@@ -124,7 +126,8 @@
 			<ul>
 				<li><a id="Seance" href="suggestion">Le Film du mois</a></li>
 				<li id="connection"><a id="logIn" href="login">Connexion</a></li>
-				<li  id="admin" class='active has-sub'><a href='/admin'><span>Administration</span></a>
+				<li id="inscription"><a id="logIn" href="inscription">Inscription</a></li>
+				<li id="admin" class='active has-sub'><a href='/admin'><span>Administration</span></a>
 					<ul>
 						<li><a href='/admin-suggestion'><span>Soumettre un film</span></a></li>
 						<li><a href='/admin-carousel'><span>Modifier Carousel</span></a></li>
@@ -150,6 +153,7 @@
 				});
 			});
 		</script>
+		<div>
 		<div id="carousel-wrapper">
 			<div id="carousel">
 				<ul>
@@ -165,11 +169,11 @@
 					<div id="pager" class="pager"></div>
 				</div>
 			</div>
+			<!--Message d'accueil-->
 		</div>
-
-		<!--Message d'accueil-->
 		<div class="home-message">
-			<h1>Bienvenue au Lille City Ciné Club !</h1>
+				<h1>Bienvenue au Lille City Ciné Club !</h1>
+		</div>
 		</div>
 	</div>
 	

@@ -14,22 +14,21 @@ text-align:justify;
 line-height: 1.2em;
 }
 .about_movie h1{
-margin-top:-5px;
-padding-bottom:25px;
+margin-top:-1%;
+padding-bottom:1%;
 }
-
 .about_movie h4{
-padding-top:10px;
+padding-top:2%;
 }
 #TitleMovie{
-margin-bottom:20px;
+margin-bottom:4%;
 }
 #MovieTitle{
 color:#7D0000;
 font-size:1.5em;
 }
 #duration{
-margin-left:10px;;
+margin-left:0.7%;
 }
 .poster img{
 width:100%;
@@ -37,17 +36,15 @@ width:100%;
 .poster{
 display:inline-block;
 float:left;
-/*resizing the img to 75%*/
-/*transform:scale(0.75);*/
 padding-top:4%;
 padding-left:7%;
 width:30%
 }
 .seance-wrapper{
-padding-top:20px;
+padding-top:1%;
 }
 .seance-wrapper #div-img img{
-margin-left:550px;
+margin-left:40.26%;
 width:20%;
 height:auto;
 }
@@ -56,6 +53,6 @@ float:right;
 width:63%;
 }
 .about{
-margin-top:50px;
+margin-top:4%;
 height:64%;
 }

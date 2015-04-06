@@ -98,77 +98,77 @@
 			});
 			} )( jQuery );
 			
-			// to load the correct menu
-			var sayMyName = function(){
-				$.ajax({
-					type:'POST',
-					url:'whatsMyName',
-					data:"",
-					processData:false,
-					contentType:false,
-					
-					success:function(content){
-						if(content.email){
-							if(!content.isAdmin){
-								console.log('Je suis un membre!');
-								$('#admin').hide();
-								$('#connection').hide();
-								$('#member').show();
-							}else{
-								console.log('Je suis un admin!');
-								$('#connection').hide();
-							}
-						}else{
-							console.log('Je suis un internaute!');
+					// to load the correct menu
+		var sayMyName = function(){
+			$.ajax({
+				type:'POST',
+				url:'whatsMyName',
+				data:"",
+				processData:false,
+				contentType:false,
+				
+				success:function(content){
+					if(content.email){
+						if(!content.isAdmin){
+							console.log('Je suis un membre!');
 							$('#admin').hide();
-							$('#member').hide();
+							$('#connection').hide();
+							$('#inscription').hide();
+							$('#member').show();
+						}else{
+							console.log('Je suis un admin!');
+							$('#connection').hide();
+							$('#inscription').hide();
 						}
-					},
-					error:function(){
-						alert('Error Ajax!');
+					}else{
+						console.log('Je suis un internaute!');
+						$('#admin').hide();
+						$('#member').hide();
 					}
-				});
-			};
-			
-			$(document).ready(function(){
-				sayMyName();
+				},
+				error:function(){
+					alert('Error Ajax!');
+				}
 			});
-		</script>
-	</head>
+		};
 		
-	<body>
-		<!-- logo+site -->
-		<div class="logo-nav-wrapper">
-		<!-- Regroupe le logo-->
-			<div class="logo-wrapper">
-				<div class="site-logo">
-					<a href="http://localhost:7777/">
-						<img src="../ressources/logo/L3C.jpg" alt="Lille City Cine Club" />
-					</a>
-				</div>
+		$(document).ready(function(){
+			sayMyName();
+		});
+	</script>
+	<!-- logo+site -->
+	<div class="logo-nav-wrapper">
+	<!-- Regroupe le logo-->
+		<div class="logo-wrapper">
+			<div class="site-logo">
+				<a href="http://localhost:7777/">
+					<img src="../ressources/logo/L3C.jpg" alt="Lille City Cine Club" />
+				</a>
 			</div>
-			<!-- le menu -->
-			<div id='cssmenu'>
-				<ul>
-					<li><a id="Seance" href="suggestion">Le Film du mois</a></li>
-					<li id="connection"><a id="logIn" href="login">Connexion</a></li>
-					<li  id="admin" class='active has-sub'><a href='/admin'><span>Administration</span></a>
-						<ul>
-							<li><a href='/admin-suggestion'><span>Soumettre un film</span></a></li>
-							<li><a href='/admin-carousel'><span>Modifier Carousel</span></a></li>
-							<li><a href="/admin-management"> <span> Gérer les Admins</span></a></li>
-						</ul>
-					</li>
-					<li id="member" class='active has-sub'><a href='#'><span>Gérer mon profil</span></a>
-						<ul>
-							<li><a href='../changePass'><span>Changer Mot de Passe</span></a></li>
-							<li><a href='../logout'><span>Déconnexion</span></a></li>
-						</ul>
-					</li>
-					<li><a id="about" href="about">A propos</a></li>
-				</ul>
-			</div>	
-		</div>
+        </div>
+        <!-- le menu -->
+		<div id='cssmenu'>
+			<ul>
+				<li><a id="Seance" href="suggestion">Le Film du mois</a></li>
+				<li id="connection"><a id="logIn" href="login">Connexion</a></li>
+				<li id="inscription"><a id="logIn" href="inscription">Inscription</a></li>
+				<li id="admin" class='active has-sub'><a href='/admin'><span>Administration</span></a>
+					<ul>
+						<li><a href='/admin-suggestion'><span>Soumettre un film</span></a></li>
+						<li><a href='/admin-carousel'><span>Modifier Carousel</span></a></li>
+						<li><a href="/admin-management"> <span> Gérer les Admins</span></a></li>
+					</ul>
+				</li>
+				<li id="member" class='active has-sub'><a href='#'><span>Gérer mon profil</span></a>
+					<ul>
+						<li><a href='../changePass'><span>Changer Mot de Passe</span></a></li>
+						<li><a href='../logout'><span>Déconnexion</span></a></li>
+					</ul>
+				</li>
+				<li><a id="about" href="about">A propos</a></li>
+			</ul>
+		</div>	
+	</div>
 		<div id="form">
 			<form id="formForgottenPass" action="forgottenPass" method="post">
 				<h2 id="forgotten-title"> Mot de Passe Oublié ? </h2>
@@ -178,7 +178,7 @@
 						<label class="description"> Entrez ici votre adresse e-mail : </label>
 						<input id="forgotten-email" maxlength="255" type="text" value="" placeholder="Votre adresse e-mail"/>
 					</li>
-					<li>
+					<li id="buttons">
 						<div id="ButtonsWrapper" >
 							<input type="hidden" name="form_id" value="955925" />
 							<input id="saveForm" class="buttonValider" type="submit"  value="Valider" />

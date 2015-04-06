@@ -83,23 +83,8 @@
 				contentType:false,
 				
 				success:function(content){
-					if(content.email){
 					var messageAccueil = document.getElementById("admin-message-accueil");
 					messageAccueil.innerHTML="Bienvenue, "+content.name;
-						if(!content.isAdmin){
-							console.log('Je suis un membre!');
-							$('#admin').hide();
-							$('#connection').hide();
-							$('#member').show();
-						}else{
-							console.log('Je suis un admin!');
-							$('#connection').hide();
-						}
-					}else{
-						console.log('Je suis un internaute!');
-						$('#admin').hide();
-						$('#member').hide();
-					}
 				},
 				error:function(){
 					alert('Error Ajax!');
@@ -125,7 +110,6 @@
 		<div id='cssmenu'>
 			<ul>
 				<li><a id="Seance" href="suggestion">Le Film du mois</a></li>
-				<li id="connection"><a id="logIn" href="login">Connexion</a></li>
 				<li  id="admin" class='active has-sub'><a href='/admin'><span>Administration</span></a>
 					<ul>
 						<li><a href='/admin-suggestion'><span>Soumettre un film</span></a></li>

@@ -71,7 +71,7 @@
 		});
 		} )( jQuery );
 		
-		// to load the correct menu
+			// to load the correct menu
 		var sayMyName = function(){
 			$.ajax({
 				type:'POST',
@@ -83,18 +83,9 @@
 				success:function(content){
 					if(content.email){
 						if(!content.isAdmin){
-							console.log('Je suis un membre!');
-							$('#admin').hide();
-							$('#connection').hide();
-							$('#member').show();
-						}else{
-							console.log('Je suis un admin!');
-							$('#connection').hide();
-						}
-					}else{
 						console.log('Je suis un internaute!');
 						$('#admin').hide();
-						$('#member').hide();
+						}
 					}
 				},
 				error:function(){
@@ -106,39 +97,39 @@
 		$(document).ready(function(){
 			sayMyName();
 		});
-		</script>
-		<!-- logo+site -->
-		<div class="logo-nav-wrapper">
-		<!-- Regroupe le logo-->
-			<div class="logo-wrapper">
-				<div class="site-logo">
-					<a href="http://localhost:7777/">
-						<img src="../ressources/logo/L3C.jpg" alt="Lille City Cine Club" />
-					</a>
-				</div>
+	</script>
+	<!-- logo+site -->
+	<div class="logo-nav-wrapper">
+	<!-- Regroupe le logo-->
+		<div class="logo-wrapper">
+			<div class="site-logo">
+				<a href="http://localhost:7777/">
+					<img src="../ressources/logo/L3C.jpg" alt="Lille City Cine Club" />
+				</a>
 			</div>
-			<!-- le menu -->
-			<div id='cssmenu'>
-				<ul>
-					<li><a id="Seance" href="suggestion">Le Film du mois</a></li>
-					<li id="connection"><a id="logIn" href="login">Connexion</a></li>
-					<li  id="admin" class='active has-sub'><a href='/admin'><span>Administration</span></a>
-						<ul>
-							<li><a href='/admin-suggestion'><span>Soumettre un film</span></a></li>
-							<li><a href='/admin-carousel'><span>Modifier Carousel</span></a></li>
-							<li><a href="/admin-management"> <span> Gérer les Admins</span></a></li>
-						</ul>
-					</li>
-					<li id="member" class='active has-sub'><a href='#'><span>Gérer mon profil</span></a>
-						<ul>
-							<li><a href='../changePass'><span>Changer Mot de Passe</span></a></li>
-							<li><a href='../logout'><span>Déconnexion</span></a></li>
-						</ul>
-					</li>
-					<li><a id="about" href="about">A propos</a></li>
-				</ul>
-			</div>	
-		</div>
+        </div>
+        <!-- le menu -->
+		<div id='cssmenu'>
+			<ul>
+				<li><a id="Seance" href="suggestion">Le Film du mois</a></li>
+
+				<li id="admin" class='active has-sub'><a href='/admin'><span>Administration</span></a>
+					<ul>
+						<li><a href='/admin-suggestion'><span>Soumettre un film</span></a></li>
+						<li><a href='/admin-carousel'><span>Modifier Carousel</span></a></li>
+						<li><a href="/admin-management"> <span> Gérer les Admins</span></a></li>
+					</ul>
+				</li>
+				<li id="member" class='active has-sub'><a href='#'><span>Gérer mon profil</span></a>
+					<ul>
+						<li><a href='../changePass'><span>Changer Mot de Passe</span></a></li>
+						<li><a href='../logout'><span>Déconnexion</span></a></li>
+					</ul>
+				</li>
+				<li><a id="about" href="about">A propos</a></li>
+			</ul>
+		</div>	
+	</div>
 		<div class="poster-about">
 			<div class="poster">
 				<!-- <img src="../ressources/Avng.jpg"> -->
@@ -169,7 +160,7 @@
 				<h2>Les séances : </h2>
 			</div>
 			<div id="div-img">
-				<img src="../ressources/comingsoon.jpg">
+				<img src="../ressources/comingsoon.png">
 			</div>
 		</div>
 		
