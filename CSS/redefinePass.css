@@ -1,5 +1,5 @@
 /* -------------------------------------------------------- MDP Oublié ------------------------------------------------------------------ */
-#formForgottenPass{
+#formRedefinePass{
 height:auto;
 width:35%;
 border: 2px solid;
@@ -11,22 +11,39 @@ margin-bottom:6.4%;
 padding-bottom:1.3%;
 }
 
-#forgotten-title{
+#redefine-title{
 margin-left : -1%;
 color : #171717;
 font-size:2em;
 }
 
-#forgotten-message{
+#redefine-message{
 padding-right : 5%;
 padding-left : 6%;
 text-align: justify;
 font-size : 1.2em;
 }
 
-#forgotten-email{
+.description2{
+font-weight:500;
+font-style : italic;
+}
+
+#redefine-champs{
+margin-left : 6.5%;
+}
+
+#redefine-confirmation{
+margin-top : 0%;
 padding-left : 1%;
 margin-left:2%;
-margin-bottom : 4%;
-margin-top : 2%;
+margin-bottom : 3%;
+width : 75%;
+}
+#redefine-mdp{
+margin-top : 0%;
+padding-left : 1%;
+margin-left:2%;
+margin-bottom : %;
+width:75%;
 }
