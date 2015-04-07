@@ -20,13 +20,14 @@
 		
 			<script>		
 			$(document).ready(function(){
-				$('#formForgottenPass').on('submit', function(e){
+				$('#formRedefinePass').on('submit', function(e){
 					e.preventDefault();
 					
 					var $this = $(this);
 					
 					var formData = new FormData();
-					formData.append('email',$('#forgotten-email').val());
+					formData.append('pass',$('#redefine-mdp').val());
+					formData.append('confirmation',$('#redefine-confirmation').val());
 					
 					$.ajax({
 						type:'POST',
@@ -97,44 +98,6 @@
 					});
 			});
 			} )( jQuery );
-			
-					// to load the correct menu
-		var sayMyName = function(){
-			$.ajax({
-				type:'POST',
-				url:'whatsMyName',
-				data:"",
-				processData:false,
-				contentType:false,
-				
-				success:function(content){
-					if(content.email){
-						if(!content.isAdmin){
-							console.log('Je suis un membre!');
-							$('#admin').hide();
-							$('#connection').hide();
-							$('#inscription').hide();
-							$('#member').show();
-						}else{
-							console.log('Je suis un admin!');
-							$('#connection').hide();
-							$('#inscription').hide();
-						}
-					}else{
-						console.log('Je suis un internaute!');
-						$('#admin').hide();
-						$('#member').hide();
-					}
-				},
-				error:function(){
-					alert('Error Ajax!');
-				}
-			});
-		};
-		
-		$(document).ready(function(){
-			sayMyName();
-		});
 	</script>
 	<!-- logo+site -->
 	<div class="logo-nav-wrapper">
@@ -145,32 +108,10 @@
 					<img src="../ressources/logo/L3C.jpg" alt="Lille City Cine Club" />
 				</a>
 			</div>
-        </div>
-        <!-- le menu -->
-		<div id='cssmenu'>
-			<ul>
-				<li><a id="Seance" href="suggestion">Le Film du mois</a></li>
-				<li id="connection"><a id="logIn" href="login">Connexion</a></li>
-				<li id="inscription"><a id="logIn" href="inscription">Inscription</a></li>
-				<li id="admin" class='active has-sub'><a href='/admin'><span>Administration</span></a>
-					<ul>
-						<li><a href='/admin-suggestion'><span>Soumettre un film</span></a></li>
-						<li><a href='/admin-carousel'><span>Modifier Carousel</span></a></li>
-						<li><a href="/admin-management"> <span> Gérer les Admins</span></a></li>
-					</ul>
-				</li>
-				<li id="member" class='active has-sub'><a href='#'><span>Gérer mon profil</span></a>
-					<ul>
-						<li><a href='../changePass'><span>Changer Mot de Passe</span></a></li>
-						<li><a href='../logout'><span>Déconnexion</span></a></li>
-					</ul>
-				</li>
-				<li><a id="about" href="about">A propos</a></li>
-			</ul>
-		</div>	
+        </div>	
 	</div>
 		<div id="form">
-			<form id="formRedefinePass" action="redefinePass" method="post">
+			<form id="formRedefinePass" action="updatePass" method="post">
 				<h2 id="redefine-title"> Redéfinir votre mot de passe : </h2>
 				
 				<ul id="redefine-champs">
