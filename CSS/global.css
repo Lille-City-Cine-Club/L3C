@@ -327,11 +327,10 @@ line-height:1.5em;
 .loading {
 display: none;
 position: absolute;
-top:20%;
-left:35%;
-width:30%;
+top:30%;
+left:45%;
+width:10%;
 height:auto;
-opacity:0.3;
 }
 .fadeMe{
 display:none;

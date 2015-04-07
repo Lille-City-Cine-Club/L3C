@@ -21,6 +21,7 @@
 		
 		<script>		
 			$(document).ready(function(){
+				
 				$('#formChangeMdp').on('submit', function(e){
 					e.preventDefault();
 					
@@ -178,16 +179,18 @@
 	</div>
 		<div id="success" class="success"></div>
 		<div id="error" class="error"></div>
-		<div class="fadeMe"></div>
-		<!-- loading gif-->
-		<img class="loading" src="../ressources/loading.gif" alt="loading gif"/>
+		<!-- overley-->
+		<div class="fadeMe">
+			<!-- loading gif-->
+			<img class="loading" src="../ressources/loading.gif" alt="loading gif"/>
+		</div>
 		<div id="form">
 			<form id="formChangeMdp" action="changeMdp" method="post">
 				<h2> Modifier votre mot de passe : </h2>
 				<ul>
 					<li id="ChampMDP">
 						<label class="description"> Entrez votre ancien mot de passe : </label>
-						<input id="oldMDP" maxlength="255" type="password" value="" placeholder="Ancien Mot de Passe"/>
+						<input id="oldMDP" maxlength="255" type="password" value="" placeholder="Ancien mot de passe"/>
 					</li>
 					<hr>
 					<div id="separateur"></div>
