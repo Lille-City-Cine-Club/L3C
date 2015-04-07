@@ -135,7 +135,8 @@ var userSchema = new Schema({
 	isAdmin:{type: Boolean, default: false},
 	description:String,
 	genre:[String],
-	date:{type:Date, default:Date.now}
+	date:{type:Date, default:Date.now},
+	temporaryKey:String
 });
 
 var movieModel = mongoose.model('Movie', movieSchema,'Movie');
@@ -464,6 +465,32 @@ app.get('/forgottenPass', function (req,res){
 	});	
 })	
 
+app.get('/redefinePass:passKey',function(req,res){
+	var passKey = req.params.passKey;
+	
+	userModel.findOne({"temporaryKey":passKey},{},function(err,user){
+		if(err){
+			console.log('redefinePass : Error findOne!');
+			throw err;
+		}
+		
+		sess.email = user.email;
+		var html;
+		fs.readFile(__dirname+"/html/redefinePass.html","utf8",function(err,data){
+			if(err){
+				console.log('redefinePass: error readfile');
+				throw err;
+			}
+			html = data;
+
+			res.charset='utf-8';
+			res.setHeader("Access-Control-Allows-Origin","*");
+			res.send(html);
+
+		});
+	});
+})
+
 // logout
 app.get('/logout', function(req,res){
 	console.log('Merci de votre visite et à bientôt ! ');
@@ -681,6 +708,21 @@ app.post('/loginConnection', function(req,res){
 	});
 })
 
+//updateMdp
+app.post('/updateMdp', function(req,res){
+
+	var email = sess.email;
+	userModel.findOneAndUpdate({"email":email},{"temporaryKey":null, "password":req.body.redefine-mdp},{},function(err, user){
+		if(err){
+			console.log('UpdateMdp : Error findOne');
+			throw err;
+		}
+		console.log('UpdateMdp : Success pass updated!');
+		res.redirect('/');
+	
+	});
+})
+
 // ChangeMDP
 app.post('/changeMdp', function(req,res){
 	var response = checkFormMdp(req);
@@ -724,13 +766,15 @@ app.post('/forgottenPass', function(req,res){
 	salt = bcrypt.genSaltSync(10);
 	
 	console.log('email :' + userEmail);
-	console.log('MDP provisoire : '+ tmpPass);
+	console.log('temporaryKey : '+ tmpPass);
 	
 	response = {
 		codeResponse :"",
 		message :""
 	};
-	userModel.findOneAndUpdate({email: userEmail},{password: bcrypt.hashSync(tmpPass,salt)},{}, function(err,user){
+	
+	// userModel.findOneAndUpdate({email: userEmail},{password: bcrypt.hashSync(tmpPass,salt)},{}, function(err,user){
+	userModel.findOneAndUpdate({email: userEmail},{temporaryKey: bcrypt.hashSync(tmpPass,salt)},{}, function(err,user){
 		if(err){
 			console.log('ForgottenPass : error searching user.');
 			throw err;
@@ -748,7 +792,7 @@ app.post('/forgottenPass', function(req,res){
 					to:mail,
 					subject:"Mot de passe provisoire",
 					//text: "ne s''affiche pas je ne sais pas pourquoi",
-					html: '<b>Mot de pass provisoire</b><br/>Voici votre mdp provisoire: <strong>'+tmpPass+'</strong><br/>Changez vite votre mot de passe pour en a voir un plus parlant! Et surtout ne l\'oubliez plus cette fois ahah!<br/> Benny-P & DonDiego'
+					html: '<b>Changer son mdp</b><br/>Voici votre lien: <strong><a href=\"localhost:7777/redefinePass:'+tmpPass+'/></strong><br/>Changez vite votre mot de passe pour en a voir un plus parlant! Et surtout ne l\'oubliez plus cette fois ahah!<br/> Benny-P & DonDiego'
 				},function(err,mail){
 					if(err){
 						console.log("\nForgottenPass: Error Sending mail!");
