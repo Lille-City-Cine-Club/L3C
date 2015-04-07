@@ -466,14 +466,20 @@ app.get('/forgottenPass', function (req,res){
 })	
 
 app.get('/redefinePass:passKey',function(req,res){
-	var passKey = req.params.passKey;
+	var tmp = req.params.passKey;
+	var passKey = tmp.substring(1,tmp.length);
+
+	console.log(passKey);
 	
 	userModel.findOne({"temporaryKey":passKey},{},function(err,user){
 		if(err){
 			console.log('redefinePass : Error findOne!');
 			throw err;
 		}
-		
+		if(user == null){
+			console.log('ReedfinePass: Utilisateur non trouvé!');
+		}
+		console.log(user);
 		sess.email = user.email;
 		var html;
 		fs.readFile(__dirname+"/html/redefinePass.html","utf8",function(err,data){
@@ -710,8 +716,14 @@ app.post('/loginConnection', function(req,res){
 
 //updateMdp
 app.post('/updateMdp', function(req,res){
-
-	var email = sess.email;
+	var email,response;
+	email = sess.email;
+	
+	if(req.body.pass != req.body.confirmation){
+		console.log('UpdateMdp : pass & confirmation different!');
+		res.send(response);
+	}
+	
 	userModel.findOneAndUpdate({"email":email},{"temporaryKey":null, "password":req.body.redefine-mdp},{},function(err, user){
 		if(err){
 			console.log('UpdateMdp : Error findOne');
@@ -774,7 +786,7 @@ app.post('/forgottenPass', function(req,res){
 	};
 	
 	// userModel.findOneAndUpdate({email: userEmail},{password: bcrypt.hashSync(tmpPass,salt)},{}, function(err,user){
-	userModel.findOneAndUpdate({email: userEmail},{temporaryKey: bcrypt.hashSync(tmpPass,salt)},{}, function(err,user){
+	userModel.findOneAndUpdate({email: userEmail},{temporaryKey: tmpPass},{}, function(err,user){
 		if(err){
 			console.log('ForgottenPass : error searching user.');
 			throw err;
