@@ -28,6 +28,8 @@
 					var formData = new FormData();
 					formData.append('email',$('#forgotten-email').val());
 					
+					$(".loading").show();
+					$(".fadeMe").show();
 					$.ajax({
 						type:'POST',
 						url:$this.attr('action'),
@@ -37,13 +39,25 @@
 						
 						success:function(content){
 							if(content.codeResponse == "ko"){
-								alert(content.message);
+								window.scrollTo(0,0);
+								var errorMessage = document.getElementById('error');
+								errorMessage.innerHTML = content.message;
+								$(".error").show();
 							}else{
-								alert(content.message);
+								$(".error").hide(0);
+								var successMessage = document.getElementById('success');
+								successMessage.innerHTML = content.message;							
+								$(".success").show();
+								$(".success").fadeOut(2400);
+								setTimeout("window.location.href = '/login';",2350);
 							}
 						},
 						error:function(){
 							alert('Error Ajax!');
+						},
+						complete:function(){
+							$(".loading").hide();
+							$(".fadeMe").hide();
 						}
 					});
 				});
@@ -136,6 +150,8 @@
 			sayMyName();
 		});
 	</script>
+	</head>
+	<body>
 	<!-- logo+site -->
 	<div class="logo-nav-wrapper">
 	<!-- Regroupe le logo-->
@@ -169,37 +185,43 @@
 			</ul>
 		</div>	
 	</div>
-		<div id="form">
-			<form id="formForgottenPass" action="forgottenPass" method="post">
-				<h2 id="forgotten-title"> Mot de Passe Oublié ? </h2>
-				<h4 id="forgotten-message"> Pour récupérer votre mot de passe, renseignez votre e-mail ci-dessous, un formulaire de réinitialisation vous y sera envoyé.</h4>
-				<ul>
-					<li id="ChampEmail">
-						<label class="description"> Entrez ici votre adresse e-mail : </label>
-						<input id="forgotten-email" maxlength="255" type="text" value="" placeholder="Votre adresse e-mail"/>
-					</li>
-					<li id="buttons">
-						<div id="ButtonsWrapper" >
-							<input type="hidden" name="form_id" value="955925" />
-							<input id="saveForm" class="buttonValider" type="submit"  value="Valider" />
-						</div>
-					</li>
-			</form>
-		</div>
-		<div class="footer-wrapper">
-		<div id="menu-logo" >
-			<a href="http://www.univ-lille1.fr/" target="_blank">
-				<img src="../ressources/logo/logoLille1Mini.png" alt="Université Lille1" >
-			</a>
-			<ul id="footer-menu">
-				<li><span class="fa fa-lg fa-facebook" style="margin-left:0.2%"></span> <a href=http://www.facebook.com/LilleCityCineClub target="_blank" style="margin-left:0.8%"> Facebook </a></li>
-				<li><span class="glyphicon glyphicon-info-sign" style="font-size:16px;" ></span> <a href="about" style="margin-left:0.5%"> A propos </a></li>
-			</ul>
-		</div>
-		<div id="copyright">
-			<p>
-				&copy Benny-P & DonDiego. En collaboration avec M.Dufrêne. Université Lille 1.
-			</p>	
-		</div>
+	<div id="success" class="success"></div>
+	<div id="error" class="error"></div>
+	<div class="fadeMe">
+		<!-- loading gif-->
+		<img class="loading" src="../ressources/loading.gif" alt="loading gif"/>
+	</div>
+	<div id="form">
+		<form id="formForgottenPass" action="forgottenPass" method="post">
+			<h2 id="forgotten-title"> Mot de Passe Oublié ? </h2>
+			<h4 id="forgotten-message"> Pour récupérer votre mot de passe, renseignez votre e-mail ci-dessous, un formulaire de réinitialisation vous y sera envoyé.</h4>
+			<ul>
+				<li id="ChampEmail">
+					<label class="description"> Entrez ici votre adresse e-mail : </label>
+					<input id="forgotten-email" maxlength="255" type="email" value="" placeholder="Votre adresse e-mail"/>
+				</li>
+				<li id="buttons">
+					<div id="ButtonsWrapper" >
+						<input type="hidden" name="form_id" value="955925" />
+						<input id="saveForm" class="buttonValider" type="submit"  value="Valider" />
+					</div>
+				</li>
+		</form>
+	</div>
+	<div class="footer-wrapper">
+	<div id="menu-logo" >
+		<a href="http://www.univ-lille1.fr/" target="_blank">
+			<img src="../ressources/logo/logoLille1Mini.png" alt="Université Lille1" >
+		</a>
+		<ul id="footer-menu">
+			<li><span class="fa fa-lg fa-facebook" style="margin-left:0.2%"></span> <a href=http://www.facebook.com/LilleCityCineClub target="_blank" style="margin-left:0.8%"> Facebook </a></li>
+			<li><span class="glyphicon glyphicon-info-sign" style="font-size:16px;" ></span> <a href="about" style="margin-left:0.5%"> A propos </a></li>
+		</ul>
+	</div>
+	<div id="copyright">
+		<p>
+			&copy Benny-P & DonDiego. En collaboration avec M.Dufrêne. Université Lille 1.
+		</p>	
+	</div>
 	</body>
 </html>
