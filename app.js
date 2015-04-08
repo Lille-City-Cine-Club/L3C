@@ -125,7 +125,8 @@ var movieSchema = new Schema({
 	poster: String,
 	duration: String,
 	why: String,
-	date: {type:Date, default:Date.now}
+	date: {type:Date, default:Date.now},
+	suggestionDate : Date
 });
 
 var userSchema = new Schema({
@@ -469,6 +470,7 @@ app.get('/redefinePass:passKey',function(req,res){
 	var tmp = req.params.passKey;
 	var passKey = tmp.substring(1,tmp.length);
 
+	console.log('redefine: PassKey');
 	console.log(passKey);
 	
 	userModel.findOne({"temporaryKey":passKey},{},function(err,user){
@@ -479,8 +481,11 @@ app.get('/redefinePass:passKey',function(req,res){
 		if(user == null){
 			console.log('ReedfinePass: Utilisateur non trouvé!');
 		}
-		console.log(user);
+		console.log(sess);
+		console.log('si tu trouve user pk tu bug.....');
+		console.log(user.email);
 		sess.email = user.email;
+		
 		var html;
 		fs.readFile(__dirname+"/html/redefinePass.html","utf8",function(err,data){
 			if(err){
@@ -518,7 +523,7 @@ app.get('/logout', function(req,res){
 app.post('/postContent',function(req,res){
 	console.log('posting content...\n');
 	
-	var title,director,actors,genre,duration,synopsis,why;	// le poster est géré par multer. On rajoute juste le chemmin du poster à la base(cf posterPath)
+	var title,director,actors,genre,duration,synopsis,why,publicationDate;	// le poster est géré par multer. On rajoute juste le chemmin du poster à la base(cf posterPath)
 	
 	response = checkFormFilm(req);					// verification du formulaire
 	if(response.codeResponse == "ko"){
@@ -542,8 +547,9 @@ app.post('/postContent',function(req,res){
 		duration = req.body.duree;
 		synopsis=req.body.synopsis;
 		why=req.body.why;
+		publicationDate = req.body.suggestionDate;
 		
-		console.log('title: '+title+'\n genre: '+genre+'\n duration: '+duration+'\ndirector: '+director+'\n actors: '+actors+'\n synopsis: '+synopsis+'\n poster:'+posterPath+'\n why:'+why+'\n');
+		console.log('title: '+title+'\n genre: '+genre+'\n duration: '+duration+'\ndirector: '+director+'\n actors: '+actors+'\n synopsis: '+synopsis+'\n poster:'+posterPath+'\n why:'+why+'\n plublication date:'+publicationDate +'\n');
 		
 		var movie = {
 			"title":title,
@@ -553,7 +559,8 @@ app.post('/postContent',function(req,res){
 			"synopsis":synopsis,
 			"poster":posterPath,
 			"duration":duration,
-			"why":why
+			"why":why,
+			"suggestionDate":publicationDate
 		};
 
 		if(done){										//used with multer to notify the upload sucess
@@ -579,69 +586,70 @@ app.post('/newMember', function(req,res){
 	
 	var pseudo,mail,password,genre,description,response;
 	
-	response = checkFormMember(req);
-	console.log('response newMember');
-	console.log(response);
-	if(response.codeResponse == "ko"){
-		console.log("Adding newMember failed! form wasn't valid.");
-		res.send(response);
-	}else{
-		pseudo = req.body.pseudo;
-		mail = req.body.mail;
-		var salt = bcrypt.genSaltSync(10);
-		password = bcrypt.hashSync(req.body.password,salt);
-		
-		genre =[]; 
-		genre.push(req.body.genre1);
-		
-		if(req.body.genre2 != undefined){
-			genre.push(req.body.genre2);
-		};
-		if(req.body.genre3 != undefined){
-			genre.push(req.body.genre3);
-		};
-		
-		if(req.body.description != undefined){
-			description = req.body.description;
+	checkFormMember(req, function(err, response) {
+		console.log('response newMember');
+		console.log(response);
+		if(response.codeResponse == "ko"){
+			console.log("Adding newMember failed! form wasn't valid.");
+			res.send(response);
 		}else{
-			description = pseudo +" est encore un peu timide.. Souhaitez lui la bienvenue ! ";
-		};
-		
-		var user = {
-			"name":pseudo,
-			"email":mail,
-			"password":password,
-			"isAdmin":false,
-			"description":description,
-			"genre":genre
-		};
-
-		user = new userModel(user);
-		user.save(function(err,member){
-			if(err){
-				console.log('Error saving new member!!');
-				throw err;
+			pseudo = req.body.pseudo;
+			mail = req.body.mail;
+			var salt = bcrypt.genSaltSync(10);
+			password = bcrypt.hashSync(req.body.password,salt);
+			
+			genre =[]; 
+			genre.push(req.body.genre1);
+			
+			if(req.body.genre2 != undefined){
+				genre.push(req.body.genre2);
 			};
-			console.log('New member '+user.name+' added!!');
-			console.log(user);
+			if(req.body.genre3 != undefined){
+				genre.push(req.body.genre3);
+			};
 			
-			mailer.sendMail({
-				from:"Admin L3C <bennyp.dondiego@gmail.com>",
-				to:mail,
-				subject:"Bienvenue au sein du L3C!",
-				//text: "ne s'affiche pas je ne sais pas pourquoi",
-				html: '<b>Test Nodemailer!</b><br/>Bienvenue au sein de la communauté Lilloise City Cine Club!<br/>Vous retrouverez chaque semaine une suggestion de film choisis par nos soins.<br/> Nous avons deja hâte d\'entendre vos retours sur notre service/projet! A tout de suite sur le site!<br/> Benny-P & DonDiego'
-			},function(err,mail){
+			if(req.body.description != undefined){
+				description = req.body.description;
+			}else{
+				description = pseudo +" est encore un peu timide.. Souhaitez lui la bienvenue ! ";
+			};
+			
+			var user = {
+				"name":pseudo,
+				"email":mail,
+				"password":password,
+				"isAdmin":false,
+				"description":description,
+				"genre":genre
+			};
+
+			user = new userModel(user);
+			user.save(function(err,member){
 				if(err){
-					console.log("\nNew member: Error Sending mail!");
+					console.log('Error saving new member!!');
 					throw err;
-				}
-				console.log('\nMessage successfully sent! Message:'+ mail.response);
+				};
+				console.log('New member '+user.name+' added!!');
+				console.log(user);
+				
+				mailer.sendMail({
+					from:"Admin L3C <bennyp.dondiego@gmail.com>",
+					to:mail,
+					subject:"Bienvenue au sein du L3C!",
+					//text: "ne s'affiche pas je ne sais pas pourquoi",
+					html: '<b>Test Nodemailer!</b><br/>Bienvenue au sein de la communauté Lilloise City Cine Club!<br/>Vous retrouverez chaque semaine une suggestion de film choisis par nos soins.<br/> Nous avons deja hâte d\'entendre vos retours sur notre service/projet! A tout de suite sur le site!<br/> Benny-P & DonDiego'
+				},function(err,mail){
+					if(err){
+						console.log("\nNew member: Error Sending mail!");
+						throw err;
+					}
+					console.log('\nMessage successfully sent! Message:'+ mail.response);
+				});
+				
+				res.send('New member '+user.name+' added!!');
 			});
-			
-			res.send('New member '+user.name+' added!!');
-		});
-	};
+		};
+	});
 })
 
 // Adding new poster for the carousel
@@ -715,23 +723,33 @@ app.post('/loginConnection', function(req,res){
 })
 
 //updateMdp
-app.post('/updateMdp', function(req,res){
-	var email,response;
+app.post('/updatePass', function(req,res){
+	var email,response, salt;
+		
 	email = sess.email;
+	salt = bcrypt.genSaltSync(10);
+	
+	response = {
+		codeResponse: "",
+		message: ""
+	};
 	
 	if(req.body.pass != req.body.confirmation){
 		console.log('UpdateMdp : pass & confirmation different!');
+		response.codeResponse = "ko";
+		response.message="new mdp & confirmation !=";
 		res.send(response);
 	}
-	
-	userModel.findOneAndUpdate({"email":email},{"temporaryKey":null, "password":req.body.redefine-mdp},{},function(err, user){
+	// crypt pass
+	userModel.findOneAndUpdate({"email":email},{"temporaryKey":null, "password":bcrypt.hashSync(req.body.pass,salt)},{},function(err, user){
 		if(err){
 			console.log('UpdateMdp : Error findOne');
 			throw err;
 		}
 		console.log('UpdateMdp : Success pass updated!');
-		res.redirect('/');
-	
+		response.codeResponse = "ok";
+		response.message ="message correctement changé.";
+		res.send(response);
 	});
 })
 
@@ -957,86 +975,52 @@ var checkFormFilm = function(req){
 	return response;
 };
 
+function checkRequired( arr, key, cb ) {
+	if ( arr[ key ] == "" || arr[ key ] == null ) {
+		cb( null, {
+			codeResponse : "ko",
+			message: "Le champ "+key+" doit au moins être complété !"
+		});
+		return false;
+	}
+	return true;
+}
+
 // CheckForm for inscription
-var checkFormMember = function(req){
+var checkFormMember = function(req, cb){
 	var response = {
 		codeResponse:"",
 		message:""
 	};
-	/*
+	/* */
 	userModel.findOne({"email": req.body.mail},{},function(err, user){
 		if(err){
 			console.log('checkMemberForm: error findOne');
-			throw err;
+			cb( err );
 		}
 		if(user == null){
-			if(req.body.pseudo == "" || req.body.pseudo === null ){
-				response.codeResponse = "ko";
-				response.message ="Le champ PSEUDO doit au moins être complété !";
-				return response;
-			};
-			if(req.body.mail == "" || req.body.mail === null ){
-				response.codeResponse = "ko";
-				response.message ="Le champ MAIL doit au moins être complété !";
-				return response;
-			};
-			if(req.body.password == "" || req.body.password == null ){
-				response.codeResponse = "ko";
-				response.message ="Le champ MOT DE PASSE doit au moins être complété !";
-				return response;
-			};
+			for( k in ['pseudo', 'mail', 'password', 'genre1'] )
+				if ( !checkRequired(req.body, k, cb) ) return;
+			
 			if(req.body.password != req.body.confirmPass){
 				response.codeResponse = "ko";
 				response.message = "Les champs MOT DE PASSE et CONFIRMATION doivent être IDENTIQUES !";
-				return response;
+				cb( null, response );
+				return ;
 			};
-			if(req.body.genre1 == "" || req.body.genre1 == null ){
-				response.codeResponse = "ko";
-				response.message ="Le premier GENRE doit au moins être completé !";
-				return response;
-			};
+
 			console.log('user = null + all ok');
 			response.codeResponse = "ok";
 			response.message = "New member added! Welcome "+req.body.name+" !";
-			return response;
+			cb ( null, response );
 			
 		}else{
 			console.log('email trouvé!');
 			response.codeResponse = "ko";
 			response.message = "L'adresse email est deja utilisée.";
-			return response;
+			cb( null, response);
 		}
-	});*/
-	if(req.body.pseudo == "" || req.body.pseudo === null ){
-		response.codeResponse = "ko";
-		response.message ="Le champ PSEUDO doit au moins être complété !";
-		return response;
-	};
-	if(req.body.mail == "" || req.body.mail === null ){
-		response.codeResponse = "ko";
-		response.message ="Le champ MAIL doit au moins être complété !";
-		return response;
-	};
-	if(req.body.password == "" || req.body.password == null ){
-		response.codeResponse = "ko";
-		response.message ="Le champ MOT DE PASSE doit au moins être complété !";
-		return response;
-	};
-	if(req.body.password != req.body.confirmPass){
-		response.codeResponse = "ko";
-		response.message = "Les champs MOT DE PASSE et CONFIRMATION doivent être IDENTIQUES !";
-		return response;
-	};
-	if(req.body.genre1 == "" || req.body.genre1 == null ){
-		response.codeResponse = "ko";
-		response.message ="Le premier GENRE doit au moins être completé !";
-		return response;
-	};
-	
-	response.codeResponse = "ok";
-	response.message = "Bienvenue "+req.body.pseudo+" !";
-	
-	return response;
+	});
 	
 };
 

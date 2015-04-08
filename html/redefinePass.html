@@ -38,9 +38,11 @@
 						
 						success:function(content){
 							if(content.codeResponse == "ko"){
+								console.log(content);
 								alert(content.message);
 							}else{
-								alert(content.message);
+								console.log(content);
+								windows.location.href='/';
 							}
 						},
 						error:function(){
@@ -60,7 +62,7 @@
 				});
 
 
-				var posLeft = activeElement.position().left;
+				var posLeft = activeElement.position().left();
 				var elementWidth = activeElement.width();
 				posLeft = posLeft + elementWidth/2 -6;
 				if (activeElement.hasClass('has-sub')) {
