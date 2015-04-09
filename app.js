@@ -14,11 +14,8 @@ var bcrypt = require('bcryptjs');			// to crypt password before puting them into
 var nodemailer = require('nodemailer');		// to send emails
 var chance = require('chance').Chance()		// to generate random number/strings
 var async = require('async');				// to be able to make async work even easier/better
-var passport = require('passport')			// to identify members etc...
-	, LocalStrategy = require('passport-local').Strategy
-	, ensureLoggedIn = require('connect-ensure-login').ensureLoggedIn;
-	
-var app = express()
+
+var app = express();
 
 // for the session
 var sess;
@@ -70,33 +67,7 @@ app.use(multer({dest: './ressources/poster',
 				}
 }));
 
-//credientials for localStrategy {usernameField:'email',passwordField:'password'}
-passport.use(new LocalStrategy({usernameField:'email',passwordField:'password'},function(email,password,done){
-	userModel.findOne({'email':email,'password': password },
-				{'_id':1,'email':1}, function(err, user){
-					if(err){
-						console.log('Erreur loggin user!');
-						return done(err);
-						throw err;
-					}
-					if(!user){
-						return done(null,false,{message:'Incorrect username!'});
-					}
-					return done(null,user);	
-				});
-}));
 
-passport.serializeUser(function(user,done){
-	done(null,user);
-});
-
-passport.deserializeUser(function(user,done){
-	done(null,user);
-});
-
-// for passport
-app.use(passport.initialize());
-app.use(passport.session());
 
 // -------------------------------------------------------- Start -------------------------------------------------------------------------
 console.log("City Ciné Club, a.k.a CCC, Web Server!\nListening on : 7777 \n");
@@ -149,10 +120,7 @@ app.get('/', function(req,res){
 	console.log('\nHome loaded');
 	
 	if(req.session.email == undefined){
-		console.log('on cree une session.');
 		sess = req.session;
-	}else{
-		console.log('Il y à deja une session');
 	}
 	
 	var html;
@@ -173,7 +141,6 @@ app.get('/', function(req,res){
 app.get('/suggestion', function(req,res){
 
 	if(typeof sess == "undefined"){
-		console.log('redirection car pas de sess');
 		res.redirect('/');
 	}else{
 		if(sess.email){
@@ -228,7 +195,7 @@ app.get('/suggestion', function(req,res){
 				});
 			});
 		}else{
-			console.log('Seul les membres peuvent se rendre sur la page de suggestion. Inscrivez vous!');
+			//console.log('Seul les membres peuvent se rendre sur la page de suggestion. Inscrivez vous!');
 			res.redirect('/login');
 		}
 	}
@@ -238,11 +205,9 @@ app.get('/suggestion', function(req,res){
 app.get('/admin', function(req,res){
 	
 	if(typeof sess == "undefined"){
-		console.log('redirection car pas de sess');
 		res.redirect('/');
 	}else{
 		if(!sess.isAdmin){
-			console.log('\nVous n\'avez pas les droit pour vous rendre sur cette page.');
 			res.redirect('/');
 		}else{
 		
@@ -267,11 +232,9 @@ app.get('/admin', function(req,res){
 app.get('/admin-suggestion', function(req,res){
 	
 	if(typeof sess == "undefined"){
-		console.log('redirection car pas de sess');
 		res.redirect('/');
 	}else{
 		if(!sess.isAdmin){
-			console.log('\nVous n\'avez pas les droits pour vous rendre sur cette page.\n');
 			res.redirect('/');
 		}else{
 
@@ -360,7 +323,6 @@ app.get('/PanelMember', function(req,res){
 			res.send(html);
 		});
 	}else{
-		console.log('Seul les membres peuvent acceder à cette page.');
 		res.redirect('/');
 	}
 });
@@ -369,11 +331,9 @@ app.get('/PanelMember', function(req,res){
 app.get('/admin-carousel', function(req,res){
 	
 	if(typeof sess == "undefined"){
-		console.log('redirection car pas de sess');
 		res.redirect('/');
 	}else{
 		if(!sess.isAdmin){
-			console.log('Vous n\'avez pas les droits pour vous rendre sur cette page');
 			res.redirect('/');
 		}else{
 			console.log('\n Admin carousel loaded');
@@ -397,7 +357,6 @@ app.get('/admin-carousel', function(req,res){
 // Admin management
 app.get('/admin-management', function(req,res){
 	if(typeof sess == "undefined"){
-		console.log('Admin management: session non defini. Redirecion vers home');
 		res.redirect('/');
 	}else{
 		if(sess.isAdmin){
@@ -425,7 +384,6 @@ app.get('/admin-management', function(req,res){
 // ChangePass
 app.get('/changePass', function(req,res){
 	if(typeof sess == 'undefined'){
-		console.log('\nredirection car pas de session');
 		res.redirect('/');
 	}else{
 		if(sess.email){
@@ -443,7 +401,6 @@ app.get('/changePass', function(req,res){
 				res.send(html);
 			});
 		}else{
-			console.log("redirection car vous n\'etes pas connecté");
 			res.redirect('/login');
 		}
 	}
@@ -469,9 +426,6 @@ app.get('/forgottenPass', function (req,res){
 app.get('/redefinePass:passKey',function(req,res){
 	var tmp = req.params.passKey;
 	var passKey = tmp.substring(1,tmp.length);
-
-	console.log('redefine: PassKey');
-	console.log(passKey);
 	
 	userModel.findOne({"temporaryKey":passKey},{},function(err,user){
 		if(err){
@@ -481,9 +435,7 @@ app.get('/redefinePass:passKey',function(req,res){
 		if(user == null){
 			console.log('ReedfinePass: Utilisateur non trouvé!');
 		}
-		console.log(sess);
-		console.log('si tu trouve user pk tu bug.....');
-		console.log(user.email);
+		
 		sess.email = user.email;
 		
 		var html;
@@ -504,7 +456,6 @@ app.get('/redefinePass:passKey',function(req,res){
 
 // logout
 app.get('/logout', function(req,res){
-	console.log('Merci de votre visite et à bientôt ! ');
 	req.session.destroy(function(err){
 		if(err){
 			console.log('Error logout!');
@@ -690,7 +641,6 @@ app.post('/loginConnection', function(req,res){
 			response.message="Email ou Mot de Passe incorrect!";
 			response.isAdmin = "";
 			
-			console.log('email or password invalid');
 			res.send(response);
 		}else{
 			sess = req.session;
@@ -705,8 +655,6 @@ app.post('/loginConnection', function(req,res){
 				response.message = "Bienvenue "+user.name+" !";
 				res.send(response);
 			}else{
-				console.log('session');
-				console.log(sess);
 				
 				sess.email = user.email;
 				sess.name = user.name;
@@ -735,9 +683,8 @@ app.post('/updatePass', function(req,res){
 	};
 	
 	if(req.body.pass != req.body.confirmation){
-		console.log('UpdateMdp : pass & confirmation different!');
 		response.codeResponse = "ko";
-		response.message="new mdp & confirmation !=";
+		response.message="Le mot de passe et la confirmation doivent être identiques!";
 		res.send(response);
 	}
 	// crypt pass
@@ -746,7 +693,6 @@ app.post('/updatePass', function(req,res){
 			console.log('UpdateMdp : Error findOne');
 			throw err;
 		}
-		console.log('UpdateMdp : Success pass updated!');
 		response.codeResponse = "ok";
 		response.message ="message correctement changé.";
 		res.send(response);
@@ -795,9 +741,6 @@ app.post('/forgottenPass', function(req,res){
 	userEmail = req.body.email;
 	salt = bcrypt.genSaltSync(10);
 	
-	console.log('email :' + userEmail);
-	console.log('temporaryKey : '+ tmpPass);
-	
 	response = {
 		codeResponse :"",
 		message :""
@@ -822,7 +765,7 @@ app.post('/forgottenPass', function(req,res){
 					to:mail,
 					subject:"Mot de passe provisoire",
 					//text: "ne s''affiche pas je ne sais pas pourquoi",
-					html: '<b>Changer son mdp</b><br/>Voici votre lien: <strong><a href=\"localhost:7777/redefinePass:'+tmpPass+'/></strong><br/>Changez vite votre mot de passe pour en a voir un plus parlant! Et surtout ne l\'oubliez plus cette fois ahah!<br/> Benny-P & DonDiego'
+					html: '<b>Changer son mdp</b><br/>Voici votre lien: <strong><a href=\"localhost:7777/redefinePass:'+tmpPass+'"> ICI </a></strong><br/>Changez vite votre mot de passe pour en a voir un plus parlant! Et surtout ne l\'oubliez plus cette fois ahah!<br/> Benny-P & DonDiego'
 				},function(err,mail){
 					if(err){
 						console.log("\nForgottenPass: Error Sending mail!");
@@ -831,7 +774,7 @@ app.post('/forgottenPass', function(req,res){
 					console.log('\nForgottenPass : Message successfully sent! Message:'+ mail.response);
 					
 					response.codeResponse = "ok";
-					response.message = "Mdp provisoire envoyé";
+					response.message = "Un mail de redéfinition de votre mot de passe vous a été envoyé";
 					
 					res.send(response);
 				}
@@ -911,27 +854,6 @@ app.post('/whatsMyName', function(req,res){
 	res.send(sess);
 });
 
-// ------------------------------------------------------- PASSPORT -----------------------------------------------------------------------
-// login
-/*app.post('/loginConnection',passport.authenticate('local',{succesReturntoOrRedirect:'/home', failureRedirect:'/login'}),function(req,res){
-	console.log('test login');
-});
-*/
-
-// Function that assure that isAdmin = T for all pages in admin folder
-var requiresAdmin = function(){
-	return[ensureLoggedIn('/login'),function(req,res,next){
-			console.log(req.user);
-			if(req.user && req.user.isAdmin == true){
-				next();
-			}else{
-				res.send(401,'Vous n\'êtes pas autorisé à acceder à cette partie du site !');
-			}
-		}
-	]
-};
-
-app.all('/admin/*',requiresAdmin());
 
 // ------------------------------------------------------- Fonction de verification des forms ---------------------------------------------
 // checkForm for admin-suggestion
@@ -992,7 +914,7 @@ var checkFormMember = function(req, cb){
 		codeResponse:"",
 		message:""
 	};
-	/* */
+	
 	userModel.findOne({"email": req.body.mail},{},function(err, user){
 		if(err){
 			console.log('checkMemberForm: error findOne');
