@@ -56,10 +56,18 @@
 
 							success:function(content) {
 								if(content.codeResponse === "ko"){
-									alert(content.message);
+									window.scrollTo(0,0);
+									var errorMessage = document.getElementById('error');
+									errorMessage.innerHTML = content.message;
+									$(".error").show();
 								}else{
-									alert(content)
-									window.location.href="/";
+									window.scrollTo(0,0);
+									$(".error").hide(0);
+									var successMessage = document.getElementById('success');
+									successMessage.innerHTML = content.message;							
+									$(".success").show();
+									$(".success").fadeOut(2400);
+									setTimeout("window.location.href = '/';",2350);
 								};
 							},
 							error:function(){
@@ -189,6 +197,8 @@
 			</ul>
 		</div>	
 	</div>		
+		<div id="success" class="success"></div>
+		<div id="error" class="error"></div>
 		<div id="form">	
 			<form id="formInscription" method="post" action="newMember">
 				<h2> Inscription : </h2>			
@@ -203,7 +213,7 @@
 					</li>		
 					<li id="Pass" >
 						<label class="description" >Mot de passe: </label>
-						<input id="pass"  type="password" maxlength="255" value="" placeholder="Votre mot de passe"/> 
+						<input id="pass"  type="password" maxlength="255" value="" placeholder="Votre mot de passe doit contenir au - 6 caractères"/> 
 					</li>	
 					<li id="Pass2" >
 						<label class="description" >Confirmation: </label>

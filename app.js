@@ -597,7 +597,7 @@ app.post('/newMember', function(req,res){
 					console.log('\nMessage successfully sent! Message:'+ mail.response);
 				});
 				
-				res.send('New member '+user.name+' added!!');
+				res.send(response);
 			});
 		};
 	});
@@ -898,10 +898,20 @@ var checkFormFilm = function(req){
 };
 
 function checkRequired( arr, key, cb ) {
+	
 	if ( arr[ key ] == "" || arr[ key ] == null ) {
 		cb( null, {
 			codeResponse : "ko",
 			message: "Le champ "+key+" doit au moins être complété !"
+		});
+		return false;
+	}
+	var tmp = arr[key];	
+	
+	if(key == "password" && tmp.length<6){
+		cb(null, {
+			codeResponse : "ko",
+			message : "Le mot de passe doit contenir 6 caractères minimum"
 		});
 		return false;
 	}
@@ -921,19 +931,20 @@ var checkFormMember = function(req, cb){
 			cb( err );
 		}
 		if(user == null){
-			for( k in ['pseudo', 'mail', 'password', 'genre1'] )
-				if ( !checkRequired(req.body, k, cb) ) return;
-			
+			var list =['pseudo', 'mail', 'password', 'genre1'];
+			for( k in  list){
+				var key = list[k];
+				if ( !checkRequired(req.body, key, cb) ) return;
+			}
 			if(req.body.password != req.body.confirmPass){
 				response.codeResponse = "ko";
 				response.message = "Les champs MOT DE PASSE et CONFIRMATION doivent être IDENTIQUES !";
 				cb( null, response );
 				return ;
 			};
-
-			console.log('user = null + all ok');
+			console.log('email non trouvé');
 			response.codeResponse = "ok";
-			response.message = "New member added! Welcome "+req.body.name+" !";
+			response.message = "New member added! Welcome "+req.body.pseudo+" !";
 			cb ( null, response );
 			
 		}else{
