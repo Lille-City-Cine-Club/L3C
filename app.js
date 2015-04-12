@@ -14,8 +14,9 @@ var bcrypt = require('bcryptjs');			// to crypt password before puting them into
 var nodemailer = require('nodemailer');		// to send emails
 var chance = require('chance').Chance()		// to generate random number/strings
 var async = require('async');				// to be able to make async work even easier/better
-
 var app = express();
+
+
 
 // for the session
 var sess;
