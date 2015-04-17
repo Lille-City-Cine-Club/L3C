@@ -13,6 +13,7 @@ var session = require('express-session');	// to handle session storage
 var bcrypt = require('bcryptjs');			// to crypt password before puting them into DB
 var nodemailer = require('nodemailer');		// to send emails
 var chance = require('chance').Chance()		// to generate random number/strings
+var crypto = require('crypto');				// to generate random strings
 var async = require('async');				// to be able to make async work even easier/better
 var app = express();
 
@@ -738,7 +739,16 @@ app.post('/changeMdp', function(req,res){
 // forgottenPass
 app.post('/forgottenPass', function(req,res){
 	var tmpPass, userEmail, response, mail, salt;
-	tmpPass = chance.string({length: 8, pool: 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789'});
+	
+	try {
+		tmpPass = crypto.randomBytes(48).toString('hex');
+		
+	}catch(ex){
+		console.log('forgottenPass : Error generating random string');
+		throw ex;
+	}
+	console.log(tmpPass);
+	
 	userEmail = req.body.email;
 	salt = bcrypt.genSaltSync(10);
 	
@@ -766,7 +776,7 @@ app.post('/forgottenPass', function(req,res){
 					to:mail,
 					subject:"Mot de passe provisoire",
 					//text: "ne s''affiche pas je ne sais pas pourquoi",
-					html: '<b>Changer son mdp</b><br/>Voici votre lien: <strong><a href=\"localhost:7777/redefinePass:'+tmpPass+'"> ICI </a></strong><br/>Changez vite votre mot de passe pour en a voir un plus parlant! Et surtout ne l\'oubliez plus cette fois ahah!<br/> Benny-P & DonDiego'
+					html: '<b>Changer son mdp</b><br/>Voici votre lien: <strong><a href=\"http://localhost:7777/redefinePass:'+tmpPass+'\"> ICI </a></strong><br/>Changez vite votre mot de passe pour en a voir un plus parlant! Et surtout ne l\'oubliez plus cette fois ahah!<br/> Benny-P & DonDiego'
 				},function(err,mail){
 					if(err){
 						console.log("\nForgottenPass: Error Sending mail!");
