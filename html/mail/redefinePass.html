@@ -8,15 +8,47 @@
 		<link rel="stylesheet" href="../CSS/style.css" />
 		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
 	</head>
+	<style>
+		body{
+			background : #171717;
+			font-family : Helvetica;
+		}
+		#corps{
+			margin-top : 0.5%;
+			margin-left : 3%;
+			background : white ;
+			width : 97.6%;
+			height : 86%;
+			border-top-left-radius: 2em;
+		}
+		#message{
+			margin-left : 3%;
+			padding-top :0.5%;
+
+		}
+		#logo{
+			margin-left : 1.5%;
+			width : 20%;
+			margin-top : -0.5%;
+		}
+	</style>
 	
 	<body>
-		<h2>Récupérer votre mot de passe</h1>
-		Vous avez demandé à redéfinir votre mot de passe.</br>
-		Veuillez trouver ci-dessous un mot de passe provisoire qui vous permettra d'accéder à votre compte et redéfinir votre mot de passe :
-		</br><b>%%MDPRandom%%</b></br>
-		N'hésitez pas à nous contacter en cas de problème ou pour tout autre renseignement !
-		</br></br>
-		L'équipe du L3C.
-	
+		<a href="http://localhost:7777/" ><img id="logo" src="http://i19.servimg.com/u/f19/09/00/63/38/l3c10.jpg"></img></a>
+		<div id="corps">
+			<div id="message">
+				<h2>Récupérer votre mot de passe</h1>
+				Vous avez demandé à redéfinir votre mot de passe.</br>
+				Veuillez trouver ci-dessous un lien qui vous permettra d'effectuer cette redéfinition :
+				</br>
+				</br>
+				<b>%%MDPRandom%%</b>
+				</br>
+				</br>
+				N'hésitez pas à nous contacter en cas de problème ou pour tout autre renseignement !
+				</br></br>
+				L'équipe du L3C.
+			</div>
+		</div>	
 	</body>
 </html>
