@@ -1,4 +1,4 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+ <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <html lang="fr">
 	<head>
 		<!--[if lt IE 9]>
@@ -167,130 +167,66 @@
 			</div>	
 		</div>
 		<div id="displayCarousel">
-			<ul id="posterCarousel">
-				<li>
-					<div>
-						<label for="film1">
-							<img  src="/ressources/home-carousel/posters/film1.jpg" alt="film1" />
-						</label>
-						<input id="film1" type="checkbox" name="film1" value="film1"/>
-					</div>	
-				</li>
-				<li>
-					<div>
-						<label for="film2">
-							<img  src="/ressources/home-carousel/posters/film2.jpg" alt="film2" />
-						</label>
-						<input id="film2" type="checkbox" name="film2" value="film2"/>
-					</div>
-				</li>
-				<li>
-					<div>
-						<label for="film3">
-							<img  src="/ressources/home-carousel/posters/film3.jpg" alt="film3" />
-						</label>
-						<input id="film3" type="checkbox" name="film3" value="film3"/>
-					</div>
-				</li>
-				<li>
-					<div>
-						<label for="film4">
-							<img  src="/ressources/home-carousel/posters/film4.jpg" alt="film4" />
-						</label>
-						<input id="film4" type="checkbox" name="film4" value="film4"/>
-					</div>
-				</li>
-				<li>
-					<div>
-						<label for="film5">
-							<img  src="/ressources/home-carousel/posters/film5.jpg" alt="film5" />
-						</label>
-						<input id="film5" type="checkbox" name="film5" value="film5"/>
-					</div>
-				</li>
-				<li>
-					<div>
-						<label for="film6">
-							<img  src="/ressources/home-carousel/posters/film6.jpg" alt="film6" />
-						</label>
-						<input id="film6" type="checkbox" name="film6" value="film6"/>
-					</div>
-				</li>
-			</ul>		
+		<!-- <form id="formCarousel" method="post" action="postCarousel">-->
+			<div id="posterCarousel">
+				<div class="movie" id="movie1">
+					<label for="film1" class="carousel-affiche-label">
+						<img  src="/ressources/home-carousel/posters/film1.jpg" alt="film1" />
+					</label>
+					<input id="film1" class="carousel-affiche" type="file" name="film1" value="film1"/>
+				</div>	
+			
+				<div class="movie" id="movie2">
+					<label for="film2" class="carousel-affiche-label">
+						<img  src="/ressources/home-carousel/posters/film2.jpg" alt="film2" />
+					</label>
+					<input id="film2" class="carousel-affiche" type="file" name="film2" value="film2"/>
+				</div>
+			
+				<div class="movie" id="movie3">
+					<label for="film3" class="carousel-affiche-label">
+						<img  src="/ressources/home-carousel/posters/film3.jpg" alt="film3" />
+					</label>
+					<input id="film3" class="carousel-affiche" type="file" name="film3" value="film3"/>
+				</div>
+			
+				<div class="movie" id="movie4">
+					<label for="film4" class="carousel-affiche-label">
+						<img  src="/ressources/home-carousel/posters/film4.jpg" alt="film4" />
+					</label>
+					<input id="film4" class="carousel-affiche" type="file" name="film4" value="film4"/>
+				</div>
+			
+				<div class="movie" id="movie5">
+					<label for="film5" class="carousel-affiche-label">
+						<img  src="/ressources/home-carousel/posters/film5.jpg" alt="film5" />
+					</label>
+					<input id="film5" class="carousel-affiche" type="file" name="film5" value="film5"/>
+				</div>
+			
+				<div class="movie" id="movie6">
+					<label for="film6" class="carousel-affiche-label">
+						<img  src="/ressources/home-carousel/posters/film6.jpg" alt="film6" />
+					</label>
+					<input id="film6" class="carousel-affiche" type="file" name="film6" value="film6"/>
+				</div>
+			</div>		
 		</div>
-		
-		<div id="form">	
-			<form id="formCarousel" method="post" action="postCarousel">
-				<h2> Modifier les affiches du carousel : </h2>			
-				<ul>
-					<li id="Film1" >
-						<div class="carousel-affiche-wrapper">
-							<label class="carousel-affiche-label">Affiche 1: </label>
-							<input class="carousel-affiche" name="film1" type="file"/> 					
-						</div>
-					</li>
-					
-					<li id="Film2" >
-						<div class="carousel-affiche-wrapper">
-							<label class="carousel-affiche-label">Affiche 2: </label>
-							<input class="carousel-affiche" name="film2" type="file"/> 					
-						</div>
-					</li>
-					
-					<li id="Film3" >
-						<div class="carousel-affiche-wrapper">
-							<label class="carousel-affiche-label">Affiche 3: </label>
-							<input class="carousel-affiche" name="film3" type="file"/> 					
-						</div>
-					</li>
-					
-					<li id="Film4" >
-						<div class="carousel-affiche-wrapper">
-							<label class="carousel-affiche-label">Affiche 4: </label>
-							<input class="carousel-affiche" name="film4" type="file"/> 					
-						</div>
-					</li>
-					
-					<li id="Film5" >
-						<div class="carousel-affiche-wrapper">
-							<label class="carousel-affiche-label">Affiche 5: </label>
-							<input class="carousel-affiche" name="film5" type="file"/> 					
-						</div>
-					</li>
-					
-					<li id="Film6" >
-						<div class="carousel-affiche-wrapper">
-							<label class="carousel-affiche-label">Affiche 6: </label>
-							<input class="carousel-affiche" name="film6" type="file"/> 					
-						</div>
-					</li>
-					
-					<li id="buttons">
-						<div id="ButtonsWrapper" >
-							<input type="hidden" name="form_id" value="carousel" />
-							<input id="saveForm" class="buttonValider" type="submit" value="Valider" />
-						</div>
-					</li>
-				</ul>
-			</form>
-		</div>
-		
 		<div class="footer-wrapper">
-		<div id="menu-logo" >
-			<a href="http://www.univ-lille1.fr/" target="_blank">
-				<img src="../../ressources/logo/logoLille1Mini.png" alt="Université Lille1" >
-			</a>
-			<ul id="footer-menu">
-				<li><span class="fa fa-lg fa-facebook" style="margin-left:0.2%"></span> <a href=http://www.facebook.com/LilleCityCineClub target="_blank" style="margin-left:0.8%"> Facebook </a></li>
-				<li><span class="glyphicon glyphicon-info-sign" style="font-size:16px;" ></span> <a href="about" style="margin-left:0.5%"> A propos </a></li>
-			</ul>
+			<div id="menu-logo" >
+				<a href="http://www.univ-lille1.fr/" target="_blank">
+					<img src="../../ressources/logo/logoLille1Mini.png" alt="Université Lille1" >
+				</a>
+				<ul id="footer-menu">
+					<li><span class="fa fa-lg fa-facebook" style="margin-left:0.2%"></span> <a href=http://www.facebook.com/LilleCityCineClub target="_blank" style="margin-left:0.8%"> Facebook </a></li>
+					<li><span class="glyphicon glyphicon-info-sign" style="font-size:16px;" ></span> <a href="about" style="margin-left:0.5%"> A propos </a></li>
+				</ul>
+			</div>
+			<div id="copyright">
+				<p>
+					&copy Benny-P & DonDiego. En collaboration avec M.Dufrêne. Université Lille 1.
+				</p>	
+			</div>
 		</div>
-		<div id="copyright">
-			<p>
-				&copy Benny-P & DonDiego. En collaboration avec M.Dufrêne. Université Lille 1.
-			</p>	
-		</div>
-	</div>
-	</div>
 	</body>
 </html>

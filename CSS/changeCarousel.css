@@ -8,42 +8,56 @@ display:block;
 font-style:italic;
 font-weight:200;
 padding-top: 10px;	
+/*border: 2px solid;*/
 }
 
 .carousel-affiche{
 float:right;
-padding-right:130px;
-padding-top:13px;
+margin-top:22%;
+margin-right:2%;
 }
 
-#form #formCarousel{
-height:auto;
-border: 2px solid;
-border-radius:25px;
-margin-top : 50px;
-margin-left: 30%;
-margin-right: 30%;
-margin-bottom:25px;
-padding-bottom:10px;
+.movie {
+margin: 2%;
+width: 41%;
+/*border: 2px solid blue;*/
+}
+#movie1{
+margin-left:5%;
+}
+#movie3{
+margin-left:5%;
+}
+#movie5{
+margin-left:5%;
+}
+
+#movie2{
+float:right;
+margin-top:-22%;
+margin-right:5%;
+}
+#movie4{
+float:right;
+margin-top:-22%;
+margin-right:5%;
+}
+#movie6{
+float:right;
+margin-top:-22%;
+margin-right:5%;
 }
 
 #posterCarousel{
 margin-left:10%;
-
 margin-top:2%;
-}
-#posterCarousel li {
-list-style: none;
-display:block;
-}
-#posterCarousel li div {
-	
+background-color:#FDEBE3;
+border-radius:25px;
+margin-right:10%;
 }
 
-#posterCarousel li label img {
+#posterCarousel label img {
 width: 150px;
 height: 200px;
-margin-right: 2%;
-float: left;
 }
 
