@@ -38,6 +38,8 @@
 						
 						success:function(content){
 							if(content.codeResponse == "ko"){
+								$('.error').hide(0);
+								$('#formRedifinePass').reset();
 								window.scrollTo(0,0);
 								var errorMessage = document.getElementById('error');
 								errorMessage.innerHTML = content.message;
