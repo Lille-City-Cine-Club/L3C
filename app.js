@@ -585,18 +585,25 @@ app.post('/newMember', function(req,res){
 				console.log('New member '+user.name+' added!!');
 				console.log(user);
 				
-				mailer.sendMail({
-					from:"Admin L3C <bennyp.dondiego@gmail.com>",
-					to:mail,
-					subject:"Bienvenue au sein du L3C!",
-					//text: "ne s'affiche pas je ne sais pas pourquoi",
-					html: '<b>Test Nodemailer!</b><br/>Bienvenue au sein de la communauté Lilloise City Cine Club!<br/>Vous retrouverez chaque semaine une suggestion de film choisis par nos soins.<br/> Nous avons deja hâte d\'entendre vos retours sur notre service/projet! A tout de suite sur le site!<br/> Benny-P & DonDiego'
-				},function(err,mail){
+				fs.readFile(__dirname+'/html/mail/welcome.html','utf8',function(err,data){
 					if(err){
-						console.log("\nNew member: Error Sending mail!");
+						console.log('Welcome mail not found!');
 						throw err;
 					}
-					console.log('\nMessage successfully sent! Message:'+ mail.response);
+					
+					mailer.sendMail({
+						from:"Admin L3C <bennyp.dondiego@gmail.com>",
+						to:mail,
+						subject:"Bienvenue au sein du L3C!",
+						html: data
+						
+					},function(err,mail){
+						if(err){
+							console.log("\nNew member: Error Sending mail!");
+							throw err;
+						}
+						console.log('\nMessage successfully sent! Message:'+ mail.response);
+					});
 				});
 				
 				res.send(response);
@@ -741,7 +748,7 @@ app.post('/forgottenPass', function(req,res){
 	var tmpPass, userEmail, response, mail, salt;
 	
 	try {
-		tmpPass = crypto.randomBytes(48).toString('hex');
+		tmpPass = crypto.randomBytes(15).toString('hex');
 		
 	}catch(ex){
 		console.log('forgottenPass : Error generating random string');
@@ -771,25 +778,31 @@ app.post('/forgottenPass', function(req,res){
 		}else{
 			mail = user.email;
 			
-			mailer.sendMail({
+			fs.readFile(__dirname+'/html/mail/redefinePass.html','utf8',function(err,data){
+				if(err){
+					console.log('Pasword mail not found!');
+					throw err;
+				}
+				
+				var htmlContent = data.replace('%%MDPRandom%%', '<a href="http://localhost:7777/redefinePass:'+tmpPass+'">http://localhost:7777/redefinePass:'+tmpPass+'</a>')
+				
+				mailer.sendMail({
 					from:"Admin L3C <bennyp.dondiego@gmail.com>",
 					to:mail,
-					subject:"Mot de passe provisoire",
-					//text: "ne s''affiche pas je ne sais pas pourquoi",
-					html: '<b>Changer son mdp</b><br/>Voici votre lien: <strong><a href=\"http://localhost:7777/redefinePass:'+tmpPass+'\"> ICI </a></strong><br/>Changez vite votre mot de passe pour en a voir un plus parlant! Et surtout ne l\'oubliez plus cette fois ahah!<br/> Benny-P & DonDiego'
+					subject:"Mot de passe oublié",
+					html: htmlContent
+					
 				},function(err,mail){
 					if(err){
-						console.log("\nForgottenPass: Error Sending mail!");
+						console.log("\nNew member: Error Sending mail!");
 						throw err;
 					}
-					console.log('\nForgottenPass : Message successfully sent! Message:'+ mail.response);
-					
+					console.log('\nMessage successfully sent! Message:'+ mail.response);
 					response.codeResponse = "ok";
 					response.message = "Un mail de redéfinition de votre mot de passe vous a été envoyé";
-					
 					res.send(response);
-				}
-			);
+				});
+			});
 		}
 	})
 });	
