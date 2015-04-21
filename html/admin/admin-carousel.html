@@ -21,13 +21,153 @@
 	
 		<script><!-- Ajax command to add new movie to DB -->
 			$(document).ready(function(){
-				$('#formCarousel').submit(function(e) {
+				$('#formCarousel1').submit(function(e) {
 					e.preventDefault(); // J'empêche le comportement par défaut du navigateur, c-à-d de soumettre le formulaire
 	 
 					var $this = $(this); // L'objet jQuery du formulaire	
 			
 					var formData;
-					formData = new FormData($('formCarousel')[0]);
+					formData = new FormData($('formCarousel1')[0]);
+					
+					$.ajax( {
+						type:'POST',
+						url:$this.attr('action'),
+						data:formData,
+						processData: false,
+						contentType:false,
+
+						success:function(content) {
+							alert(content);
+						},
+						error:function(){
+							alert('Error Ajax!');
+						}
+					});
+				});
+				$('#formCarousel2').submit(function(e) {
+					e.preventDefault(); // J'empêche le comportement par défaut du navigateur, c-à-d de soumettre le formulaire
+	 
+					var $this = $(this); // L'objet jQuery du formulaire	
+			
+					var formData;
+					formData = new FormData($('formCarousel2')[0]);
+					
+					$.ajax( {
+						type:'POST',
+						url:$this.attr('action'),
+						data:formData,
+						processData: false,
+						contentType:false,
+
+						success:function(content) {
+							alert(content);
+						},
+						error:function(){
+							alert('Error Ajax!');
+						}
+					});
+				});
+				$('#formCarousel3').submit(function(e) {
+					e.preventDefault(); // J'empêche le comportement par défaut du navigateur, c-à-d de soumettre le formulaire
+	 
+					var $this = $(this); // L'objet jQuery du formulaire	
+			
+					var formData;
+					formData = new FormData($('formCarousel3')[0]);
+					
+					$.ajax( {
+						type:'POST',
+						url:$this.attr('action'),
+						data:formData,
+						processData: false,
+						contentType:false,
+
+						success:function(content) {
+							alert(content);
+						},
+						error:function(){
+							alert('Error Ajax!');
+						}
+					});
+				});
+				$('#formCarousel4').submit(function(e) {
+					e.preventDefault(); // J'empêche le comportement par défaut du navigateur, c-à-d de soumettre le formulaire
+	 
+					var $this = $(this); // L'objet jQuery du formulaire	
+			
+					var formData;
+					formData = new FormData($('formCarousel4')[0]);
+					
+					$.ajax( {
+						type:'POST',
+						url:$this.attr('action'),
+						data:formData,
+						processData: false,
+						contentType:false,
+
+						success:function(content) {
+							alert(content);
+						},
+						error:function(){
+							alert('Error Ajax!');
+						}
+					});
+				});
+				$('#formCarousel5').submit(function(e) {
+					e.preventDefault(); // J'empêche le comportement par défaut du navigateur, c-à-d de soumettre le formulaire
+	 
+					var $this = $(this); // L'objet jQuery du formulaire	
+			
+					var formData;
+					formData = new FormData($('formCarousel5')[0]);
+					
+					$.ajax( {
+						type:'POST',
+						url:$this.attr('action'),
+						data:formData,
+						processData: false,
+						contentType:false,
+
+						success:function(content) {
+							alert(content);
+						},
+						error:function(){
+							alert('Error Ajax!');
+						}
+					});
+				});
+				$('#formCarousel6').submit(function(e) {
+					e.preventDefault(); // J'empêche le comportement par défaut du navigateur, c-à-d de soumettre le formulaire
+	 
+					var $this = $(this); // L'objet jQuery du formulaire	
+			
+					var formData;
+					formData = new FormData($('formCarousel6')[0]);
+					console.log('formData');
+					console.log(formData);
+					
+					$.ajax( {
+						type:'POST',
+						url:$this.attr('action'),
+						data:formData,
+						processData: false,
+						contentType:false,
+
+						success:function(content) {
+							alert(content);
+						},
+						error:function(){
+							alert('Error Ajax!');
+						}
+					});
+				});
+				$('#formCarousel6').submit(function(e) {
+					e.preventDefault(); // J'empêche le comportement par défaut du navigateur, c-à-d de soumettre le formulaire
+	 
+					var $this = $(this); // L'objet jQuery du formulaire	
+			
+					var formData;
+					formData = new FormData($('formCarousel6')[0]);
 					
 					$.ajax( {
 						type:'POST',

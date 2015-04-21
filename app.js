@@ -40,18 +40,18 @@ app.use(bodyParser.urlencoded({extended : true}));
 var done = false;
 var posterPath;
 app.use(multer({dest: './ressources/poster',
-				/*changeDest : function(dest, req, res){
-					if(req.body.form_id =="formCarousel"){
+				changeDest : function(dest, req, res){
+					if(req.body.form_id =="formCarousel1" || req.body.form_id =="formCarousel2" || req.body.form_id =="formCarousel3" || req.body.form_id =="formCarousel4" || req.body.form_id =="formCarousel5" || req.body.form_id =="formCarousel6"){
 						console.log('Changement du fichier de destination pour les fichiers du carousel');
 						return dest +'/carousel';
 					};
-				},*/
+				},
 				rename: function(fieldname, filename, req, res){
-					// if(req.body.form_id =="formCarousel"){
-						// return filename;
-					// }else{
-						// return moment().format('YYYY_MM_DD')+'_'+filename;
-					// }
+					if(req.body.form_id =="formCarousel1" || req.body.form_id =="formCarousel2" || req.body.form_id =="formCarousel3" || req.body.form_id =="formCarousel4" || req.body.form_id =="formCarousel5" || req.body.form_id =="formCarousel6"){
+						return filename;
+					}else{
+						return moment().format('YYYY_MM_DD')+'_'+filename;
+					}
 					return moment().format('YYYY_MM_DD')+'_'+filename;
 				},
 				onFileUploadStart: function(file, req, res){
@@ -616,8 +616,15 @@ app.post('/newMember', function(req,res){
 app.post('/postCarousel', function(req,res){
 	console.log('\nAdding new movie poster to the carousel');
 	console.log(req.headers['content-type']);
+	console.log("reqbody*************");
+	console.log(req.body);
+	console.log("req ****************");
+	//console.log(req);
+	/*
 	console.log(req.files);
+	console.log(req.body.form_id);
 	console.log('film1'+req.body.film1);
+	*/
 
 	var response = checkFormCarousel(req);
 	if(response.codeResponse =="ko"){
