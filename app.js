@@ -703,6 +703,11 @@ app.post('/updatePass', function(req,res){
 		response.message="Le mot de passe et la confirmation doivent être identiques!";
 		res.send(response);
 	}
+	if(req.body.pass.length < 6){
+		response.codeResponse = "ko";
+		response.message="Le mot de passe doit faire plus de 6 caracteres!";
+		res.send(response);
+	}
 	// crypt pass
 	userModel.findOneAndUpdate({"email":email},{"temporaryKey":null, "password":bcrypt.hashSync(req.body.pass,salt)},{},function(err, user){
 		if(err){
