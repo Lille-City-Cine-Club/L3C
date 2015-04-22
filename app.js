@@ -677,7 +677,6 @@ app.post('/loginConnection', function(req,res){
 				sess.isAdmin = user.isAdmin;
 				
 				response.codeResponse = "ok";
-				response.message = "Au boulot "+user.name+" !";
 				response.isAdmin = user.isAdmin;
 				
 				res.send(response);
