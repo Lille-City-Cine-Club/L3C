@@ -40,19 +40,16 @@ app.use(bodyParser.urlencoded({extended : true}));
 var done = false;
 var posterPath;
 app.use(multer({dest: './ressources/poster',
-				changeDest : function(dest, req, res){
-					if(req.body.form_id =="formCarousel1" || req.body.form_id =="formCarousel2" || req.body.form_id =="formCarousel3" || req.body.form_id =="formCarousel4" || req.body.form_id =="formCarousel5" || req.body.form_id =="formCarousel6"){
-						console.log('Changement du fichier de destination pour les fichiers du carousel');
-						return dest +'/carousel';
-					};
-				},
+				
 				rename: function(fieldname, filename, req, res){
-					if(req.body.form_id =="formCarousel1" || req.body.form_id =="formCarousel2" || req.body.form_id =="formCarousel3" || req.body.form_id =="formCarousel4" || req.body.form_id =="formCarousel5" || req.body.form_id =="formCarousel6"){
-						return filename;
+				// return  fieldname.startsWith("film") ? fieldname : moment().format('YYYY_MM_DD')+'_'+filename ;
+					if( fieldname.startsWith("film")){
+						console.log('je suis fans film');
+						return fieldname;
 					}else{
+						console.log('kdjhflkdhfjdhfjdfkjh');
 						return moment().format('YYYY_MM_DD')+'_'+filename;
 					}
-					return moment().format('YYYY_MM_DD')+'_'+filename;
 				},
 				onFileUploadStart: function(file, req, res){
 					console.log(file.name + ' uploading . . .');
@@ -425,6 +422,7 @@ app.get('/forgottenPass', function (req,res){
 	});	
 })	
 
+// redefinePass
 app.get('/redefinePass:passKey',function(req,res){
 	var tmp = req.params.passKey;
 	var passKey = tmp.substring(1,tmp.length);
@@ -619,21 +617,23 @@ app.post('/postCarousel', function(req,res){
 	console.log("reqbody*************");
 	console.log(req.body);
 	console.log("req ****************");
-	//console.log(req);
+	console.log(req);
 	/*
 	console.log(req.files);
 	console.log(req.body.form_id);
 	console.log('film1'+req.body.film1);
 	*/
 
-	var response = checkFormCarousel(req);
+	/*var response = checkFormCarousel(req);
 	if(response.codeResponse =="ko"){
 		console.log('Error! Invalid form.');
 		res.send(response.message);
 	}else{
 		console.log("\nSuccess! All movies correctly added into Server.");
 		res.send("Success! All movies correctly added into Server.");
-	};
+	};*/
+	console.log("\nSuccess! All movies correctly added into Server.");
+	res.send("Success! All movies correctly added into Server.");
 })
 
 // Post loggin page
@@ -1015,6 +1015,8 @@ var checkFormLogin = function(req){
 
 // checkForm for admin-carousel
 var checkFormCarousel = function(req){
+	console.log('********posterPath*****');
+	console.log(posterPath);
 	var response = {
 		codeResponse:"",
 		message:""
