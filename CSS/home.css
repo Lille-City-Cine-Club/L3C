@@ -79,7 +79,9 @@ padding-right : 19%;
 height:75%;
 }
 .home-message{
-padding-top : 29.3%;
+position : absolute;
+top : 72%;
+left : 29%;
 text-align : center;
 color : #171717;
 h1.font-weight : 800; 
