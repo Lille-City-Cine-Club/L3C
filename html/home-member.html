@@ -71,7 +71,7 @@
 			});
 			} )( jQuery );
 			
-					/* to load the correct menu
+					 to load the correct menu
 		var sayMyName = function(){
 			$.ajax({
 				type:'POST',
@@ -81,21 +81,8 @@
 				contentType:false,
 				
 				success:function(content){
-					if(content.email){
-						if(!content.isAdmin){
-							console.log('Je suis un membre!');
-							$('#admin').hide();
-							$('#connection').hide();
-							$('#inscription').hide();
-							$('#member').show();
-						}else{
-							console.log('Je suis un admin!');
-							$('#inscription').hide();
-						}
-					}else{
-						console.log('Je suis un internaute!');
-						$('#admin').hide();
-						$('#member').hide();
+					var messageAccueil = document.getElementById("admin-message-accueil");
+					messageAccueil.innerHTML="Bienvenue, "+content.name;
 					}
 				},
 				error:function(){
@@ -133,12 +120,10 @@
 		</div>	
 	</div>
 		<div class="admin-body">
-			<h1 id="member-message-accueil">
-			</h1>
-		</div>
-		<div class="admin-message">
-			Sélectionnez dans le menu supérieur l'action que vous voulez effectuer.
-		</div>
+			<div class="admin-message">
+				<h2 id="admin-message-accueil"></h2>
+				Sélectionnez dans le menu supérieur l'action que vous voulez effectuer.
+			</div>
 		
 		<div class="footer-wrapper">
 			<div id="menu-logo" >
