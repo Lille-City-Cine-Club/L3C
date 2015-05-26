@@ -50,7 +50,7 @@ app.use(multer({dest: './ressources/poster',
 						console.log('kdjhflkdhfjdhfjdfkjh');
 						return moment().format('YYYY_MM_DD')+'_'+filename;
 					}*/
-                    return moment().format('YYY_MM_DD')+"_"+filename;
+                    return moment().format('YYYY_MM_DD')+"_"+filename;   
 				},
 				onFileUploadStart: function(file, req, res){
 					console.log(file.name + ' uploading . . .');
