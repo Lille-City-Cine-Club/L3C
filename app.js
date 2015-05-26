@@ -1,18 +1,18 @@
-// Code server CCC 
-// Version: 0.0.0
+// CCC server code
+// Version: 1.0.0
 // Author : Sufiane 'DonDiego' Souissi
 //			Benjamin 'BennyP' Parant
 
-var express = require('express')			// main FW
-var bodyParser = require('body-parser')		// to parse req
-var fs = require('fs')						// to read Files
-var mongoose = require('mongoose') 			// for DB
+var express = require('express');			// main FW
+var bodyParser = require('body-parser');	// to parse req
+var fs = require('fs');						// to read Files
+var mongoose = require('mongoose');			// for DB
 var moment = require('moment'); 			// for date //date=moment().format('MMMM Do YYYY, h:mm:ss a');
 var multer = require('multer');				// for receiving multipart form
 var session = require('express-session');	// to handle session storage
 var bcrypt = require('bcryptjs');			// to crypt password before puting them into DB
 var nodemailer = require('nodemailer');		// to send emails
-var chance = require('chance').Chance()		// to generate random number/strings
+var chance = require('chance').Chance();	// to generate random number/strings
 var crypto = require('crypto');				// to generate random strings
 var async = require('async');				// to be able to make async work even easier/better
 var app = express();
@@ -40,16 +40,17 @@ app.use(bodyParser.urlencoded({extended : true}));
 var done = false;
 var posterPath;
 app.use(multer({dest: './ressources/poster',
-				
+
 				rename: function(fieldname, filename, req, res){
 				// return  fieldname.startsWith("film") ? fieldname : moment().format('YYYY_MM_DD')+'_'+filename ;
-					if( fieldname.startsWith("film")){
+					/*if( fieldname.startsWith("film")){
 						console.log('je suis fans film');
 						return fieldname;
 					}else{
 						console.log('kdjhflkdhfjdhfjdfkjh');
 						return moment().format('YYYY_MM_DD')+'_'+filename;
-					}
+					}*/
+                    return moment().format('YYY_MM_DD')+"_"+filename;
 				},
 				onFileUploadStart: function(file, req, res){
 					console.log(file.name + ' uploading . . .');
@@ -65,7 +66,6 @@ app.use(multer({dest: './ressources/poster',
 					next(error);
 				}
 }));
-
 
 
 // -------------------------------------------------------- Start -------------------------------------------------------------------------
@@ -117,11 +117,11 @@ var userModel = mongoose.model('Users', userSchema, 'Users');
 //Home page
 app.get('/', function(req,res){
 	console.log('\nHome loaded');
-	
+
 	if(req.session.email == undefined){
 		sess = req.session;
 	}
-	
+
 	var html;
 	fs.readFile(__dirname+'/html/home.html','utf8',function(err,data){
 		if(err){
@@ -129,7 +129,7 @@ app.get('/', function(req,res){
 			throw err;
 		}
 		html=data;
-		
+
 		res.charset='utf-8';
 		res.setHeader("Access-Control-Allow-Origin","*");
 		res.send(html);
@@ -155,13 +155,13 @@ app.get('/suggestion', function(req,res){
 					if(err){
 						console.log('Error Suggestion!');
 						throw err;
-					}		
+					}
 					// disable "actors1, undefined ..."
 					var actors = "";
 					for(var i = 0; i<movie.actors.length ; i++){
 						actors += movie.actors[i]+', ';
 					}
-					// Disable the 'undefined' genre when a movie have less than 3 genre. 
+					// Disable the 'undefined' genre when a movie have less than 3 genre.
 					var genre ="";
 					genre += movie.genre[0];
 					if (typeof movie.genre[1] != 'undefined'){
@@ -170,14 +170,14 @@ app.get('/suggestion', function(req,res){
 					if(typeof movie.genre[2] != 'undefined'){
 						genre +=", "+movie.genre[2];
 					};
-					
+
 					var duration;
 					if( typeof movie.duration === 'undefined'){
 						duration = "Un film sans durée :O !";
 					}else{
 						duration = movie.duration;
 					};
-				
+
 					html = data;
 					html = html.replace('%%title%%',movie.title);
 					html = html.replace('%%duration%%',duration);
@@ -187,7 +187,7 @@ app.get('/suggestion', function(req,res){
 					html = html.replace('%%why%%',movie.why);
 					html = html.replace('%%synopsis%%',movie.synopsis);
 					html = html.replace('%%poster%%', movie.poster);
-					
+
 					res.charset='utf-8';
 					res.setHeader("Access-Control-Allow-Origin","*");
 					res.send(html);
@@ -202,16 +202,16 @@ app.get('/suggestion', function(req,res){
 
 // Admin Home page
 app.get('/admin', function(req,res){
-	
+
 	if(typeof sess == "undefined"){
 		res.redirect('/');
 	}else{
 		if(!sess.isAdmin){
 			res.redirect('/');
 		}else{
-		
+
 			console.log('\n Admin Home page loaded');
-			
+
 			var html;
 			fs.readFile(__dirname+'/html/admin/admin.html','utf8',function(err, data){
 				if(err){
@@ -229,7 +229,7 @@ app.get('/admin', function(req,res){
 
 // Admin Adding content page
 app.get('/admin-suggestion', function(req,res){
-	
+
 	if(typeof sess == "undefined"){
 		res.redirect('/');
 	}else{
@@ -238,7 +238,7 @@ app.get('/admin-suggestion', function(req,res){
 		}else{
 
 			console.log('\nAdminSuggestion loaded');
-			
+
 			var html;
 			fs.readFile(__dirname+'/html/admin/admin-suggestion.html','utf8',function(err,data){
 				if(err){
@@ -257,7 +257,7 @@ app.get('/admin-suggestion', function(req,res){
 //About page
 app.get('/about', function(req,res){
 	console.log('\nAbout loaded');
-	
+
 	var html;
 	fs.readFile(__dirname+'/html/about.html','utf8',function(err,data){
 		if(err){
@@ -274,7 +274,7 @@ app.get('/about', function(req,res){
 //Inscription page
 app.get('/inscription',function(req,res){
 	console.log('\nInscription loaded');
-	
+
 	var html;
 	fs.readFile(__dirname+'/html/inscription.html','utf8',function(err,data){
 		if(err){
@@ -291,14 +291,14 @@ app.get('/inscription',function(req,res){
 //Login page
 app.get('/login',function(req,res){
 	console.log('\nLogin page loaded');
-	
+
 	var html;
 	fs.readFile(__dirname+'/html/login.html','utf8',function(err,data){
 		if(err){
 			console.log('Error login page!');
 			throw err;
 		}
-		
+
 		html = data;
 		res.charset='utf-8';
 		res.setHeader("Access-Control-Allows-Origin","*");
@@ -315,7 +315,7 @@ app.get('/PanelMember', function(req,res){
 				console.log('PanelMember: error loading page!');
 				throw err;
 			}
-			
+
 			html = data;
 			res.charset='utf-8';
 			res.setHeader("Access-Control-Allows-Origin","*");
@@ -328,7 +328,7 @@ app.get('/PanelMember', function(req,res){
 
 // Admin modif carousel page
 app.get('/admin-carousel', function(req,res){
-	
+
 	if(typeof sess == "undefined"){
 		res.redirect('/');
 	}else{
@@ -336,14 +336,14 @@ app.get('/admin-carousel', function(req,res){
 			res.redirect('/');
 		}else{
 			console.log('\n Admin carousel loaded');
-			
+
 			var html;
 			fs.readFile(__dirname+'/html/admin/admin-carousel.html','utf8',function(err,data){
 				if(err){
 					console.log('Error Admin carousel!');
 					throw err;
 				};
-				
+
 				html = data;
 				res.charset='utf-8';
 				res.setHeader("Access-Control-Allows-Origin","*");
@@ -366,9 +366,9 @@ app.get('/admin-management', function(req,res){
 					throw err;
 				}
 				console.log('\nAdmin management page loaded!');
-				
+
 				html = data;
-				
+
 				res.charset='utf-8';
 				res.setHeader("Access-Control-Allows-Origin","*");
 				res.send(html);
@@ -394,7 +394,7 @@ app.get('/changePass', function(req,res){
 				}
 				console.log('\nchangePass loaded!');
 				html = data;
-				
+
 				res.charset='utf-8';
 				res.setHeader("Access-Control-Allows-Origin","*");
 				res.send(html);
@@ -415,18 +415,18 @@ app.get('/forgottenPass', function (req,res){
 		}
 		console.log('\nForgotPass page loaded!');
 		html = data;
-		
+
 		res.charset='utf-8';
 		res.setHeader("Access-Control-Allows-Origin","*");
 		res.send(data)
-	});	
-})	
+	});
+})
 
 // redefinePass
 app.get('/redefinePass:passKey',function(req,res){
 	var tmp = req.params.passKey;
 	var passKey = tmp.substring(1,tmp.length);
-	
+
 	userModel.findOne({"temporaryKey":passKey},{},function(err,user){
 		if(err){
 			console.log('redefinePass : Error findOne!');
@@ -435,9 +435,9 @@ app.get('/redefinePass:passKey',function(req,res){
 		if(user == null){
 			console.log('ReedfinePass: Utilisateur non trouvé!');
 		}
-		
+
 		sess.email = user.email;
-		
+
 		var html;
 		fs.readFile(__dirname+"/html/redefinePass.html","utf8",function(err,data){
 			if(err){
@@ -473,21 +473,21 @@ app.get('/logout', function(req,res){
 //posting content to DB
 app.post('/postContent',function(req,res){
 	console.log('posting content...\n');
-	
+
 	var title,director,actors,genre,duration,synopsis,why,publicationDate;	// le poster est géré par multer. On rajoute juste le chemmin du poster à la base(cf posterPath)
-	
+
 	response = checkFormFilm(req);					// verification du formulaire
 	if(response.codeResponse == "ko"){
 		res.send(response);
 	}else{
-	
+
 		title = req.body.title;
 		director=req.body.director;
 		actors = req.body.actors.split(', '); 		// transformation of string to array, parsing to ', '
-		
+
 		genre = []; 								// creating an array of genre
 		genre.push(req.body.genre1);
-		
+
 		// Allow a movie to have less than 3 genre
 		if(typeof req.body.genre2 != 'undefined'){
 			genre.push(req.body.genre2);
@@ -499,9 +499,9 @@ app.post('/postContent',function(req,res){
 		synopsis=req.body.synopsis;
 		why=req.body.why;
 		publicationDate = req.body.suggestionDate;
-		
+
 		console.log('title: '+title+'\n genre: '+genre+'\n duration: '+duration+'\ndirector: '+director+'\n actors: '+actors+'\n synopsis: '+synopsis+'\n poster:'+posterPath+'\n why:'+why+'\n plublication date:'+publicationDate +'\n');
-		
+
 		var movie = {
 			"title":title,
 			"director":director,
@@ -517,9 +517,9 @@ app.post('/postContent',function(req,res){
 		if(done){										//used with multer to notify the upload sucess
 			console.log("uploading files complete!");
 		};
-		
+
 		var movie = new movieModel(movie);
-		
+
 		movie.save(function(err,data){
 			if(err){
 				console.log('Error saving movie!');
@@ -527,16 +527,16 @@ app.post('/postContent',function(req,res){
 			};
 			console.log('movie added!\n');
 			res.send(response);
-		});	
+		});
 	};
 })
 
 // Adding new member into DB
 app.post('/newMember', function(req,res){
 	console.log('Adding new member...');
-	
+
 	var pseudo,mail,password,genre,description,response;
-	
+
 	checkFormMember(req, function(err, response) {
 		console.log('response newMember');
 		console.log(response);
@@ -548,23 +548,23 @@ app.post('/newMember', function(req,res){
 			mail = req.body.mail;
 			var salt = bcrypt.genSaltSync(10);
 			password = bcrypt.hashSync(req.body.password,salt);
-			
-			genre =[]; 
+
+			genre =[];
 			genre.push(req.body.genre1);
-			
+
 			if(req.body.genre2 != undefined){
 				genre.push(req.body.genre2);
 			};
 			if(req.body.genre3 != undefined){
 				genre.push(req.body.genre3);
 			};
-			
+
 			if(req.body.description != undefined){
 				description = req.body.description;
 			}else{
 				description = pseudo +" est encore un peu timide.. Souhaitez lui la bienvenue ! ";
 			};
-			
+
 			var user = {
 				"name":pseudo,
 				"email":mail,
@@ -582,19 +582,19 @@ app.post('/newMember', function(req,res){
 				};
 				console.log('New member '+user.name+' added!!');
 				console.log(user);
-				
+
 				fs.readFile(__dirname+'/html/mail/welcome.html','utf8',function(err,data){
 					if(err){
 						console.log('Welcome mail not found!');
 						throw err;
 					}
-					
+
 					mailer.sendMail({
 						from:"Admin L3C <bennyp.dondiego@gmail.com>",
 						to:mail,
 						subject:"Bienvenue au sein du L3C!",
 						html: data
-						
+
 					},function(err,mail){
 						if(err){
 							console.log("\nNew member: Error Sending mail!");
@@ -603,7 +603,7 @@ app.post('/newMember', function(req,res){
 						console.log('\nMessage successfully sent! Message:'+ mail.response);
 					});
 				});
-				
+
 				res.send(response);
 			});
 		};
@@ -638,7 +638,7 @@ app.post('/postCarousel', function(req,res){
 
 // Post loggin page
 app.post('/loginConnection', function(req,res){
-	
+
 	var response = {
 		codeResponse:"",
 		message:"",
@@ -650,13 +650,13 @@ app.post('/loginConnection', function(req,res){
 			console.log('Error login! User not found!');
 			throw err;
 		}
-		
+
 		if(user == null || !bcrypt.compareSync(req.body.password, user.password)){
-		
+
 			response.codeResponse = "ko"
 			response.message="Email ou Mot de Passe incorrect!";
 			response.isAdmin = "";
-			
+
 			res.send(response);
 		}else{
 			sess = req.session;
@@ -666,19 +666,19 @@ app.post('/loginConnection', function(req,res){
 				sess.name = user.name;
 				sess.isAdmin = user.isAdmin;
 				//rajout dans la sessions des autres attributs d'un membre possible ici.
-				
+
 				response.codeResponse = "ok";
 				response.message = "Bienvenue "+user.name+" !";
 				res.send(response);
 			}else{
-				
+
 				sess.email = user.email;
 				sess.name = user.name;
 				sess.isAdmin = user.isAdmin;
-				
+
 				response.codeResponse = "ok";
 				response.isAdmin = user.isAdmin;
-				
+
 				res.send(response);
 			}
 		}
@@ -688,15 +688,15 @@ app.post('/loginConnection', function(req,res){
 //updateMdp
 app.post('/updatePass', function(req,res){
 	var email,response, salt;
-		
+
 	email = sess.email;
 	salt = bcrypt.genSaltSync(10);
-	
+
 	response = {
 		codeResponse: "",
 		message: ""
 	};
-	
+
 	if(req.body.pass != req.body.confirmation){
 		response.codeResponse = "ko";
 		response.message="Le mot de passe et la confirmation doivent être identiques!";
@@ -729,11 +729,11 @@ app.post('/changeMdp', function(req,res){
 				throw err;
 			}
 			if(user == null || !bcrypt.compareSync(req.body.oldMdp, user.password)){
-			
+
 				response.codeResponse = "ko"
 				response.message="L'ANCIEN Mot de Passe n'est pas correct!";
 				response.isAdmin = "";
-				
+
 				console.log('old mdp invalid');
 				res.send(response);
 			}else{
@@ -757,24 +757,24 @@ app.post('/changeMdp', function(req,res){
 // forgottenPass
 app.post('/forgottenPass', function(req,res){
 	var tmpPass, userEmail, response, mail, salt;
-	
+
 	try {
 		tmpPass = crypto.randomBytes(15).toString('hex');
-		
+
 	}catch(ex){
 		console.log('forgottenPass : Error generating random string');
 		throw ex;
 	}
 	console.log(tmpPass);
-	
+
 	userEmail = req.body.email;
 	salt = bcrypt.genSaltSync(10);
-	
+
 	response = {
 		codeResponse :"",
 		message :""
 	};
-	
+
 	// userModel.findOneAndUpdate({email: userEmail},{password: bcrypt.hashSync(tmpPass,salt)},{}, function(err,user){
 	userModel.findOneAndUpdate({email: userEmail},{temporaryKey: tmpPass},{}, function(err,user){
 		if(err){
@@ -788,21 +788,21 @@ app.post('/forgottenPass', function(req,res){
 			res.send(response);
 		}else{
 			mail = user.email;
-			
+
 			fs.readFile(__dirname+'/html/mail/redefinePass.html','utf8',function(err,data){
 				if(err){
 					console.log('Pasword mail not found!');
 					throw err;
 				}
-				
+
 				var htmlContent = data.replace('%%MDPRandom%%', '<a href="http://localhost:7777/redefinePass:'+tmpPass+'">http://localhost:7777/redefinePass:'+tmpPass+'</a>')
-				
+
 				mailer.sendMail({
 					from:"Admin L3C <bennyp.dondiego@gmail.com>",
 					to:mail,
 					subject:"Mot de passe oublié",
 					html: htmlContent
-					
+
 				},function(err,mail){
 					if(err){
 						console.log("\nNew member: Error Sending mail!");
@@ -816,41 +816,41 @@ app.post('/forgottenPass', function(req,res){
 			});
 		}
 	})
-});	
+});
 
 // adminManagement
 app.post('/adminManagement', function(req,res){
-	
+
 	userModel.findOne({"name":req.body.pseudo},{}, function(err, user){
 		if(err){
 			console.log('adminManagement : error finding membre');
 			throw err;
 		}
-		
+
 		var response = {
 			codeResponse :"",
 			message :""
 		}
-		
+
 		if(user == null){
 			response.codeResponse = "ko";
 			response.message = "Membre non trouvé!";
-			
+
 			res.send(response);
 		}else{
-		
+
 			response.pseudo = user.name;
 			response.email = user.email;
-			response.date = moment(user.date).format('DD-MM-YYYY'); 
+			response.date = moment(user.date).format('DD-MM-YYYY');
 			response.genre = "";
 			for(var i = 0; i < user.genre.length ; i++){
 				response.genre += user.genre[i]+", ";
 			}
 			response.description = user.description;
-			
-			res.send(response);	
+
+			res.send(response);
 		}
-	})	
+	})
 })
 
 // electAdmin
@@ -860,23 +860,23 @@ app.post('/electAdmin', function(req,res){
 			console.log('adminManagement : error finding membre');
 			throw err;
 		}
-		
+
 		var response = {
 			codeResponse :"",
 			message :""
 		}
 		console.log(req.body);
-		
+
 		if(user == null){
 			response.codeResponse = "ko";
 			response.message = "Membre non trouvé!";
-			
+
 			res.send(response);
 		}else{
 			console.log('\nElectAdmin : '+req.body.pseudo+'is now an admin!');
 			response.codeResponse = "ok";
 			response.message = req.body.pseudo+' is now an admin!';
-			
+
 			res.send(response);
 		}
 	})
@@ -892,7 +892,7 @@ app.post('/whatsMyName', function(req,res){
 
 // ------------------------------------------------------- Fonction de verification des forms ---------------------------------------------
 // checkForm for admin-suggestion
-var checkFormFilm = function(req){	
+var checkFormFilm = function(req){
 	var response = {
 		codeResponse:"",
 		message:""
@@ -928,12 +928,12 @@ var checkFormFilm = function(req){
 		return response;
 	};
 	response.codeResponse = "ok";
-	response.message ="Success ! Movie " + req.body.title + " added into L3C DB;" 
+	response.message ="Success ! Movie " + req.body.title + " added into L3C DB;"
 	return response;
 };
 
 function checkRequired( arr, key, cb ) {
-	
+
 	if ( arr[ key ] == "" || arr[ key ] == null ) {
 		cb( null, {
 			codeResponse : "ko",
@@ -941,8 +941,8 @@ function checkRequired( arr, key, cb ) {
 		});
 		return false;
 	}
-	var tmp = arr[key];	
-	
+	var tmp = arr[key];
+
 	if(key == "password" && tmp.length<6){
 		cb(null, {
 			codeResponse : "ko",
@@ -959,7 +959,7 @@ var checkFormMember = function(req, cb){
 		codeResponse:"",
 		message:""
 	};
-	
+
 	userModel.findOne({"email": req.body.mail},{},function(err, user){
 		if(err){
 			console.log('checkMemberForm: error findOne');
@@ -981,7 +981,7 @@ var checkFormMember = function(req, cb){
 			response.codeResponse = "ok";
 			response.message = "New member added! Welcome "+req.body.pseudo+" !";
 			cb ( null, response );
-			
+
 		}else{
 			console.log('email trouvé!');
 			response.codeResponse = "ko";
@@ -989,10 +989,10 @@ var checkFormMember = function(req, cb){
 			cb( null, response);
 		}
 	});
-	
+
 };
 
-// checkForm for login	
+// checkForm for login
 var checkFormLogin = function(req){
 	var response = {
 			codeResponse:"",
@@ -1011,7 +1011,7 @@ var checkFormLogin = function(req){
 	response.codeResponse = "ok";
 	response.message ="";
 	return response;
-};	
+};
 
 // checkForm for admin-carousel
 var checkFormCarousel = function(req){
@@ -1051,11 +1051,11 @@ var checkFormCarousel = function(req){
 		response.message = "Toutes les affiches de films doivent être complété!(6)";
 		return response;
 	};
-	
+
 	response.codeResponse = "ok";
 	response.message ="" ;
 	return response;
-};	
+};
 
 // checkFormMdp
 var checkFormMdp = function(req){
@@ -1063,7 +1063,7 @@ var checkFormMdp = function(req){
 		codeResponse:"",
 		message:""
 	};
-	
+
 	if(req.body.password != req.body.confirmPass){
 		response.codeResponde = "ko";
 		response.message = "Le NOUVEAU Mot de Passe et la CONFIRMATION doivent être IDENTIQUES!";
@@ -1087,6 +1087,7 @@ app.get("*:file", function(req, res, next) {
 	*/
 });
 
+
 // ------------------------------------------------------- Finish -------------------------------------------------------------------------
 app.on('close',function(){
 	console.log('Closing server...');
@@ -1105,7 +1106,7 @@ app.use(function(req,res,next){
 			console.log('Error PageNotFound!');
 			throw err;
 		};
-		
+
 		html = data;
 		res.charset='utf-8';
 		res.setHeader("Access-Control-Allows-Origin","*");
