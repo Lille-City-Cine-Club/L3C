@@ -18,6 +18,9 @@ var async = require('async');				// to be able to make async work even easier/be
 var app = express();
 
 
+var testPoster, testFieldname;
+testPoster = "no changes";
+testFieldname = "no changes";
 
 // for the session
 var sess;
@@ -43,14 +46,38 @@ app.use(multer({dest: './ressources/poster',
 
 				rename: function(fieldname, filename, req, res){
 				// return  fieldname.startsWith("film") ? fieldname : moment().format('YYYY_MM_DD')+'_'+filename ;
-					/*if( fieldname.startsWith("film")){
-						console.log('je suis fans film');
+                 /*
+                    console.log('JE SUIS DANS MULTER MOTHERFUCKEEEEERRRRRRRR!!!!');
+                    console.log(fieldname.startsWith("film"));
+					if( fieldname.startsWith("film")){
+                        console.log("poster");
+                        console.log(poster);
+                        testPoster = poster;
+                        console.log("fieldname");
+                        console.log(fieldname);
+                        testFieldname = fieldname;
+						console.log('je suis dans film');
 						return fieldname;
 					}else{
 						console.log('kdjhflkdhfjdhfjdfkjh');
 						return moment().format('YYYY_MM_DD')+'_'+filename;
-					}*/
-                    return moment().format('YYYY_MM_DD')+"_"+filename;   
+					}
+                    */
+                   /*
+                    // remplacement de startsWith car pas encore actif(waiting for ECMAS 6)
+                    if(fieldname.indexOf("film") === 0){
+                        testPoster = "changed!";
+                        testFieldname = "changed!";
+                        return fieldname;
+                    }else{
+                        // pourque l'upload fonctionne sans le if.
+                        return moment().format('YYYY_MM_DD')+"_"+filename;   
+                    }
+                    */
+                    
+                    // pourque l'upload fonctionne sans le if.
+                    return moment().format('YYYY_MM_DD')+"_"+filename;
+                    
 				},
 				onFileUploadStart: function(file, req, res){
 					console.log(file.name + ' uploading . . .');
@@ -78,6 +105,7 @@ mongoose.connect('mongodb://adminL3C:Herculesproject@ds045031.mongolab.com:45031
 var db = mongoose.connection;
 db.on('error',function(){
 	console.log("Error connecting to DB ! Check your network and restart the server.");
+    server.close();
 });
 db.once('connected', function(){
 	console.log('Connected to DataBase');
@@ -614,10 +642,14 @@ app.post('/newMember', function(req,res){
 app.post('/postCarousel', function(req,res){
 	console.log('\nAdding new movie poster to the carousel');
 	console.log(req.headers['content-type']);
-	console.log("reqbody*************");
+    console.log(testPoster);
+    console.log(testFieldname);
+	/*
+    console.log("reqbody*************");
 	console.log(req.body);
 	console.log("req ****************");
 	console.log(req);
+    */
 	/*
 	console.log(req.files);
 	console.log(req.body.form_id);
@@ -632,8 +664,10 @@ app.post('/postCarousel', function(req,res){
 		console.log("\nSuccess! All movies correctly added into Server.");
 		res.send("Success! All movies correctly added into Server.");
 	};*/
-	console.log("\nSuccess! All movies correctly added into Server.");
-	res.send("Success! All movies correctly added into Server.");
+	//console.log("\nSuccess! All movies correctly added into Server.");
+	//res.send("Success! All movies correctly added into Server.");
+    res.send('Still testing... poster: '+testPoster+', fieldname: ' +testFieldname);
+
 })
 
 // Post loggin page
@@ -1114,4 +1148,4 @@ app.use(function(req,res,next){
 	});
 });
 
-app.listen(7777);
+var server = app.listen(7777);
