@@ -9,7 +9,7 @@
   "author": "Sufiane 'DonDiego' Souissi",
   "license": "MIT",
   "dependencies": {
-    "express": "^4.10.7",
+    "express": "^4.13.3",
     "moment": "^2.9.0"
   },
   "devDependencies": {},

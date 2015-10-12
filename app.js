@@ -31,7 +31,7 @@ var mailer = nodemailer.createTransport({
 	service: "Gmail",
 	auth:{
 		user: "bennyp.dondiego@gmail.com",
-		pass: "herculesproject"
+		pass: "adminl3c"
 	}
 });
 
@@ -100,11 +100,13 @@ console.log("City Ciné Club, a.k.a CCC, Web Server!\nListening on : 7777 \n");
 
 //connection to the DB
 mongoose.connect('mongodb://adminL3C:Herculesproject@ds045031.mongolab.com:45031/lille_city_cine_club');
+//mongoose.connect('mongodb://testAdmin:admin@ds045031.mongolab.com:45031/lille_city_cine_club');
 //mongoose.connect('mongodb://localhost:27017/CCC');
 
 var db = mongoose.connection;
-db.on('error',function(){
+db.on('error',function(err){
 	console.log("Error connecting to DB ! Check your network and restart the server.");
+    console.info(err);
     server.close();
 });
 db.once('connected', function(){
