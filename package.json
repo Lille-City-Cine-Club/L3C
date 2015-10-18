@@ -4,13 +4,14 @@
   "description": "CCC web Server",
   "main": "app.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "at the moment we don't have any test (it's bad we know, we'll make them we promise!)"
   },
-  "author": "Sufiane 'DonDiego' Souissi",
+  "author": "Sufiane 'Don Diego' Souissi & Benjamin 'BennyP' Parrant",
   "license": "MIT",
   "dependencies": {
     "express": "^4.13.3",
-    "moment": "^2.9.0"
+    "moment": "^2.9.0",
+    "mongoose": "^4.1.11"
   },
   "devDependencies": {},
   "repository": {
@@ -18,7 +19,7 @@
     "url": "https://github.com/Lille-City-Cine-Club/L3C.git"
   },
   "keywords": [
-    "Movie",
+    "Movies",
     "suggestion",
     "student",
     "project"
