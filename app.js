@@ -3,6 +3,8 @@
 // Author : Sufiane 'DonDiego' Souissi
 //			Benjamin 'BennyP' Parant
 
+/* jshint node: true */ // to disable warning with node
+
 var express = require('express');			// main FW
 var bodyParser = require('body-parser');	// to parse req
 var fs = require('fs');						// to read Files
@@ -148,7 +150,7 @@ var userModel = mongoose.model('Users', userSchema, 'Users');
 app.get('/', function(req,res){
 	console.log('\nHome loaded');
 
-	if(req.session.email == undefined){
+	if(req.session.email === undefined){
 		sess = req.session;
 	}
 
@@ -164,7 +166,7 @@ app.get('/', function(req,res){
 		res.setHeader("Access-Control-Allow-Origin","*");
 		res.send(html);
 	});
-})
+});
 
 //Suggestion page
 app.get('/suggestion', function(req,res){
@@ -196,17 +198,17 @@ app.get('/suggestion', function(req,res){
 					genre += movie.genre[0];
 					if (typeof movie.genre[1] != 'undefined'){
 						genre +=", "+movie.genre[1];
-					};
+					}
 					if(typeof movie.genre[2] != 'undefined'){
 						genre +=", "+movie.genre[2];
-					};
+					}
 
 					var duration;
 					if( typeof movie.duration === 'undefined'){
 						duration = "Un film sans durée :O !";
 					}else{
 						duration = movie.duration;
-					};
+					}
 
 					html = data;
 					html = html.replace('%%title%%',movie.title);
@@ -228,7 +230,7 @@ app.get('/suggestion', function(req,res){
 			res.redirect('/login');
 		}
 	}
-})
+});
 
 // Admin Home page
 app.get('/admin', function(req,res){
@@ -255,7 +257,7 @@ app.get('/admin', function(req,res){
 			});
 		}
 	}
-})
+});
 
 // Admin Adding content page
 app.get('/admin-suggestion', function(req,res){
@@ -282,7 +284,7 @@ app.get('/admin-suggestion', function(req,res){
 			});
 		}
 	}
-})
+});
 
 //About page
 app.get('/about', function(req,res){
@@ -299,7 +301,7 @@ app.get('/about', function(req,res){
 		res.setHeader("Access-Control-Allow-Origin","*");
 		res.send(html);
 	});
-})
+});
 
 //Inscription page
 app.get('/inscription',function(req,res){
@@ -316,7 +318,7 @@ app.get('/inscription',function(req,res){
 		res.setHeader("Access-Control-Allow-Origin","*");
 		res.send(html);
 	});
-})
+});
 
 //Login page
 app.get('/login',function(req,res){
@@ -334,7 +336,7 @@ app.get('/login',function(req,res){
 		res.setHeader("Access-Control-Allows-Origin","*");
 		res.send(html);
 	});
-})
+});
 
 //PanelMember
 app.get('/PanelMember', function(req,res){
@@ -372,7 +374,7 @@ app.get('/admin-carousel', function(req,res){
 				if(err){
 					console.log('Error Admin carousel!');
 					throw err;
-				};
+				}
 
 				html = data;
 				res.charset='utf-8';
@@ -381,7 +383,7 @@ app.get('/admin-carousel', function(req,res){
 			});
 		}
 	}
-})
+});
 
 // Admin management
 app.get('/admin-management', function(req,res){
@@ -402,13 +404,13 @@ app.get('/admin-management', function(req,res){
 				res.charset='utf-8';
 				res.setHeader("Access-Control-Allows-Origin","*");
 				res.send(html);
-			})
+			});
 		}else{
 			console.log('Admin management: Vous n\'etes pas autorisés à vous rendre sur cette page.');
 			res.redirect('/');
 		}
 	}
-})
+});
 
 // ChangePass
 app.get('/changePass', function(req,res){
@@ -433,7 +435,7 @@ app.get('/changePass', function(req,res){
 			res.redirect('/login');
 		}
 	}
-})
+});
 
 // forgottenPass
 app.get('/forgottenPass', function (req,res){
@@ -448,9 +450,9 @@ app.get('/forgottenPass', function (req,res){
 
 		res.charset='utf-8';
 		res.setHeader("Access-Control-Allows-Origin","*");
-		res.send(data)
+		res.send(data);
 	});
-})
+});
 
 // redefinePass
 app.get('/redefinePass:passKey',function(req,res){
@@ -462,7 +464,7 @@ app.get('/redefinePass:passKey',function(req,res){
 			console.log('redefinePass : Error findOne!');
 			throw err;
 		}
-		if(user == null){
+		if(user === null){
 			console.log('ReedfinePass: Utilisateur non trouvé!');
 		}
 
@@ -482,7 +484,7 @@ app.get('/redefinePass:passKey',function(req,res){
 
 		});
 	});
-})
+});
 
 // logout
 app.get('/logout', function(req,res){
@@ -498,7 +500,7 @@ app.get('/logout', function(req,res){
 	req.logout();
 	res.redirect('/');
 	*/
-})
+});
 
 //posting content to DB
 app.post('/postContent',function(req,res){
@@ -521,10 +523,10 @@ app.post('/postContent',function(req,res){
 		// Allow a movie to have less than 3 genre
 		if(typeof req.body.genre2 != 'undefined'){
 			genre.push(req.body.genre2);
-		};
+		}
 		if(typeof req.body.genre3 != 'undefined'){
 			genre.push(req.body.genre3);
-		};
+		}
 		duration = req.body.duree;
 		synopsis=req.body.synopsis;
 		why=req.body.why;
@@ -532,7 +534,7 @@ app.post('/postContent',function(req,res){
 
 		console.log('title: '+title+'\n genre: '+genre+'\n duration: '+duration+'\ndirector: '+director+'\n actors: '+actors+'\n synopsis: '+synopsis+'\n poster:'+posterPath+'\n why:'+why+'\n plublication date:'+publicationDate +'\n');
 
-		var movie = {
+		var movieSchema = {
 			"title":title,
 			"director":director,
 			"actors":actors,
@@ -546,20 +548,20 @@ app.post('/postContent',function(req,res){
 
 		if(done){										//used with multer to notify the upload sucess
 			console.log("uploading files complete!");
-		};
+		}
 
-		var movie = new movieModel(movie);
+		var movie = new movieModel(movieSchema);
 
 		movie.save(function(err,data){
 			if(err){
 				console.log('Error saving movie!');
 				throw err;
-			};
+			}
 			console.log('movie added!\n');
 			res.send(response);
 		});
-	};
-})
+	}
+});
 
 // Adding new member into DB
 app.post('/newMember', function(req,res){
@@ -582,18 +584,18 @@ app.post('/newMember', function(req,res){
 			genre =[];
 			genre.push(req.body.genre1);
 
-			if(req.body.genre2 != undefined){
+			if(req.body.genre2 !== undefined){
 				genre.push(req.body.genre2);
-			};
-			if(req.body.genre3 != undefined){
+			}
+			if(req.body.genre3 !== undefined){
 				genre.push(req.body.genre3);
-			};
+			}
 
-			if(req.body.description != undefined){
+			if(req.body.description !== undefined){
 				description = req.body.description;
 			}else{
 				description = pseudo +" est encore un peu timide.. Souhaitez lui la bienvenue ! ";
-			};
+			}
 
 			var user = {
 				"name":pseudo,
@@ -609,7 +611,7 @@ app.post('/newMember', function(req,res){
 				if(err){
 					console.log('Error saving new member!!');
 					throw err;
-				};
+				}
 				console.log('New member '+user.name+' added!!');
 				console.log(user);
 
@@ -636,9 +638,9 @@ app.post('/newMember', function(req,res){
 
 				res.send(response);
 			});
-		};
+		}
 	});
-})
+});
 
 // Adding new poster for the carousel
 app.post('/postCarousel', function(req,res){
@@ -670,7 +672,7 @@ app.post('/postCarousel', function(req,res){
 	//res.send("Success! All movies correctly added into Server.");
     res.send('Still testing... poster: '+testPoster+', fieldname: ' +testFieldname);
 
-})
+});
 
 // Post loggin page
 app.post('/loginConnection', function(req,res){
@@ -687,9 +689,9 @@ app.post('/loginConnection', function(req,res){
 			throw err;
 		}
 
-		if(user == null || !bcrypt.compareSync(req.body.password, user.password)){
+		if(user === null || !bcrypt.compareSync(req.body.password, user.password)){
 
-			response.codeResponse = "ko"
+			response.codeResponse = "ko";
 			response.message="Email ou Mot de Passe incorrect!";
 			response.isAdmin = "";
 
@@ -697,7 +699,7 @@ app.post('/loginConnection', function(req,res){
 		}else{
 			sess = req.session;
 			console.log(user);
-			if(user.isAdmin != true){
+			if(user.isAdmin !== true){
 				sess.email = user.email;
 				sess.name = user.name;
 				sess.isAdmin = user.isAdmin;
@@ -719,7 +721,7 @@ app.post('/loginConnection', function(req,res){
 			}
 		}
 	});
-})
+});
 
 //updateMdp
 app.post('/updatePass', function(req,res){
@@ -753,7 +755,7 @@ app.post('/updatePass', function(req,res){
 		response.message ="message correctement changé.";
 		res.send(response);
 	});
-})
+});
 
 // ChangeMDP
 app.post('/changeMdp', function(req,res){
@@ -764,9 +766,9 @@ app.post('/changeMdp', function(req,res){
 				console.log('Error login! User not found!');
 				throw err;
 			}
-			if(user == null || !bcrypt.compareSync(req.body.oldMdp, user.password)){
+			if(user === null || !bcrypt.compareSync(req.body.oldMdp, user.password)){
 
-				response.codeResponse = "ko"
+				response.codeResponse = "ko";
 				response.message="L'ANCIEN Mot de Passe n'est pas correct!";
 				response.isAdmin = "";
 
@@ -781,14 +783,14 @@ app.post('/changeMdp', function(req,res){
 					}
 					console.log('\nChangePass: Password successfully changed!');
 					res.send(response);
-				})
+				});
 			}
-		})
+		});
 	}else{
 		console.log('\nChangePass: new & confirm not equals');
-		res.send(response)
+		res.send(response);
 	}
-})
+});
 
 // forgottenPass
 app.post('/forgottenPass', function(req,res){
@@ -817,7 +819,7 @@ app.post('/forgottenPass', function(req,res){
 			console.log('ForgottenPass : error searching user.');
 			throw err;
 		}
-		if(user == null){
+		if(user === null){
 			console.log('ForgottenPass : no user found');
 			response.codeResponse = "ko";
 			response.message = "Adresse mail non trouvé!";
@@ -831,7 +833,7 @@ app.post('/forgottenPass', function(req,res){
 					throw err;
 				}
 
-				var htmlContent = data.replace('%%MDPRandom%%', '<a href="http://localhost:7777/redefinePass:'+tmpPass+'">http://localhost:7777/redefinePass:'+tmpPass+'</a>')
+				var htmlContent = data.replace('%%MDPRandom%%', '<a href="http://localhost:7777/redefinePass:'+tmpPass+'">http://localhost:7777/redefinePass:'+tmpPass+'</a>');
 
 				mailer.sendMail({
 					from:"Admin L3C <bennyp.dondiego@gmail.com>",
@@ -851,7 +853,7 @@ app.post('/forgottenPass', function(req,res){
 				});
 			});
 		}
-	})
+	});
 });
 
 // adminManagement
@@ -866,9 +868,9 @@ app.post('/adminManagement', function(req,res){
 		var response = {
 			codeResponse :"",
 			message :""
-		}
+		};
 
-		if(user == null){
+		if(user === null){
 			response.codeResponse = "ko";
 			response.message = "Membre non trouvé!";
 
@@ -886,8 +888,8 @@ app.post('/adminManagement', function(req,res){
 
 			res.send(response);
 		}
-	})
-})
+	});
+});
 
 // electAdmin
 app.post('/electAdmin', function(req,res){
@@ -900,10 +902,10 @@ app.post('/electAdmin', function(req,res){
 		var response = {
 			codeResponse :"",
 			message :""
-		}
+		};
 		console.log(req.body);
 
-		if(user == null){
+		if(user === null){
 			response.codeResponse = "ko";
 			response.message = "Membre non trouvé!";
 
@@ -915,8 +917,8 @@ app.post('/electAdmin', function(req,res){
 
 			res.send(response);
 		}
-	})
-})
+	});
+});
 
 // whatsMyName
 app.post('/whatsMyName', function(req,res){
@@ -933,44 +935,44 @@ var checkFormFilm = function(req){
 		codeResponse:"",
 		message:""
 	};
-	if(req.body.title == "" || req.body.title == null ){
+	if(req.body.title === "" || req.body.title === null ){
 		response.codeResponse = "ko";
 		response.message ="Le champ TITRE doit au moins être complété !";
 		return response;
-	};
-	if(req.body.director == "" || req.body.director == null ){
+	}
+	if(req.body.director === "" || req.body.director === null ){
 		response.codeResponse = "ko";
 		response.message ="Le champ REALISATEUR doit au moins être complété !";
 		return response;
-	};
-	if(req.body.actors == "" || req.body.actors == null ){
+	}
+	if(req.body.actors === "" || req.body.actors === null ){
 		response.codeResponse = "ko";
 		response.message ="Les champ ACTEURS doivent au moins être complétés !";
 		return response;
-	};
-	if(req.body.genre1 == "" || req.body.genre1 == null ){
+	}
+	if(req.body.genre1 === "" || req.body.genre1 === null ){
 		response.codeResponse = "ko";
 		response.message ="Le premier GENRE doit au moins être complété !";
 		return response;
-	};
-	if(req.body.synopsis == "" || req.body.synopsis == null ){
+	}
+	if(req.body.synopsis === "" || req.body.synopsis === null ){
 		response.codeResponse = "ko";
 		response.message ="Le champ SYNOPSIS doit au moins être complété !";
 		return response;
-	};
-	if(req.body.why == "" || req.body.why == null ){
+	}
+	if(req.body.why === "" || req.body.why === null ){
 		response.codeResponse = "ko";
 		response.message ="Le champ JUSTIFICATION doit au moins être complétée !";
 		return response;
-	};
+	}
 	response.codeResponse = "ok";
-	response.message ="Success ! Movie " + req.body.title + " added into L3C DB;"
+	response.message ="Success ! Movie " + req.body.title + " added into L3C DB";
 	return response;
 };
 
 function checkRequired( arr, key, cb ) {
 
-	if ( arr[ key ] == "" || arr[ key ] == null ) {
+	if ( arr[ key ] === "" || arr[ key ] === null ) {
 		cb( null, {
 			codeResponse : "ko",
 			message: "Le champ "+key+" doit au moins être complété !"
@@ -1001,9 +1003,9 @@ var checkFormMember = function(req, cb){
 			console.log('checkMemberForm: error findOne');
 			cb( err );
 		}
-		if(user == null){
+		if(user === null){
 			var list =['pseudo', 'mail', 'password', 'genre1'];
-			for( k in  list){
+			for( var k in  list){
 				var key = list[k];
 				if ( !checkRequired(req.body, key, cb) ) return;
 			}
@@ -1012,7 +1014,7 @@ var checkFormMember = function(req, cb){
 				response.message = "Les champs MOT DE PASSE et CONFIRMATION doivent être IDENTIQUES !";
 				cb( null, response );
 				return ;
-			};
+			}
 			console.log('email non trouvé');
 			response.codeResponse = "ok";
 			response.message = "New member added! Welcome "+req.body.pseudo+" !";
@@ -1033,19 +1035,19 @@ var checkFormLogin = function(req){
 	var response = {
 			codeResponse:"",
 			message:""
-		};
-	if(req.body.email == "" || req.body.email === null ){
+    };
+	if(req.body.email === "" || req.body.email === null ){
 		response.codeResponse = "ko";
 		response.message ="Le champ E-MAIL doit au moins être complété !";
 		return response;
-	};
-	if(req.body.password == "" || req.body.password === null ){
+	}
+	if(req.body.password === "" || req.body.password === null ){
 		response.codeResponse = "ko";
 		response.message = "Le champ MOT DE PASSE doit au moins être complété !";
 		return response;
-	};
+	}
 	response.codeResponse = "ok";
-	response.message ="";
+	response.message = "";
 	return response;
 };
 
@@ -1057,36 +1059,36 @@ var checkFormCarousel = function(req){
 		codeResponse:"",
 		message:""
 	};
-	if(req.body.film1 == undefined ){
+	if(req.body.film1 === undefined ){
 		response.codeResponse = "ko";
 		response.message = "Toutes les affiches de films doivent être complété!(1)";
 		return response;
-	};
-	if(req.body.film2 == undefined ){
+	}
+	if(req.body.film2 === undefined ){
 		response.codeResponse = "ko";
 		response.message = "Toutes les affiches de films doivent être complété!(2)";
 		return response;
-	};
-	if(req.body.film3 == undefined ){
+	}
+	if(req.body.film3 === undefined ){
 		response.codeResponse = "ko";
 		response.message = "Toutes les affiches de films doivent être complété!(3)";
 		return response;
-	};
-	if(req.body.film4 == undefined){
+	}
+	if(req.body.film4 === undefined){
 		response.codeResponse = "ko";
 		response.message = "Toutes les affiches de films doivent être complété!(4)";
 		return response;
-	};
-	if(req.body.film5 == undefined ){
+	}
+	if(req.body.film5 === undefined ){
 		response.codeResponse = "ko";
 		response.message = "Toutes les affiches de films doivent être complété!(5)";
 		return response;
-	};
-	if(req.body.film6 == undefined ){
+	}
+	if(req.body.film6 === undefined ){
 		response.codeResponse = "ko";
 		response.message = "Toutes les affiches de films doivent être complété!(6)";
 		return response;
-	};
+	}
 
 	response.codeResponse = "ok";
 	response.message ="" ;
@@ -1141,7 +1143,7 @@ app.use(function(req,res,next){
 		if(err){
 			console.log('Error PageNotFound!');
 			throw err;
-		};
+		}
 
 		html = data;
 		res.charset='utf-8';
