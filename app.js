@@ -508,7 +508,7 @@ app.post('/postContent',function(req,res){
 
 	var title,director,actors,genre,duration,synopsis,why,publicationDate;	// le poster est géré par multer. On rajoute juste le chemmin du poster à la base(cf posterPath)
 
-	response = checkFormFilm(req);					// verification du formulaire
+	var response = checkFormFilm(req);					// verification du formulaire
 	if(response.codeResponse == "ko"){
 		res.send(response);
 	}else{
