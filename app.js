@@ -1,4 +1,4 @@
-// CCC server code
+// L3C server code
 // Version: 1.0.0
 // Author : Sufiane 'DonDiego' Souissi
 //			Benjamin 'BennyP' Parant
@@ -110,7 +110,7 @@ db.on('error',function(err){
     server.close();
 });
 db.once('connected', function(){
-	console.log('Connected to DataBase');
+	console.log('Successfully connected to DataBase');
 });
 
 // -------------------------------------------------------- DB model ----------------------------------------------------------------------
