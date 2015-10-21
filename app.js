@@ -25,7 +25,6 @@ testPoster = "no changes";
 testFieldname = "no changes";
 
 // for the session
-var sess;
 app.use(session({secret:'Hercules Project'}));
 
 // for sending mails
@@ -151,7 +150,7 @@ app.get('/', function(req,res){
 	console.log('\nHome loaded');
 
 	if(req.session.email === undefined){
-		sess = req.session;
+		var sess = req.session;
 	}
 
 	var html;
@@ -171,7 +170,9 @@ app.get('/', function(req,res){
 //Suggestion page
 app.get('/suggestion', function(req,res){
 
-	if(typeof sess == "undefined"){
+    var sess = req.session;
+    
+	if(typeof sess === "undefined"){
 		res.redirect('/');
 	}else{
 		if(sess.email){
@@ -234,6 +235,8 @@ app.get('/suggestion', function(req,res){
 
 // Admin Home page
 app.get('/admin', function(req,res){
+    
+    var sess = req.session;
 
 	if(typeof sess == "undefined"){
 		res.redirect('/');
@@ -261,6 +264,8 @@ app.get('/admin', function(req,res){
 
 // Admin Adding content page
 app.get('/admin-suggestion', function(req,res){
+    
+    var sess = req.session;
 
 	if(typeof sess == "undefined"){
 		res.redirect('/');
@@ -340,6 +345,9 @@ app.get('/login',function(req,res){
 
 //PanelMember
 app.get('/PanelMember', function(req,res){
+    
+    var sess = req.session;
+    
 	if(typeof sess != "undefined"){
 		var html;
 		fs.readFile(__dirname+'/html/home-member.html','utf8', function(err, data){
@@ -360,6 +368,8 @@ app.get('/PanelMember', function(req,res){
 
 // Admin modif carousel page
 app.get('/admin-carousel', function(req,res){
+    
+    var sess = req.session;
 
 	if(typeof sess == "undefined"){
 		res.redirect('/');
@@ -387,6 +397,9 @@ app.get('/admin-carousel', function(req,res){
 
 // Admin management
 app.get('/admin-management', function(req,res){
+    
+    var sess = req.session;
+    
 	if(typeof sess == "undefined"){
 		res.redirect('/');
 	}else{
@@ -414,6 +427,9 @@ app.get('/admin-management', function(req,res){
 
 // ChangePass
 app.get('/changePass', function(req,res){
+    
+    var sess = req.session;
+    
 	if(typeof sess == 'undefined'){
 		res.redirect('/');
 	}else{
@@ -458,6 +474,7 @@ app.get('/forgottenPass', function (req,res){
 app.get('/redefinePass:passKey',function(req,res){
 	var tmp = req.params.passKey;
 	var passKey = tmp.substring(1,tmp.length);
+    var sess = req.session;
 
 	userModel.findOne({"temporaryKey":passKey},{},function(err,user){
 		if(err){
@@ -697,7 +714,7 @@ app.post('/loginConnection', function(req,res){
 
 			res.send(response);
 		}else{
-			sess = req.session;
+			var sess = req.session;
 			console.log(user);
 			if(user.isAdmin !== true){
 				sess.email = user.email;
@@ -726,7 +743,8 @@ app.post('/loginConnection', function(req,res){
 //updateMdp
 app.post('/updatePass', function(req,res){
 	var email,response, salt;
-
+    var sess = req.session;
+    
 	email = sess.email;
 	salt = bcrypt.genSaltSync(10);
 
@@ -760,6 +778,8 @@ app.post('/updatePass', function(req,res){
 // ChangeMDP
 app.post('/changeMdp', function(req,res){
 	var response = checkFormMdp(req);
+    var sess = req.session;
+    
 	if(response.codeResponse == "ok"){
 		userModel.findOne({"email":sess.email},{},function(err,user){
 			if(err){
@@ -922,6 +942,7 @@ app.post('/electAdmin', function(req,res){
 
 // whatsMyName
 app.post('/whatsMyName', function(req,res){
+    var sess = req.session;
 	console.log('Session asked : ');
 	console.log(sess);
 	res.send(sess);
