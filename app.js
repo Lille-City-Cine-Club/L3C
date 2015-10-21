@@ -3,7 +3,7 @@
 // Author : Sufiane 'DonDiego' Souissi
 //			Benjamin 'BennyP' Parant
 
-/* jshint node: true */ // to disable warning with node
+/* jshint node: true */                     // to disable warning with node
 
 var express = require('express');			// main FW
 var bodyParser = require('body-parser');	// to parse req
