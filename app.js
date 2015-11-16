@@ -17,15 +17,9 @@ var nodemailer = require('nodemailer');		// to send emails
 var chance = require('chance').Chance();	// to generate random number/strings
 var crypto = require('crypto');				// to generate random strings
 var async = require('async');				// to be able to make async work even easier/better
-var chalk = require('chalk');               // to be able to style log info in the console
 var app = express();
 
 
-// log styles colors
-var errorLog = chalk.bold.bgRed;
-var successLog = chalk.bold.bgGreen;
-
-// for testing multipler images dl with multer
 var testPoster, testFieldname;
 testPoster = "no changes";
 testFieldname = "no changes";
@@ -112,12 +106,12 @@ mongoose.connect('mongodb://adminL3C:Herculesproject@ds045031.mongolab.com:45031
 
 var db = mongoose.connection;
 db.on('error',function(err){
-	console.log(errorLog("Error connecting to DB ! Check your network and restart the server."));
+	console.log("Error connecting to DB ! Check your network and restart the server.");
     console.info(err);
     server.close();
 });
 db.once('connected', function(){
-	console.log(successLog('Successfully connected to DataBase'));
+	console.log('Successfully connected to DataBase');
 });
 
 // -------------------------------------------------------- DB model ----------------------------------------------------------------------
@@ -162,7 +156,7 @@ app.get('/', function(req,res){
 	var html;
 	fs.readFile(__dirname+'/html/home.html','utf8',function(err,data){
 		if(err){
-			console.log(errorLog('Error Home!'));
+			console.log('Error Home!');
 			throw err;
 		}
 		html=data;
@@ -184,7 +178,7 @@ app.get('/suggestion', function(req,res){
 		if(sess.email){
 			movieModel.findOne({},{},{sort:{date:-1}},function(err,movie){
 				if(err){
-					console.log(errorLog('Error find!'));
+					console.log('Error find!');
 					throw err;
 				}
 				console.log('\nSuggestion Loaded! Movie: '+ movie.title +'\n');
@@ -192,7 +186,7 @@ app.get('/suggestion', function(req,res){
 				var html;
 				fs.readFile(__dirname+'/html/suggestion.html','utf8',function(err,data){
 					if(err){
-						console.log(errorLog('Error Suggestion!'));
+						console.log('Error Suggestion!');
 						throw err;
 					}
 					// disable "actors1, undefined ..."
@@ -256,7 +250,7 @@ app.get('/admin', function(req,res){
 			var html;
 			fs.readFile(__dirname+'/html/admin/admin.html','utf8',function(err, data){
 				if(err){
-					console.log(errorLog('Error Admin home page!'));
+					console.log('Error Admin home page!');
 					throw err;
 				}
 				html = data;
@@ -285,7 +279,7 @@ app.get('/admin-suggestion', function(req,res){
 			var html;
 			fs.readFile(__dirname+'/html/admin/admin-suggestion.html','utf8',function(err,data){
 				if(err){
-					console.log(errorLog('Error adminSuggestion!'));
+					console.log('Error adminSuggestion!');
 					throw err;
 				}
 				html = data;
@@ -304,7 +298,7 @@ app.get('/about', function(req,res){
 	var html;
 	fs.readFile(__dirname+'/html/about.html','utf8',function(err,data){
 		if(err){
-			console.log(errorLog('Error about!'));
+			console.log('Error about!');
 			throw err;
 		}
 		html = data;
@@ -321,7 +315,7 @@ app.get('/inscription',function(req,res){
 	var html;
 	fs.readFile(__dirname+'/html/inscription.html','utf8',function(err,data){
 		if(err){
-			console.log(errorLog('Error inscription page!'));
+			console.log('Error inscription page!');
 			throw err;
 		}
 		html = data;
@@ -338,7 +332,7 @@ app.get('/login',function(req,res){
 	var html;
 	fs.readFile(__dirname+'/html/login.html','utf8',function(err,data){
 		if(err){
-			console.log(errorLog('Error login page!'));
+			console.log('Error login page!');
 			throw err;
 		}
 
@@ -358,7 +352,7 @@ app.get('/PanelMember', function(req,res){
 		var html;
 		fs.readFile(__dirname+'/html/home-member.html','utf8', function(err, data){
 			if(err){
-				console.log(errorLog('PanelMember: error loading page!'));
+				console.log('PanelMember: error loading page!');
 				throw err;
 			}
 
@@ -388,7 +382,7 @@ app.get('/admin-carousel', function(req,res){
 			var html;
 			fs.readFile(__dirname+'/html/admin/admin-carousel.html','utf8',function(err,data){
 				if(err){
-					console.log(errorLog('Error Admin carousel!'));
+					console.log('Error Admin carousel!');
 					throw err;
 				}
 
@@ -413,7 +407,7 @@ app.get('/admin-management', function(req,res){
 			var html;
 			fs.readFile(__dirname+'/html/admin/admin-management.html', 'utf8', function(err, data){
 				if(err){
-					console.log(errorLog('Admin management : Error loadin page'));
+					console.log('Admin management : Error loadin page');
 					throw err;
 				}
 				console.log('\nAdmin management page loaded!');
@@ -443,7 +437,7 @@ app.get('/changePass', function(req,res){
 			var html;
 			fs.readFile(__dirname+'/html/changePass.html','utf-8',function(err,data){
 				if(err){
-					console.log(errorLog('Error! Error loading changePass'));
+					console.log('Error! Error loading changePass');
 					throw err;
 				}
 				console.log('\nchangePass loaded!');
@@ -464,7 +458,7 @@ app.get('/forgottenPass', function (req,res){
 	var html;
 	fs.readFile(__dirname+'/html/forgottenPass.html','utf8',function(err, data){
 		if(err){
-			console.log(errorLog('\nForgotPass: error loading forgotpass page'));
+			console.log('\nForgotPass: error loading forgotpass page');
 			throw err;
 		}
 		console.log('\nForgotPass page loaded!');
@@ -484,7 +478,7 @@ app.get('/redefinePass:passKey',function(req,res){
 
 	userModel.findOne({"temporaryKey":passKey},{},function(err,user){
 		if(err){
-			console.log(errorLog('redefinePass : Error findOne!'));
+			console.log('redefinePass : Error findOne!');
 			throw err;
 		}
 		if(user === null){
@@ -496,7 +490,7 @@ app.get('/redefinePass:passKey',function(req,res){
 		var html;
 		fs.readFile(__dirname+"/html/redefinePass.html","utf8",function(err,data){
 			if(err){
-				console.log(errorLog('redefinePass: error readfile'));
+				console.log('redefinePass: error readfile');
 				throw err;
 			}
 			html = data;
@@ -513,7 +507,7 @@ app.get('/redefinePass:passKey',function(req,res){
 app.get('/logout', function(req,res){
 	req.session.destroy(function(err){
 		if(err){
-			console.log(errorLog('Error logout!'));
+			console.log('Error logout!');
 			console.log(err);
 			throw err;
 		}
@@ -577,7 +571,7 @@ app.post('/postContent',function(req,res){
 
 		movie.save(function(err,data){
 			if(err){
-				console.log(errorLog('Error saving movie!'));
+				console.log('Error saving movie!');
 				throw err;
 			}
 			console.log('movie added!\n');
@@ -632,7 +626,7 @@ app.post('/newMember', function(req,res){
 			user = new userModel(user);
 			user.save(function(err,member){
 				if(err){
-					console.log(errorLog('Error saving new member!!'));
+					console.log('Error saving new member!!');
 					throw err;
 				}
 				console.log('New member '+user.name+' added!!');
@@ -652,7 +646,7 @@ app.post('/newMember', function(req,res){
 
 					},function(err,mail){
 						if(err){
-							console.log(errorLog("\nNew member: Error Sending mail!"));
+							console.log("\nNew member: Error Sending mail!");
 							throw err;
 						}
 						console.log('\nMessage successfully sent! Message:'+ mail.response);
@@ -708,7 +702,7 @@ app.post('/loginConnection', function(req,res){
 
 	userModel.findOne({"email":req.body.email},{},function(err,user){
 		if(err){
-			console.log(errorLog('Error login! User not found!'));
+			console.log('Error login! User not found!');
 			throw err;
 		}
 
@@ -772,7 +766,7 @@ app.post('/updatePass', function(req,res){
 	// crypt pass
 	userModel.findOneAndUpdate({"email":email},{"temporaryKey":null, "password":bcrypt.hashSync(req.body.pass,salt)},{},function(err, user){
 		if(err){
-			console.log(errorLog('UpdateMdp : Error findOne'));
+			console.log('UpdateMdp : Error findOne');
 			throw err;
 		}
 		response.codeResponse = "ok";
@@ -789,7 +783,7 @@ app.post('/changeMdp', function(req,res){
 	if(response.codeResponse == "ok"){
 		userModel.findOne({"email":sess.email},{},function(err,user){
 			if(err){
-				console.log(errorLog('Error login! User not found!'));
+				console.log('Error login! User not found!');
 				throw err;
 			}
 			if(user === null || !bcrypt.compareSync(req.body.oldMdp, user.password)){
@@ -804,7 +798,7 @@ app.post('/changeMdp', function(req,res){
 				var salt = bcrypt.genSaltSync(10);
 				userModel.findOneAndUpdate({email: sess.email},{password: bcrypt.hashSync(req.body.password,salt)},{}, function(err,user){
 					if(err){
-						console.log(errorLog('ChangeMdp: Error modify password!'));
+						console.log('ChangeMdp: Error modify password!');
 						throw err;
 					}
 					console.log('\nChangePass: Password successfully changed!');
@@ -826,7 +820,7 @@ app.post('/forgottenPass', function(req,res){
 		tmpPass = crypto.randomBytes(15).toString('hex');
 
 	}catch(ex){
-		console.log(errorLog('forgottenPass : Error generating random string'));
+		console.log('forgottenPass : Error generating random string');
 		throw ex;
 	}
 	console.log(tmpPass);
@@ -842,7 +836,7 @@ app.post('/forgottenPass', function(req,res){
 	// userModel.findOneAndUpdate({email: userEmail},{password: bcrypt.hashSync(tmpPass,salt)},{}, function(err,user){
 	userModel.findOneAndUpdate({email: userEmail},{temporaryKey: tmpPass},{}, function(err,user){
 		if(err){
-			console.log(errorLog('ForgottenPass : error searching user.'));
+			console.log('ForgottenPass : error searching user.');
 			throw err;
 		}
 		if(user === null){
@@ -855,7 +849,7 @@ app.post('/forgottenPass', function(req,res){
 
 			fs.readFile(__dirname+'/html/mail/redefinePass.html','utf8',function(err,data){
 				if(err){
-					console.log(errorLog('Pasword mail not found!'));
+					console.log('Pasword mail not found!');
 					throw err;
 				}
 
@@ -869,7 +863,7 @@ app.post('/forgottenPass', function(req,res){
 
 				},function(err,mail){
 					if(err){
-						console.log(errorLog("\nNew member: Error Sending mail!"));
+						console.log("\nNew member: Error Sending mail!");
 						throw err;
 					}
 					console.log('\nMessage successfully sent! Message:'+ mail.response);
@@ -887,7 +881,7 @@ app.post('/adminManagement', function(req,res){
 
 	userModel.findOne({"name":req.body.pseudo},{}, function(err, user){
 		if(err){
-			console.log(errorLog('adminManagement : error finding membre'));
+			console.log('adminManagement : error finding membre');
 			throw err;
 		}
 
@@ -921,7 +915,7 @@ app.post('/adminManagement', function(req,res){
 app.post('/electAdmin', function(req,res){
 	userModel.findOneAndUpdate({name:req.body.pseudo},{isAdmin:true},{}, function(err, user){
 		if(err){
-			console.log(errorLog('adminManagement : error finding membre'));
+			console.log('adminManagement : error finding membre');
 			throw err;
 		}
 
@@ -1027,7 +1021,7 @@ var checkFormMember = function(req, cb){
 
 	userModel.findOne({"email": req.body.mail},{},function(err, user){
 		if(err){
-			console.log(errorLog('checkMemberForm: error findOne'));
+			console.log('checkMemberForm: error findOne');
 			cb( err );
 		}
 		if(user === null){
