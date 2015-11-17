@@ -1,1 +1,11 @@
 ressources/poster/2015_02_24_about_Sufiane4.jpg
+
+# all compressed files
+*.7z
+*.dmg
+*.gz
+*.iso
+*.jar
+*.rar
+*.tar
+*.zip
