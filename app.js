@@ -1016,7 +1016,7 @@ function checkRequired( arr, key, cb ) {
 		return false;
 	}
 	return true;
-}
+};
 
 // CheckForm for inscription
 var checkFormMember = function(req, cb){

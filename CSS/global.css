@@ -1,346 +1,346 @@
 /* -------------------------------------------------------- General ----------------------------------------------------------------------- */
 body {
-color: #333;
-background-color: #FAF5F5;
-font-family: Helvetica, Georgia, serif;
-font-family: Helvetica;
-font-size: 1.450em;
-line-height: 1.6em;
-font-weight: lighter;
-font-style: normal;
+    color: #333;
+    background-color: #FAF5F5;
+    font-family: Helvetica, Georgia, serif;
+    font-family: Helvetica;
+    font-size: 1.450em;
+    line-height: 1.6em;
+    font-weight: lighter;
+    font-style: normal;
 }
 
 div {
-display:block;
+    display:block;
 }
 /*To disable the outline focus*/
 *:focus {
-outline: 0;
+    outline: 0;
 }
 
 a {
-color:#FFF;
+    color:#FFF;
 }
 a:hover{
-color:#FFF;
+    color:#FFF;
 }
 a:link{
-text-decoration:none;
+    text-decoration:none;
 }
 a:visited{
-color:#FFF;
+    color:#FFF;
 }
 
 /* -------------------------------------------------------- Menu -------------------------------------------------------------------------- */
 .logo-nav-wrapper{
-display: table;
-background-color : #171717;
-width: 100%;
-height : 10.8%;
-vertical-align : middle;
-box-sizing: border-box;
+    display: table;
+    background-color : #171717;
+    width: 100%;
+    height : 10.8%;
+    vertical-align : middle;
+    box-sizing: border-box;
 }
 .site-logo img{
-height:10.4%;
-width:auto;
-position : absolute;
-top :0;
-left : 8%;
+    height:10.4%;
+    width:auto;
+    position : absolute;
+    top :0;
+    left : 8%;
 }
 .logo-wrapper{
-display: table-cell;
+    display: table-cell;
 }
 .nav-wrapper{
-display: table-cell;
-text-align: right;
-vertical-align: middle;
+    display: table-cell;
+    text-align: right;
+    vertical-align: middle;
 }
 
 #cssmenu{
-position : absolute ;
-width : 70%;
-top : -0.8%;
-right: 0%;
+    position : absolute ;
+    width : 70%;
+    top : -0.8%;
+    right: 0%;
 }
 
 #cssmenu ul {
-  list-style: none;
-  padding: 0;
-  margin: -5;
-  line-height: 1;
-  float: left;
-  top : 22px;
+    list-style: none;
+    padding: 0;
+    margin: -5;
+    line-height: 1;
+    float: left;
+    top : 22px;
 }
 #cssmenu > ul {
-  position: relative;
-  display: block;
-  background: #171717;
-  width:100%;
-  vertical-align: center;
-  margin-right : -235px;
-  padding-left : 17.2%;
-  }
+    position: relative;
+    display: block;
+    background: #171717;
+    width:100%;
+    vertical-align: center;
+    margin-right : -235px;
+    padding-left : 17.2%;
+}
 #cssmenu:after,
 #cssmenu > ul:after {
-  content: ".";
-  display: block;
-  clear: both;
-  visibility: hidden;
-  line-height: 0;
-  height: 0;
+    content: ".";
+    display: block;
+    clear: both;
+    visibility: hidden;
+    line-height: 0;
+    height: 0;
 }
 #cssmenu.align-right > ul > li {
-  float: right;
+    float: right;
 }
 #cssmenu.align-center ul {
-  text-align: center;
+    text-align: center;
 }
 #cssmenu.align-center ul ul {
-  text-align: left;
+    text-align: left;
 }
 #cssmenu > ul > li {
-  display: inline-block;
-  position: relative;
-  margin-right: 1%; /*écart entre les boutons*/
+    display: inline-block;
+    position: relative;
+    margin-right: 1%; /*écart entre les boutons*/
 }
 #cssmenu > ul > #menu-button {
-  display: none;
+    display: none;
 }
 #cssmenu ul li a {
-  display: block;
-  text-decoration: none;
+    display: block;
+    text-decoration: none;
 }
 #cssmenu > ul > li > a {
-  font-size: 1.05em;
-  font-family: Helvetica, Georgia, serif;
-  font-family: Helvetica;
-  padding: 9.8% 15;
-  margin-top : -0.1%;
-  color: #ffffff;
-  text-transform: uppercase;
-  -webkit-transition: color 0.25s ease-out;
-  -moz-transition: color 0.25s ease-out;
-  -ms-transition: color 0.25s ease-out;
-  -o-transition: color 0.25s ease-out;
-  transition: color 0.25s ease-out;
+    font-size: 1.05em;
+    font-family: Helvetica, Georgia, serif;
+    font-family: Helvetica;
+    padding: 9.8% 15;
+    margin-top : -0.1%;
+    color: #ffffff;
+    text-transform: uppercase;
+    -webkit-transition: color 0.25s ease-out;
+    -moz-transition: color 0.25s ease-out;
+    -ms-transition: color 0.25s ease-out;
+    -o-transition: color 0.25s ease-out;
+    transition: color 0.25s ease-out;
 }
 #cssmenu > ul > li.has-sub > a {
-  padding-right: 35px;
+    padding-right: 35px;
 }
 #cssmenu > ul > li:hover > a {
-  color: #7a8189;
+    color: #7a8189;
 }
 #cssmenu li.has-sub::after {
-  display: block;
-  content: "";
-  position: absolute;
+    display: block;
+    content: "";
+    position: absolute;
 }
 #cssmenu > ul > li.has-sub::after {
-  right: 21.2%;
-  top: 46%;
-  border: 5px solid transparent;
-  border-top-color: #ffffff;
-  margin-right : -12%;
+    right: 21.2%;
+    top: 46%;
+    border: 5px solid transparent;
+    border-top-color: #ffffff;
+    margin-right : -12%;
 }
 #cssmenu > ul > li:hover::after {
-  border-top-color: #7a8189;
+    border-top-color: #7a8189;
 }
 #cIndicator {
-  position: absolute;
-  height: 0;
-  width: 100%;
-  border: 12px solid transparent;
-  border-top-color: #2b2f3a;
-  right: 100%;
-  z-index: -2;
+    position: absolute;
+    height: 0;
+    width: 100%;
+    border: 12px solid transparent;
+    border-top-color: #2b2f3a;
+    right: 100%;
+    z-index: -2;
 }
 #cssmenu ul ul {
-  position: absolute;
-  top: 85%;
-  opacity: 0;
-  -webkit-transition: opacity .3s ease, top .25s ease;
-  -moz-transition: opacity .3s ease, top .25s ease;
-  -ms-transition: opacity .3s ease, top .25s ease;
-  -o-transition: opacity .3s ease, top .25s ease;
-  transition: opacity .3s ease, top .25s ease;
-  z-index: 1000;
+    position: absolute;
+    top: 85%;
+    opacity: 0;
+    -webkit-transition: opacity .3s ease, top .25s ease;
+    -moz-transition: opacity .3s ease, top .25s ease;
+    -ms-transition: opacity .3s ease, top .25s ease;
+    -o-transition: opacity .3s ease, top .25s ease;
+    transition: opacity .3s ease, top .25s ease;
+    z-index: 1000;
 }
 #cssmenu ul ul li {
-  position: relative;
+    position: relative;
 }
 #cssmenu > ul > li:hover > ul {
-  left: auto;
-  top: 90%;
-  opacity: 1;
+    left: auto;
+    top: 90%;
+    opacity: 1;
 }
 #cssmenu.align-right > ul > li:hover > ul {
-  left: auto;
-  right: 0;
-  opacity: 1;
+    left: auto;
+    right: 0;
+    opacity: 1;
 }
 /*sous-menu*/
 #cssmenu ul ul li a {
-text-align:center;
-  width: 110%;
-  border-bottom: 1px solid #eeeeee;
-  padding: 10px 13px;
-  font-size: 1.05em;
-  color: #9ea2a5;
-  background: #ffffff;
-  -webkit-transition: all .35s ease;
-  -moz-transition: all .35s ease;
-  -ms-transition: all .35s ease;
-  -o-transition: all .35s ease;
-  transition: all .35s ease;
-  margin-left : 3px;
+    text-align:center;
+    width: 110%;
+    border-bottom: 1px solid #eeeeee;
+    padding: 10px 13px;
+    font-size: 1.05em;
+    color: #9ea2a5;
+    background: #ffffff;
+    -webkit-transition: all .35s ease;
+    -moz-transition: all .35s ease;
+    -ms-transition: all .35s ease;
+    -o-transition: all .35s ease;
+    transition: all .35s ease;
+    margin-left : 3px;
 }
 #cssmenu.align-right ul ul li a {
-  text-align: right;
+    text-align: right;
 }
 #cssmenu ul ul li:hover > a {
-  background: #8c9195;
-  color: #f2f2f2;
+    background: #8c9195;
+    color: #f2f2f2;
 }
 #cssmenu ul ul li:last-child > a,
 #cssmenu ul ul li.last > a {
-  border-bottom: 0;
+    border-bottom: 0;
 }
 #cssmenu > ul > li > ul::after {
-  content: '';
-  border: 6px solid transparent;
-  width: 0;
-  height: 0;
-  border-bottom-color: #ffffff;
-  position: absolute;
-  top: -12px;
-  left: 30px;
+    content: '';
+    border: 6px solid transparent;
+    width: 0;
+    height: 0;
+    border-bottom-color: #ffffff;
+    position: absolute;
+    top: -12px;
+    left: 30px;
 }
 #cssmenu.align-right > ul > li > ul::after {
-  left: auto;
-  right: 30px;
+    left: auto;
+    right: 30px;
 }
 
 /* -------------------------------------------------------- Footer ------------------------------------------------------------------------ */
 .footer-wrapper{
-width:100%;
-height:21.3%;
-background-color : #171717;
+    width:100%;
+    height:21.3%;
+    background-color : #171717;
 }
 .footer-wrapper #footer-menu li a:link{
-text-decoration:none;
-color:#FFF;
+    text-decoration:none;
+    color:#FFF;
 }
 .footer-wrapper #footer-menu li a:visited{
-color:#FFF;
+    color:#FFF;
 }
 #footer-menu{
-color:#FFF;
-letter-spacing:1px;
-line-height:2em;
-list-style-type:none;
-margin-left:1.83%;
-padding-top:2.7%;
+    color:#FFF;
+    letter-spacing:1px;
+    line-height:2em;
+    list-style-type:none;
+    margin-left:1.83%;
+    padding-top:2.7%;
 }
 .footer-wrapper #menu-logo img{
-float:right;
-margin-right:4.39%;
-padding-top:2.2%;
+    float:right;
+    margin-right:4.39%;
+    padding-top:2.2%;
 }
 .footer-wrapper #copyright {
-text-align:center;
-color:#FFF;
+    text-align:center;
+    color:#FFF;
 }
 
 /* -------------------------------------------------------- Banner ------------------------------------------------------------------------ */
 
 .success, .error {
     display: none;
-	color:white;
-	border-radius:25px;
+    color:white;
+    border-radius:25px;
     margin-top: 1.5%;
-	margin-left: 30%;
-	margin-right: 30%;
+    margin-left: 30%;
+    margin-right: 30%;
     padding: 0.7%;
     border: solid 2px #025C00;
-	font-weight:600;
-	text-align:center;
-	background: repeating-linear-gradient(
-		  45deg,
-		  #05E500,
-		  #05E500 1.83%,
-		  #5EFF5B 1.83%,
-		  #5EFF5B 3.66%
-		);
+    font-weight:600;
+    text-align:center;
+    background: repeating-linear-gradient(
+        45deg,
+        #05E500,
+        #05E500 1.83%,
+        #5EFF5B 1.83%,
+        #5EFF5B 3.66%
+    );
 }
 .error{
-	border: solid 2px #A21200;
-	background: repeating-linear-gradient(
-		  45deg,
-		  #E81900,
-		  #E81900 1.83% ,
-		  #E83521 1.83%,
-		  #E83521 3.66%
-		);
+    border: solid 2px #A21200;
+    background: repeating-linear-gradient(
+        45deg,
+        #E81900,
+        #E81900 1.83% ,
+        #E83521 1.83%,
+        #E83521 3.66%
+    );
 }
 
 /* -------------------------------------------------------- Boutons ----------------------------------------------------------------------- */
 .buttonValider{
-border-radius:25px;
-background:#171717;
-color:#FFF;
-border: 2px solid;
-height:5%;
-width:auto;
-font-weight:bold;
+    border-radius:25px;
+    background:#171717;
+    color:#FFF;
+    border: 2px solid;
+    height:5%;
+    width:auto;
+    font-weight:bold;
 }
 .buttonValider:hover{
-color:#C6C7B3;
+    color:#C6C7B3;
 }
 .buttonValider:active{
-color:#171717;
-border-color:#171717;
-background:#FAF5F5;
+    color:#171717;
+    border-color:#171717;
+    background:#FAF5F5;
 }
 
 /* -------------------------------------------------------- form -------------------------------------------------------------------------- */
 #form h2{
-padding-left: 40px;
+    padding-left: 40px;
 }
 #form ul li {
-list-style-type:none;
-line-height:2em;
+    list-style-type:none;
+    line-height:2em;
 }
 #form input{
-line-height:1.8em;
+    line-height:1.8em;
 }
 #form ul li .description{
-font-style:italic;
-font-weight:200; /*need it so the name of the label doesn't look bold*/
+    font-style:italic;
+    font-weight:200; /*need it so the name of the label doesn't look bold*/
 }
 #form ul #buttons #ButtonsWrapper{
-text-align:center;
-margin-left:-40px;
-line-height:1.5em;
+    text-align:center;
+    margin-left:-40px;
+    line-height:1.5em;
 }
 /* -------------------------------------------- For all actions loading/fading ------------------------------------------------------------ */
 /* -------------------------------------------------------- GIF --------------------------------------------------------------------------- */
 .loading {
-display: none;
-position: absolute;
-top:30%;
-left:45%;
-width:10%;
-height:auto;
+    display: none;
+    position: absolute;
+    top:30%;
+    left:45%;
+    width:10%;
+    height:auto;
 }
 .fadeMe{
-display:none;
-opacity:0.7;
-filter: alpha(opacity=20);
-background-color:#000; 
-width:100%; 
-height:100%; 
-z-index:10;
-top:0; 
-left:0; 
-position:fixed;    
+    display:none;
+    opacity:0.7;
+    filter: alpha(opacity=20);
+    background-color:#000; 
+    width:100%; 
+    height:100%; 
+    z-index:10;
+    top:0; 
+    left:0; 
+    position:fixed;    
 }

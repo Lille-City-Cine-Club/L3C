@@ -1,240 +1,242 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <html lang="fr">
-	<head>
-		<!--[if lt IE 9]>
-			<script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
-		<![endif]-->
-		<meta charset="utf-8" />
-		<!-- Import de Bootstrap et de FontAwesome (pour les icônes)-->
-		<link rel="stylesheet" href="../CSS/bootstrap.min.css">
-		<link rel="stylesheet" href="../CSS/font-awesome.min.css" />
-		<!-- Import de notre fichier CSS -->
-		<link rel="stylesheet" href="../CSS/login.css" />
-		<link rel="stylesheet" href="../CSS/global.css" />
-		<!-- Import des fichiers Javacript-->
-		<script src="../js/jquery-1.9.1.min.js"></script>
-		<!--favicon-->
-		<link rel="icon" type="image/png" href="../ressources/logo/favicon.png" />
-		<title>L3C : Connexion </title>
-		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
-		
-		<script>
-		$(document).ready(function(){
-		
-			$('#formLogin').on('submit', function(e){
-				e.preventDefault();
-				
-				var $this = $(this);
-				
-				var formData = new FormData();
-				formData.append('email',$('#pseudoLogin').val());
-				formData.append('password',$('#passwordLogin').val());
-				
-				$.ajax({
-					type:'POST',
-					url:$this.attr('action'),
-					data:formData,
-					processData:false,
-					contentType:false,
-					
-					success:function(content){
-						if(content.codeResponse == "ok"){
-							if(!content.isAdmin){
-								window.location.href="/";
-							}else{
-								window.location.href="/admin";
-							}
-						}else{
-							window.scrollTo(0,0);
-							var errorMessage = document.getElementById('error');
-							errorMessage.innerHTML = content.message;
-							$(".error").show();
-						}
-					},
-					error:function(){
-						alert('Error Ajax!');
-					}
-				});
-			});
-		});
-				( function( $ ) {
-		$( document ).ready(function() {
-			var activeElement = $('#cssmenu>ul>li:first');
+    <head>
+        <!--[if lt IE 9]>
+<script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+<![endif]-->
+        <meta charset="utf-8" />
+        <!-- Import de Bootstrap et de FontAwesome (pour les icônes)-->
+        <link rel="stylesheet" href="../CSS/bootstrap.min.css">
+        <link rel="stylesheet" href="../CSS/font-awesome.min.css" />
+        <!-- Import de notre fichier CSS -->
+        <link rel="stylesheet" href="../CSS/login.css" />
+        <link rel="stylesheet" href="../CSS/global.css" />
+        <!-- Import des fichiers Javacript-->
+        <script src="../js/jquery-1.9.1.min.js"></script>
+        <!--favicon-->
+        <link rel="icon" type="image/png" href="../ressources/logo/favicon.png" />
+        <title>L3C : Connexion </title>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
 
-			$('#cssmenu>ul>li').each(function() {
-				if ($(this).hasClass('active')) {
-					activeElement = $(this);
-				}
-			});
+        <script>
+            $(document).ready(function(){
+
+                $('#formLogin').on('submit', function(e){
+                    e.preventDefault();
+
+                    var $this = $(this);
+
+                    var formData = new FormData();
+                    formData.append('email',$('#pseudoLogin').val());
+                    formData.append('password',$('#passwordLogin').val());
+
+                    $.ajax({
+                        type:'POST',
+                        url:$this.attr('action'),
+                        data:formData,
+                        processData:false,
+                        contentType:false,
+
+                        success:function(content){
+                            if(content.codeResponse == "ok"){
+                                if(!content.isAdmin){
+                                    window.location.href="/";
+                                }else{
+                                    window.location.href="/admin";
+                                }
+                            }else{
+                                window.scrollTo(0,0);
+                                var errorMessage = document.getElementById('error');
+                                errorMessage.innerHTML = content.message;
+                                $(".error").show();
+                            }
+                        },
+                        error:function(){
+                            alert('Error Ajax!');
+                        }
+                    });
+                });
+            });
+            ( function( $ ) {
+                $( document ).ready(function() {
+                    var activeElement = $('#cssmenu>ul>li:first');
+
+                    $('#cssmenu>ul>li').each(function() {
+                        if ($(this).hasClass('active')) {
+                            activeElement = $(this);
+                        }
+                    });
 
 
-			var posLeft = activeElement.position().left;
-			var elementWidth = activeElement.width();
-			posLeft = posLeft + elementWidth/2 -6;
-			if (activeElement.hasClass('has-sub')) {
-				posLeft -= 6;
-			}
+                    var posLeft = activeElement.position().left;
+                    var elementWidth = activeElement.width();
+                    posLeft = posLeft + elementWidth/2 -6;
+                    if (activeElement.hasClass('has-sub')) {
+                        posLeft -= 6;
+                    }
 
-			$('#cssmenu #pIndicator').css('left', posLeft);
-			var element, leftPos, indicator = $('#cssmenu pIndicator');
-			
-			$("#cssmenu>ul>li").hover(function() {
-				element = $(this);
-				var w = element.width();
-				if ($(this).hasClass('has-sub'))
-				{
-					leftPos = element.position().left + w/2 - 12;
-				}
-				else {
-					leftPos = element.position().left + w/2 - 6;
-				}
+                    $('#cssmenu #pIndicator').css('left', posLeft);
+                    var element, leftPos, indicator = $('#cssmenu pIndicator');
 
-				$('#cssmenu #pIndicator').css('left', leftPos);
-			}
-			, function() {
-				$('#cssmenu #pIndicator').css('left', posLeft);
-			});
+                    $("#cssmenu>ul>li").hover(function() {
+                        element = $(this);
+                        var w = element.width();
+                        if ($(this).hasClass('has-sub'))
+                        {
+                            leftPos = element.position().left + w/2 - 12;
+                        }
+                        else {
+                            leftPos = element.position().left + w/2 - 6;
+                        }
 
-			$('#cssmenu>ul').prepend('<li id="menu-button"><a>Menu</a></li>');
-			$( "#menu-button" ).click(function(){
-					if ($(this).parent().hasClass('open')) {
-						$(this).parent().removeClass('open');
-					}
-					else {
-						$(this).parent().addClass('open');
-					}
-				});
-		});
-		} )( jQuery );
-		
-				// to load the correct menu
-		var sayMyName = function(){
-			$.ajax({
-				type:'POST',
-				url:'whatsMyName',
-				data:"",
-				processData:false,
-				contentType:false,
-				
-				success:function(content){
-					if(content.email){
-						if(!content.isAdmin){
-							console.log('Je suis un membre!');
-							$('#admin').hide();
-							$('#connection').hide();
-							$('#inscription').hide();
-							$('#member').show();
-						}else{
-							console.log('Je suis un admin!');
-							$('#connection').hide();
-							$('#inscription').hide();
-						}
-					}else{
-						console.log('Je suis un internaute!');
-						$('#admin').hide();
-						$('#member').hide();
-					}
-				},
-				error:function(){
-					alert('Error Ajax!');
-				}
-			});
-		};
-		
-		$(document).ready(function(){
-			sayMyName();
-		});
-	</script>
-	</head>
-	<body>
-	<!-- logo+site -->
-	<div class="logo-nav-wrapper">
-	<!-- Regroupe le logo-->
-		<div class="logo-wrapper">
-			<div class="site-logo">
-				<a href="http://localhost:7777/">
-					<img src="../ressources/logo/L3C.jpg" alt="Lille City Cine Club" />
-				</a>
-			</div>
+                        $('#cssmenu #pIndicator').css('left', leftPos);
+                    }
+                                              , function() {
+                        $('#cssmenu #pIndicator').css('left', posLeft);
+                    });
+
+                    $('#cssmenu>ul').prepend('<li id="menu-button"><a>Menu</a></li>');
+                    $( "#menu-button" ).click(function(){
+                        if ($(this).parent().hasClass('open')) {
+                            $(this).parent().removeClass('open');
+                        }
+                        else {
+                            $(this).parent().addClass('open');
+                        }
+                    });
+                });
+            } )( jQuery );
+
+            // to load the correct menu
+            var sayMyName = function(){
+                $.ajax({
+                    type:'POST',
+                    url:'whatsMyName',
+                    data:"",
+                    processData:false,
+                    contentType:false,
+
+                    success:function(content){
+                        if(content.email){
+                            if(!content.isAdmin){
+                                console.log('Je suis un membre!');
+                                $('#admin').hide();
+                                $('#connection').hide();
+                                $('#inscription').hide();
+                                $('#member').show();
+                            }else{
+                                console.log('Je suis un admin!');
+                                $('#connection').hide();
+                                $('#inscription').hide();
+                            }
+                        }else{
+                            console.log('Je suis un internaute!');
+                            $('#admin').hide();
+                            $('#member').hide();
+                        }
+                    },
+                    error:function(){
+                        alert('Error Ajax!');
+                    }
+                });
+            };
+
+            $(document).ready(function(){
+                sayMyName();
+            });
+        </script>
+    </head>
+    <body>
+        <!-- logo+site -->
+        <div class="logo-nav-wrapper">
+            <!-- Regroupe le logo-->
+            <div class="logo-wrapper">
+                <div class="site-logo">
+                    <a href="http://localhost:7777/">
+                        <img src="../ressources/logo/L3C.jpg" alt="Lille City Cine Club" />
+                    </a>
+                </div>
+            </div>
+            <!-- le menu -->
+            <div id='cssmenu'>
+                <ul>
+                    <li id="suggestion"><a id="Seance" href="suggestion">Le Film du mois</a></li>
+                    <li id="connection"><a id="logIn" href="login">Connexion</a></li>
+                    <li id="signUp"><a href="inscription">Inscription</a></li>
+                    <li id="admin" class='active has-sub'><a href='/admin'><span>Administration</span></a>
+                        <ul>
+                            <li><a href='/admin-suggestion'><span>Soumettre un film</span></a></li>
+                            <li><a href='/admin-carousel'><span>Modifier Carousel</span></a></li>
+                            <li><a href="/admin-management"> <span> Gérer les Admins</span></a></li>
+                        </ul>
+                    </li>
+                    <li id="member" class='active has-sub'><a href='#'><span>Gérer mon profil</span></a>
+                        <ul>
+                            <li><a href='../changePass'><span>Changer Mot de Passe</span></a></li>
+                            <li><a href='../logout'><span>Déconnexion</span></a></li>
+                        </ul>
+                    </li>
+                    <li><a id="about" href="about">A propos</a></li>
+                </ul>
+            </div>	
         </div>
-        <!-- le menu -->
-		<div id='cssmenu'>
-			<ul>
-				<li id="suggestion"><a id="Seance" href="suggestion">Le Film du mois</a></li>
-				<li id="connection"><a id="logIn" href="login">Connexion</a></li>
-				<li id="signUp"><a href="inscription">Inscription</a></li>
-				<li id="admin" class='active has-sub'><a href='/admin'><span>Administration</span></a>
-					<ul>
-						<li><a href='/admin-suggestion'><span>Soumettre un film</span></a></li>
-						<li><a href='/admin-carousel'><span>Modifier Carousel</span></a></li>
-						<li><a href="/admin-management"> <span> Gérer les Admins</span></a></li>
-					</ul>
-				</li>
-				<li id="member" class='active has-sub'><a href='#'><span>Gérer mon profil</span></a>
-					<ul>
-						<li><a href='../changePass'><span>Changer Mot de Passe</span></a></li>
-						<li><a href='../logout'><span>Déconnexion</span></a></li>
-					</ul>
-				</li>
-				<li><a id="about" href="about">A propos</a></li>
-			</ul>
-		</div>	
-	</div>
-		<div id="error" class="error"></div>
-		<div id="form">
-			<form id="formLogin" action="loginConnection" method="post">
-				<h2> Connexion : </h2>
-				<ul>
-					<li id="PseudoLogin">
-						<label class="description"> E-Mail : </label>
-						<input id="pseudoLogin" maxlength="255" type="email" value="" placeholder="Votre mail"/>
-					</li>
-					<li id="PasswordLogin">
-						<label class="description"> Mot de passe : </label>
-						<input id="passwordLogin" maxlength="255" type="password" value="" placeholder="Votre mot de passe"/><a  href="forgottenPass" ><span id="forgottenMdp" class="glyphicon glyphicon-question-sign" style="font-size:18px; float:right; padding-right:70px; padding-top:5px; color:black;" title="Mot de passe oublié ?"></span></a>
-					</li>
-					<li>
-						<div id="ButtonsWrapper" >
-							<input type="hidden" name="form_id" value="955925" />
-							<input id="saveForm" class="buttonValider" type="submit"  value="Se connecter" />
-						</div>
-					</li>
-			</form>
-		</div>
-		<div id="inscription">
-			<h2> Pas encore inscrit ? </h2>
-			<p id="accrocheInscription"> 
-				Le <strong>Lille City Ciné Club</strong> vous propose <i>(au moins !)</i> une suggestion de films par semaine !
-				<br/>
-				Une sélection minutieuse parmi les films à l'affiche est faite pour <strong>VOUS</strong>, afin de vous aider à choisir <strong>LE</strong> film à voir cette semaine.
-				<br/><br>	
-				&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp Avec bien sûr la raison pour laquelle nous avons choisi ce (ces) film(s) cette semaine.
-				<br/>
-				Vous trouverez aussi un synopsis, les acteurs principaux et les séances* dans les cinémas de la métropole lilloise.<i id="dvlpt">(*service en cours de développement)</i>
-				<br/>
-				<br>
-				<strong>N'attendez plus, INSCRIVEZ VOUS !</strong>
-			</p>
-			<div id="buttonInscription">
-				<p>
-					<a href="inscription" id="inscriptionButton">S'inscrire !</a>
-				</p>
-			</div>
-		</div>
-		<div class="footer-wrapper">
-		<div id="menu-logo" >
-			<a href="http://www.univ-lille1.fr/" target="_blank">
-				<img src="../ressources/logo/logoLille1Mini.png" alt="Université Lille1" >
-			</a>
-			<ul id="footer-menu">
-				<li><span class="fa fa-lg fa-facebook" style="margin-left:0.2%"></span> <a href=http://www.facebook.com/LilleCityCineClub target="_blank" style="margin-left:0.8%"> Facebook </a></li>
-				<li><span class="glyphicon glyphicon-info-sign" style="font-size:16px;" ></span> <a href="about" style="margin-left:0.5%"> A propos </a></li>
-			</ul>
-		</div>
-		<div id="copyright">
-			<p>
-				&copy Benny-P & DonDiego. En collaboration avec M.Dufrêne. Université Lille 1.
-			</p>	
-		</div>
-	</body>
+        <div id="error" class="error"></div>
+        <div id="form">
+            <form id="formLogin" action="loginConnection" method="post">
+                <h2> Connexion : </h2>
+                <ul>
+                    <li id="PseudoLogin">
+                        <label class="description"> E-Mail : </label>
+                        <input id="pseudoLogin" maxlength="255" type="email" value="" placeholder="Votre mail"/>
+                    </li>
+                    <li id="PasswordLogin">
+                        <label class="description"> Mot de passe : </label>
+                        <input id="passwordLogin" maxlength="255" type="password" value="" placeholder="Votre mot de passe"/><a  href="forgottenPass" ><span id="forgottenMdp" class="glyphicon glyphicon-question-sign" style="font-size:18px; float:right; padding-right:70px; padding-top:5px; color:black;" title="Mot de passe oublié ?"></span></a>
+                    </li>
+                    <li>
+                        <div id="ButtonsWrapper" >
+                            <input type="hidden" name="form_id" value="955925" />
+                            <input id="saveForm" class="buttonValider" type="submit"  value="Se connecter" />
+                        </div>
+                    </li>
+                </ul>
+            </form>
+        </div>
+        <div id="inscription">
+            <h2> Pas encore inscrit ? </h2>
+            <p id="accrocheInscription"> 
+                Le <strong>Lille City Ciné Club</strong> vous propose <i>(au moins !)</i> une suggestion de films par semaine !
+                <br/>
+                Une sélection minutieuse parmi les films à l'affiche est faite pour <strong>VOUS</strong>, afin de vous aider à choisir <strong>LE</strong> film à voir cette semaine.
+                <br/><br>	
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Avec bien sûr la raison pour laquelle nous avons choisi ce (ces) film(s) cette semaine.
+                <br/>
+                Vous trouverez aussi un synopsis, les acteurs principaux et les séances* dans les cinémas de la métropole lilloise.<i id="dvlpt">(*service en cours de développement)</i>
+                <br/>
+                <br>
+                <strong>N'attendez plus, INSCRIVEZ VOUS !</strong>
+            </p>
+            <div id="buttonInscription">
+                <p>
+                    <a href="inscription" id="inscriptionButton">S'inscrire !</a>
+                </p>
+            </div>
+        </div>
+        <div class="footer-wrapper">
+            <div id="menu-logo" >
+                <a href="http://www.univ-lille1.fr/" target="_blank">
+                    <img src="../ressources/logo/logoLille1Mini.png" alt="Université Lille1" >
+                </a>
+                <ul id="footer-menu">
+                    <li><span class="fa fa-lg fa-facebook" style="margin-left:0.2%"></span> <a href=http://www.facebook.com/LilleCityCineClub target="_blank" style="margin-left:0.8%"> Facebook </a></li>
+                    <li><span class="glyphicon glyphicon-info-sign" style="font-size:16px;" ></span> <a href="about" style="margin-left:0.5%"> A propos </a></li>
+                </ul>
+            </div>
+            <div id="copyright">
+                <p>
+                    &copy; Benny-P & DonDiego. En collaboration avec M.Dufrêne. Université Lille 1.
+                </p>	
+            </div>
+        </div>
+    </body>
 </html>
